@@ -1,26 +1,37 @@
-@base_url = https://yarra-api-fopwdjdusz.now.sh
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxMzIxMTQwOCwiZXhwIjoxNTEzODE2MjA4LCJzdWIiOiI1YTMxYzYwZjFhZDVmZTAwNzNmMTIyNzkifQ.DUfa2RctYfhljCjvStFvtzgSxTCrH4uR_EPUBL1anaM
+@base_url = https://yarra-api-lzhprstysc.now.sh
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9raTNAb2tpLmNvbSIsImlhdCI6MTUxMzIxMjE1NCwiZXhwIjoxNTEzODE2OTU0LCJzdWIiOiI1YTMxYzhkNmJkMDJjZTAwYTFlMjI2M2UifQ.jLLwawSK33HvPn_yhHKMCGOQFisr-xjOHYvlo2adfok
 
 ### List products
 GET {{base_url}}/products
 
-### Create product
+
+### Create products
 POST {{base_url}}/products
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "brandName": "Two dollar shop",
-  "name": "Sunglasses"
+  "brandName": "Ford3",
+  "name": "Focus"
 }
 
-### Sign up
+### Create account
 POST {{base_url}}/auth/register
 Content-Type: application/json
 
 {
-  "email": "patrick.smith@coderacademy.edu.au",
-  "firstName": "Patrick",
-  "lastName": "Smith",
-  "password": "password123"
+  "email": "oki3@oki.com",
+  "firstName": "tomomi",
+  "lastName": "oki",
+  "password": "123123"
+}
+
+
+### Sign in
+POST  {{base_url}}/auth
+Content-Type: application/json
+
+{
+  "email": "oki3@oki.com",
+  "password": "123123"
 }

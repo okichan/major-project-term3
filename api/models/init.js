@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise
 
 // Connect to our local database
 mongoose.connect(
-  process.env.MONGO_URI,
+   process.env.MONGO_URI,
   { useMongoClient: true }
 )
   .then(() => {

@@ -5,10 +5,11 @@ import logo from "../assets/img/logo.png";
 function PrimaryNav({ signedIn }) {
    return (
       <nav
-         className="navbar navbar-expand-sm navbar-light"
+         className="navbar navbar-expand-sm navbar-light "
          style={{ background: "#E5E5E5" }}
       >
-         <Link to="/">
+
+         <Link to="/" className="mr-3">
             {" "}
             <img src={logo} style={{ width: "140px" }} />
          </Link>
@@ -26,14 +27,14 @@ function PrimaryNav({ signedIn }) {
             <ul className="navbar-nav">
                <li className="nav-item">
                   <Link to="/" className="nav-link">
-                     Home
+                     My Account
                   </Link>
                </li>
-               <li className="nav-item">
+               {/* <li className="nav-item">
                   <Link to="/products" className="nav-link">
                      Products
                   </Link>
-               </li>
+               </li> */}
                {signedIn ? (
                   <Fragment>
                      <li className="nav-item">

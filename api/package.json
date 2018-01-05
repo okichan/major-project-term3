@@ -16,8 +16,7 @@
   },
   "devDependencies": {
     "dotenv": "^4.0.0",
-    "nodemon": "^1.12.5",
-    "now": "^8.5.4"
+    "nodemon": "^1.12.5"
   },
   "scripts": {
     "dev": "nodemon server.js",
@@ -25,7 +24,7 @@
     "drop": "node models/drop.js",
     "reset": "npm run drop && npm run seed",
     "start": "node server.js",
-    "deploy": "now -E production.env",
-    "rmdeploy": "now rm yarra-api"
+    "deploy": "now -E production.env"
+
   }
 }
