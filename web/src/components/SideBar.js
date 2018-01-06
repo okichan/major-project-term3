@@ -6,57 +6,57 @@ function SideBar({ signedIn }) {
       <nav className="col-sm-3 col-md-2 bg-light sidebar" style={{borderRight: "1px solid lightgray"}}>
          <ul className="nav nav-pills flex-column">
             <li className="nav-item" style={{display: "inline"}}>
-               <a href="/new-sales" className="nav-link">
+               <Link to="/new-sales" className="nav-link">
                   New Sales
-               </a>
+               </Link>
             </li>
 
             <li className="nav-item">
-               <a
-                  href="#homeSubmenu"
+               <Link
+                  to="#homeSubmenu"
                   data-toggle="collapse"
                   aria-expanded="false"
                   className="nav-link"
                >
                   Report
-               </a>
+               </Link>
                <ul className="collapse list-unstyled" id="homeSubmenu">
                   <li className="nav-item">
-                     <a href="/report-1" className="nav-link ml-3">
+                     <Link to="/report-1" className="nav-link ml-3">
                         Monthly
-                     </a>
+                     </Link>
                   </li>
                   <li className="nav-item">
-                     <a href="#" className="nav-link ml-3">
+                     <Link to="#" className="nav-link ml-3">
                         Customer Origin
-                     </a>
+                     </Link>
                   </li>
                   <li className="nav-item">
-                     <a href="#" className="nav-link ml-3">
+                     <Link to="#" className="nav-link ml-3">
                         Something
-                     </a>
+                     </Link>
                   </li>
                </ul>
             </li>
             <li className="nav-item">
-               <a href="/products" className="nav-link">
+               <Link to="/products" className="nav-link">
                   Products
-               </a>
+               </Link>
             </li>
             <li className="nav-item">
-               <a href="/customers" className="nav-link">
+               <Link to="/customers" className="nav-link">
                   Customers
-               </a>
+               </Link>
             </li>
             <li className="nav-item">
-               <a href="/notification" className="nav-link">
+               <Link to="/notification" className="nav-link">
                   Notification
-               </a>
+               </Link>
             </li>
             <li className="nav-item">
-               <a href="/tools" className="nav-link">
+               <Link to="/tools" className="nav-link">
                   Tools
-               </a>
+               </Link>
             </li>
          </ul>
       </nav>

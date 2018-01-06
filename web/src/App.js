@@ -298,23 +298,20 @@ class App extends Component {
                               ))}
                            />
 
+                              <Route
+                                 path="/new-sales"
+                                 exact
+                                 render={() => (
+                                    <div>
+                                       <h1>Log new sales</h1>
+                                    </div>
+                                 )}
+                              />
+
                            <Route
                               path="/report-1"
                               exact
-                              render={() => (
-                                 <div>
-                                    <img
-                                       src="https://i1.wp.com/familylocket.com/wp-content/uploads/2016/01/pie-slice.png"
-                                       width="200"
-                                    />
-                                 </div>
-                              )}
-                           />
-
-                           <Route
-                              path="/new-sales"
-                              exact
-                              render={() => (
+                              render={() => (   
                                  <div>
                                     <img
                                        src="https://i1.wp.com/familylocket.com/wp-content/uploads/2016/01/pie-slice.png"
@@ -326,7 +323,7 @@ class App extends Component {
 
                            <Route
                               render={({ location }) => (
-                                 <h2>Page not found: {location.pathname}</h2>
+                                 <h2>🙇Page not found: {location.pathname}</h2>
                               )}
                            />
                         </Switch>
