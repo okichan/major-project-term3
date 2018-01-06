@@ -11,6 +11,6 @@ const productSchema = new mongoose.Schema({
   totalOrders: Number
 });
 
-const Product = mongoose.model("Customer", productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;

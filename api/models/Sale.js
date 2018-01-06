@@ -19,6 +19,6 @@ const saleSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 });
 
-const Sale = mongoose.model("Customer", saleSchema);
+const Sale = mongoose.model("Sale", saleSchema);
 
 module.exports = Sale;

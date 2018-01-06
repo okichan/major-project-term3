@@ -8,6 +8,6 @@ const notificationSchema = new mongoose.Schema({
 });
 notificationSchema.plugin(timestamps);
 
-const Notification = mongoose.model("Customer", notificationSchema);
+const Notification = mongoose.model("Notification", notificationSchema);
 
 module.exports = Notification;
