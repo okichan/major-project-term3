@@ -15,7 +15,11 @@ server.use(cors()); // Allow access from other origins, i.e. our react front-end
 server.use(authMiddleware.initialize); // Kick passport off
 
 // Routes
-server.use([require("./routes/products"), require("./routes/auth")]);
+server.use([
+  require("./routes/products"),
+  require("./routes/customers"),
+  require("./routes/auth")
+]);
 
 // Error handler
 server.use((error, req, res, next) => {

@@ -18,7 +18,9 @@ const customerSchema = new mongoose.Schema({
   ],
   note: String
 });
-customerSchema.plugin(timestamps);
+customerSchema.plugin(timestamps, {
+  createdAt: "registerDate"
+});
 
 const Customer = mongoose.model("Customer", customerSchema);
 
