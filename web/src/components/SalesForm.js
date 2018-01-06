@@ -1,13 +1,13 @@
 import React from "react";
 
-function SalesForm({ initialProduct = {}, submitTitle, onSubmit }) {
+function SalesForm({ products, submitTitle, onSubmit }) {
    return (
       <div className="container">
-         <h1 className="text-center">Log new sales</h1>
+         <h1 className="text-center mb-5">Log new sales</h1>
 
-         <div class="">
+         <div className="">
             <form
-               className="test"
+               className=""
                onSubmit={event => {
                   // Prevent old-school form submission
                   event.preventDefault();
@@ -25,29 +25,33 @@ function SalesForm({ initialProduct = {}, submitTitle, onSubmit }) {
                <fieldset>
                   <div className="form-group">
                      <div className="col-md-6">
-                        <label className="control-label" for="nome">
-                           Product
+                        <label className="control-label mr-3" >
+                        Date
                         </label>
-                        <input
-                           name="brandName"
-                           className="form-control"
-                           placeholder="Kelly"
-                           type="text"
-                           defaultValue={initialProduct.brandName}
-                        />
+                        <i className="fa fa-calendar mr-1"></i>
+                        <input type="date" defaultValue="2000-05-05"/>
+                     </div>
+                  </div>
+                           { products.map(m => {  console.log(m.name) }) }
+                  <div className="form-group">
+                     <div className="col-md-6">
+                        <label className="control-label">Product</label>
+                        <select name="brandName" className="form-control">
+                           <option>volvo</option>
+                           <option>volvo</option>
+                           <option>volvo</option>
+                        </select>
                      </div>
                   </div>
 
                   <div className="form-group">
-                     <div className="col-md-6">
-                        <label className="control-label" for="mobile">
-                           Sold at
-                        </label>
+                     <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                        <label className="control-label">Sold for</label>
                         <div className="input-group">
                            <input
                               name="mobile"
                               className="form-control"
-                              placeholder="9211-4957"
+                              placeholder="425.00"
                               type="text"
                            />
                         </div>
@@ -55,53 +59,18 @@ function SalesForm({ initialProduct = {}, submitTitle, onSubmit }) {
                   </div>
 
                   <div className="form-group">
-                     <div className="col-md-6">
-                        <label className="control-label" for="mobile">
-                           Quantity
-                        </label>
+                     <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                        <label className="control-label">Quantity</label>
                         <div className="input-group">
-                           <select class="form-control" id="sel1">
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
-                              <option>11</option>
-                           </select>
+                           <input type="number" className="form-control" min="1" />
                         </div>
                      </div>
                   </div>
 
                   <div className="form-group">
                      <div className="col-md-6">
-                        <label className="control-label" for="email">
-                           Email
-                        </label>
-                        <input
-                           name="email"
-                           className="form-control"
-                           placeholder="kelly.slater.surf@gmail.com"
-                           type="text"
-                        />
-                     </div>
-                  </div>
-
-                  <div className="form-group">
-                     <div className="col-md-6">
-                        <label className="control-label" for="district">
-                           District
-                        </label>
-                        <input
-                           name="district"
-                           className="form-control"
-                           placeholder="Botafogo"
-                           type="text"
-                        />
+                        <i className="fa fa-plus-circle mr-2"></i>
+                        <span>Add more</span>
                      </div>
                   </div>
 
@@ -111,7 +80,7 @@ function SalesForm({ initialProduct = {}, submitTitle, onSubmit }) {
                            type="button"
                            className="btn btn-primary btn-lg btn-block info"
                         >
-                           Send
+                           Save
                         </button>
                      </div>
                   </div>

@@ -30,7 +30,12 @@ class App extends Component {
    state = {
       error: null,
       decodedToken: getDecodedToken(), // Restore the previous signed in data
-      products: null,
+      products: [
+         { id: 1, name: "eat", completed: false },
+         { id: 2, name: "sing", completed: false },
+         { id: 3, name: "wash", completed: false },
+         { id: 4, name: "sleep", completed: false }
+      ],
       editedProductID: null,
       wishlist: null
    };
@@ -307,7 +312,7 @@ class App extends Component {
                                  path="/new-sales"
                                  exact
                                  render={requireAuth(() => (
-                                    <SalesForm />
+                                    <SalesForm products={ products } />
                                     
                                  ))}
                               />
