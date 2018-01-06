@@ -132,7 +132,7 @@ class App extends Component {
       const signedIn = !!decodedToken;
 
       const requireAuth = render => props =>
-         !signedIn ? <Redirect to="/signin" /> : render(props);
+         !signedIn ? <Redirect to="/" /> : render(props);
 
       return (
          <Router>
@@ -300,6 +300,19 @@ class App extends Component {
 
                            <Route
                               path="/report-1"
+                              exact
+                              render={() => (
+                                 <div>
+                                    <img
+                                       src="https://i1.wp.com/familylocket.com/wp-content/uploads/2016/01/pie-slice.png"
+                                       width="200"
+                                    />
+                                 </div>
+                              )}
+                           />
+
+                           <Route
+                              path="/new-sales"
                               exact
                               render={() => (
                                  <div>
