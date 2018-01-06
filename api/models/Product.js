@@ -1,8 +1,16 @@
-const mongoose = require('./init')
+const mongoose = require("./init");
 
-const Product = mongoose.model('Product', {
-  brandName: String, // e.g. Holden
-  name: String // e.g. Commodore
-})
+const productSchema = new mongoose.Schema({
+  category: String,
+  code: String,
+  title: String,
+  image: String,
+  price: Number,
+  stock: Number,
+  totalSales: Number,
+  totalOrders: Number
+});
 
-module.exports = Product
+const Product = mongoose.model("Customer", productSchema);
+
+module.exports = Product;

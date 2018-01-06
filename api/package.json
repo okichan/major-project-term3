@@ -9,6 +9,7 @@
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.13.6",
+    "mongoose-timestamp": "^0.6.0",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
     "passport-local": "^1.0.0",
@@ -25,6 +26,5 @@
     "reset": "npm run drop && npm run seed",
     "start": "node server.js",
     "deploy": "now -E production.env"
-
   }
 }
