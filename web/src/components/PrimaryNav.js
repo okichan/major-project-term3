@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/img/logo.png";
+import notification from "../assets/img/notification.svg";
 
 function PrimaryNav({ signedIn }) {
    return (
@@ -23,7 +24,7 @@ function PrimaryNav({ signedIn }) {
          </button>
 
          <div className="collapse navbar-collapse" id="collapsibleNavbar">
-            <nav className="nav navbar-nav ml-auto">
+            <div className="ml-auto">
                <ul className="nav navbar-nav">
                   {/* <li className="nav-item">
                      <Link to="/" className="nav-link">
@@ -43,8 +44,19 @@ function PrimaryNav({ signedIn }) {
                            </Link>
                         </li>
                         <li className="nav-item">
-                           <Link to="/account" className="nav-link">
-                              My Account
+                           <Link to="/notification" className="nav-link" title="Notification">
+                              <i className="fa fa-bell big mr-3" ></i>
+                           </Link>
+
+                        </li>
+                        <li className="nav-item">
+                           <Link to="/account" className="nav-link" title="Account">
+                              <i className="fa fa-user big mr-3" ></i>
+                           </Link>
+                        </li>
+                        <li className="nav-item">
+                           <Link to="/account" className="nav-link" title="Logout">
+                              <i className="fa fa-sign-out big" ></i>
                            </Link>
                         </li>
                      </Fragment>
@@ -63,7 +75,7 @@ function PrimaryNav({ signedIn }) {
                      </Fragment>
                   )}
                </ul>
-            </nav>
+            </div>
          </div>
       </nav>
    );

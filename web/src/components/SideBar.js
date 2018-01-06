@@ -49,12 +49,12 @@ function SideBar({ signedIn }) {
                </Link>
             </li>
             <li className="nav-item">
-               <Link to="/notification" className="nav-link">
+               <Link to="/notification" className="nav-link" style={{textDecoration: "line-through"}}>
                   Notification
                </Link>
             </li>
             <li className="nav-item">
-               <Link to="/tools" className="nav-link">
+               <Link to="/tools" className="nav-link" style={{textDecoration: "line-through"}}>
                   Tools
                </Link>
             </li>
