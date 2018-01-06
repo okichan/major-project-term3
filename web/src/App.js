@@ -10,9 +10,12 @@ import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ProductList from "./components/ProductList";
 import ProductForm from "./components/ProductForm";
+import SalesForm from "./components/SalesForm";
 import Wishlist from "./components/Wishlist";
 import PrimaryNav from "./components/PrimaryNav";
 import SideBar from "./components/SideBar";
+import LinkButton from "./components/LinkButton";
+
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
@@ -132,7 +135,7 @@ class App extends Component {
       const signedIn = !!decodedToken;
 
       const requireAuth = render => props =>
-         !signedIn ? <Redirect to="/" /> : render(props);
+         !signedIn ? <Redirect to="/signin" /> : render(props);
 
       return (
          <Router>
@@ -151,29 +154,30 @@ class App extends Component {
                      >
                            {error && <Error error={error} />}
                         <Switch>
-                           {/* <Route
-                              path="/"
-                              exact
-                              render={() => (
-                                 <Fragment>
-                                    <h1>Yarra</h1>
-                                    <h2 className="mb-3">
-                                       Now Delivering: Shipping trillions of new
-                                       products
-                                    </h2>
-                                 </Fragment>
-                              )}
-                           /> */}
-
                            <Route
                               path="/"
                               exact
+                              render={requireAuth(() => (
+                                 <Fragment>
+                                    <h3 className="mb-5">Welcome to Tanto Sales Management System</h3>
+                                    <h4>
+                                       Today's weather: xxx
+                                    </h4>
+                                    <h4>
+                                       1 AUD = 89 JPY
+                                    </h4>
+                                 </Fragment>
+                              ))}
+                           />
+
+                           <Route
+                              path="/signin"
+                              exact
                               render={({ match }) =>
                                  signedIn ? (
-                                    <Redirect to="/products" />
+                                    <Redirect to="/" />
                                  ) : (
                                     <Fragment>
-                                       <h5>Tanto Sales Management System</h5>
                                        <h2>Sign In</h2>
                                        <SignInForm onSignIn={this.onSignIn} />
                                     </Fragment>
@@ -226,8 +230,9 @@ class App extends Component {
                            <Route
                               path="/products"
                               exact
-                              render={() => (
+                              render={requireAuth(() => (
                                  <Fragment>
+                                    <LinkButton href="/admin/products" name="product" />
                                     {products && (
                                        <ProductList
                                           products={products}
@@ -260,7 +265,7 @@ class App extends Component {
                                        />
                                     )}
                                  </Fragment>
-                              )}
+                              ))}
                            />
 
                            <Route
@@ -301,24 +306,23 @@ class App extends Component {
                               <Route
                                  path="/new-sales"
                                  exact
-                                 render={() => (
-                                    <div>
-                                       <h1>Log new sales</h1>
-                                    </div>
-                                 )}
+                                 render={requireAuth(() => (
+                                    <SalesForm />
+                                    
+                                 ))}
                               />
 
                            <Route
                               path="/report-1"
                               exact
-                              render={() => (   
+                              render={requireAuth(() => (   
                                  <div>
                                     <img
                                        src="https://i1.wp.com/familylocket.com/wp-content/uploads/2016/01/pie-slice.png"
                                        width="200"
                                     />
                                  </div>
-                              )}
+                              ))}
                            />
 
                            <Route

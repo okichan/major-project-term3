@@ -25,11 +25,11 @@ function PrimaryNav({ signedIn }) {
          <div className="collapse navbar-collapse" id="collapsibleNavbar">
             <nav className="nav navbar-nav ml-auto">
                <ul className="nav navbar-nav">
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                      <Link to="/" className="nav-link">
                         My Account
                      </Link>
-                  </li>
+                  </li> */}
                   {/* <li className="nav-item">
                      <Link to="/products" className="nav-link">
                         Products
@@ -44,7 +44,7 @@ function PrimaryNav({ signedIn }) {
                         </li>
                         <li className="nav-item">
                            <Link to="/account" className="nav-link">
-                              Account
+                              My Account
                            </Link>
                         </li>
                      </Fragment>
