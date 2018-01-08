@@ -10,10 +10,10 @@ const customerSchema = new mongoose.Schema({
   isChef: { type: Boolean, default: false },
   workAt: String,
   origin: String,
-  purchasedProducts: [
+  purchasedHistory: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product"
+      ref: "Sale"
     }
   ],
   note: String

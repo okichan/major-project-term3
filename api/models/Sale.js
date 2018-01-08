@@ -3,8 +3,11 @@ const mongoose = require("./init");
 const saleSchema = new mongoose.Schema({
   products: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product"
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+      },
+      unitAmount: Number
     }
   ],
   customer: {
