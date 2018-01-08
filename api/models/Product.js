@@ -8,10 +8,11 @@ const productSchema = new mongoose.Schema({
   price: Number,
   stock: {
     type: Number,
-    min: 0
+    min: 0,
+    default: 0
   },
-  totalSales: Number,
-  totalOrders: Number
+  totalSales: { type: Number, default: 0 },
+  totalOrders: { type: Number, default: 0 }
 });
 
 const Product = mongoose.model("Product", productSchema);

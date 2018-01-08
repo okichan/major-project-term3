@@ -12,23 +12,21 @@ const weatherApi = axios.create({
 getWeatherByDate = date => {
   return weatherApi
     .get(
-      `/history.json?key=04042066cca345ad89331024170512&q=Melbourne&dt=${
-        date
-      }&hour=12`
+      `/history.json?key=04042066cca345ad89331024170512&q=Melbourne&dt=${date}`
     )
     .then(weather => {
-      return weather.data.forecast.forecastday[0].hour[0].condition.text;
+      return weather.data.forecast.forecastday[0];
     })
     .catch(error => {
       console.log(error.response);
     });
 };
 
-// calculate product stock
-function stockCalculator(productId, sold) {
+// calculate product stock and total sales
+function stockAndTotalSalesCalculator(productId, sold) {
   Product.findByIdAndUpdate(
     productId,
-    { $inc: { stock: -sold } },
+    { $inc: { stock: -sold, totalSales: sold } },
     { new: true }
   )
     .then(data => {
@@ -69,7 +67,9 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
   saleObject.inCharge = currentUser;
   getWeatherByDate(saleDate)
     .then(weatherData => {
-      saleObject.weather = weatherData;
+      saleObject.weather.description = weatherData.day.condition.text;
+      saleObject.weather.maxTemp = weatherData.day.maxtemp_c;
+      saleObject.weather.minTemp = weatherData.day.mintemp_c;
       saleObject
         .save()
         .then(sale => {
@@ -85,9 +85,9 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
             { new: true }
           ).exec();
 
-          // calculate product stock - sold unit amount
+          // calculate product stock and totalSales
           sale.products.forEach(product => {
-            stockCalculator(product.product, product.unitAmount);
+            stockAndTotalSalesCalculator(product.product, product.unitAmount);
           });
         })
         .catch(error => {

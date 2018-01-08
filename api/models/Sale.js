@@ -14,7 +14,12 @@ const saleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Customer"
   },
-  weather: String,
+  weather: {
+    description: String,
+    maxTemp: Number,
+    minTemp: Number
+  },
+  totalPrice: Number,
   inCharge: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
