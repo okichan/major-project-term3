@@ -51,11 +51,11 @@ function stockAndTotalSalesCalculator(productId, sold) {
   });
 }
 
-// judge if the sale doesn't make any stock problems.
+// judge if the sale doesn't make any stock problems. boolean
 function stockIsFine(productId, sold) {
   return Product.findById(productId)
     .then(product => {
-      return product.stock - sold > 0;
+      return product.stock - sold >= 0;
     })
     .catch(error => {
       console.log(error.message);
@@ -80,7 +80,7 @@ router.get("/sales", (req, res) => {
 
 // Create
 router.post("/sales", authMiddleware.requireJWT, (req, res) => {
-  const stockOk = true;
+  let stockOk = true;
   const currentUser = req.user;
   // get customer's id
   const customer_id = req.body.customer;
@@ -88,47 +88,65 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
 
   const saleObject = new Sale(req.body);
 
+  let ctr = 0;
+
   // check if number of stock wouldn't be negative
-  // req.body.products.forEach(product => {
-  //   return stockIsFine(product.product, product.unitAmount).then(result =>
-  // {console.log(result)}
-  //   );
-  // });
+  req.body.products.forEach((product, index, array) => {
+    return stockIsFine(product.product, product.unitAmount).then(result => {
+      ctr++;
+      if (result === false) {
+        stockOk = false;
+      }
+      // after forEach execute below code
+      if (ctr === array.length) {
+        if (stockOk) {
+          //stock validation pass
 
-  // set currentUser as this document's inCharge
-  saleObject.inCharge = currentUser;
-  getWeatherByDate(saleDate)
-    .then(weatherData => {
-      saleObject.weather.description = weatherData.day.condition.text;
-      saleObject.weather.maxTemp = weatherData.day.maxtemp_c;
-      saleObject.weather.minTemp = weatherData.day.mintemp_c;
-      saleObject
-        .save()
-        .then(sale => {
-          res.status(201).json(sale);
-          // push products to Customer's purchasedProducts array
-          Customer.findByIdAndUpdate(
-            customer_id,
-            {
-              $push: {
-                purchasedHistory: sale._id
-              }
-            },
-            { new: true }
-          ).exec();
+          // set currentUser as this document's inCharge
+          saleObject.inCharge = currentUser;
+          getWeatherByDate(saleDate)
+            .then(weatherData => {
+              saleObject.weather.description = weatherData.day.condition.text;
+              saleObject.weather.maxTemp = weatherData.day.maxtemp_c;
+              saleObject.weather.minTemp = weatherData.day.mintemp_c;
+              saleObject
+                .save()
+                .then(sale => {
+                  res.status(201).json(sale);
+                  // push products to Customer's purchasedProducts array
+                  Customer.findByIdAndUpdate(
+                    customer_id,
+                    {
+                      $push: {
+                        purchasedHistory: sale._id
+                      }
+                    },
+                    { new: true }
+                  ).exec();
 
-          // calculate product stock and totalSales
-          sale.products.forEach(product => {
-            stockAndTotalSalesCalculator(product.product, product.unitAmount);
-          });
-        })
-        .catch(error => {
-          res.status(400).json({ error });
-        }); // save error catch
-    })
-    .catch(error => {
-      res.status(400).json({ error });
-    }); // weather api catch
+                  // calculate product stock and totalSales
+                  sale.products.forEach(product => {
+                    stockAndTotalSalesCalculator(
+                      product.product,
+                      product.unitAmount
+                    );
+                  });
+                })
+                .catch(error => {
+                  res.status(400).json({ error });
+                }); // save error catch
+            })
+            .catch(error => {
+              res.status(400).json({ error });
+            }); // weather api catch
+        } else {
+          // stock validation faild
+          res.status(400).json({ error: "stock validation is faild" });
+          console.error("stock validation is faild");
+        }
+      }
+    });
+  });
 });
 
 // Update
