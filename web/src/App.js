@@ -14,6 +14,7 @@ import SalesForm from "./components/SalesForm";
 import Wishlist from "./components/Wishlist";
 import PrimaryNav from "./components/PrimaryNav";
 import SideBar from "./components/SideBar";
+import Home from "./components/Home";
 import LinkButton from "./components/LinkButton";
 
 import Error from "./components/Error";
@@ -145,65 +146,72 @@ class App extends Component {
       return (
          <Router>
             <div className="App">
-               <header>
-                  <PrimaryNav signedIn={signedIn} />
-               </header>
+               { signedIn &&
+                  <Fragment>
+                     <header>
+                        <PrimaryNav signedIn={signedIn} />
+                     </header>
+                     <div className="container-fluid">
+                        <div className="row">
+                           <SideBar signedIn={signedIn} />
+                        </div>
+                     </div>
+                  </Fragment>
+               }
 
-               <div className="container-fluid">
-                  <div className="row">
-                     <SideBar signedIn={signedIn} />
+               {error && <Error error={error} />}
 
-                     <main
-                        role="main"
-                        className="col-sm-9 ml-sm-auto col-md-10 pt-3"
-                     >
-                           {error && <Error error={error} />}
-                        <Switch>
-                           <Route
-                              path="/"
-                              exact
-                              render={requireAuth(() => (
-                                 <Fragment>
-                                    <h3 className="mb-5">Welcome to Tanto Sales Management System</h3>
-                                    <h4>
-                                       Today's weather: xxx
-                                    </h4>
-                                    <h4>
-                                       1 AUD = 89 JPY
-                                    </h4>
-                                 </Fragment>
-                              ))}
-                           />
+               <Switch>
+                  {/* login page before sign in */}
+                  <Route
+                     path="/signin"
+                     exact
+                     render={({ match }) =>
+                        signedIn ? (
+                           <Redirect to="/" />
+                        ) : (
+                           <Fragment>
+                              <div className="signin">
+                                 <SignInForm onSignIn={this.onSignIn} />
+                              </div>
+                           </Fragment>
+                        )
+                     }
+                  />
 
-                           <Route
-                              path="/signin"
-                              exact
-                              render={({ match }) =>
-                                 signedIn ? (
-                                    <Redirect to="/" />
-                                 ) : (
-                                    <Fragment>
-                                       <h2>Sign In</h2>
-                                       <SignInForm onSignIn={this.onSignIn} />
-                                    </Fragment>
-                                 )
-                              }
-                           />
+                  <Route
+                     path="/signup"
+                     exact
+                     render={() =>
+                        signedIn ? (
+                           <Redirect to="/products" />
+                        ) : (
+                           <Fragment>
+                              <SignUpForm onSignUp={this.onSignUp} />
+                           </Fragment>
+                        )
+                     }
+                  />
 
-                           <Route
-                              path="/signup"
-                              exact
-                              render={() =>
-                                 signedIn ? (
-                                    <Redirect to="/products" />
-                                 ) : (
-                                    <Fragment>
-                                       <h2>Sign Up</h2>
-                                       <SignUpForm onSignUp={this.onSignUp} />
-                                    </Fragment>
-                                 )
-                              }
-                           />
+                  <Route path="/" exact render={requireAuth(() => (
+                     <Fragment>
+                        <Home />
+                     </Fragment>
+                  ))} />
+
+
+
+                  {/* after signed in */}
+                  {/* <div> */}
+                     {/* <div className="container-fluid"> */}
+                        {/* <div className="row"> */}
+                           {/* <SideBar signedIn={signedIn} /> */}
+                           {/* main content */}
+                           {/* <main className="container-fluid"> */}
+                           {/* <div className="col-md-4 test"> */}
+
+                           
+
 
                            <Route
                               path="/account"
@@ -237,7 +245,10 @@ class App extends Component {
                               exact
                               render={requireAuth(() => (
                                  <Fragment>
-                                    <LinkButton href="/admin/products" name="product" />
+                                    <LinkButton
+                                       href="/admin/products"
+                                       name="product"
+                                    />
                                     {products && (
                                        <ProductList
                                           products={products}
@@ -308,19 +319,18 @@ class App extends Component {
                               ))}
                            />
 
-                              <Route
-                                 path="/new-sales"
-                                 exact
-                                 render={requireAuth(() => (
-                                    <SalesForm products={ products } />
-                                    
-                                 ))}
-                              />
+                           <Route
+                              path="/new-sales"
+                              exact
+                              render={requireAuth(() => (
+                                 <SalesForm products={products} />
+                              ))}
+                           />
 
                            <Route
                               path="/report-1"
                               exact
-                              render={requireAuth(() => (   
+                              render={requireAuth(() => (
                                  <div>
                                     <img
                                        src="https://i1.wp.com/familylocket.com/wp-content/uploads/2016/01/pie-slice.png"
@@ -330,15 +340,17 @@ class App extends Component {
                               ))}
                            />
 
+                           {/* </div> */}
+                        {/* </div> */}
+                        {/* </main> */}
+                     {/* </div> */}
+                  {/* </div> */}
                            <Route
                               render={({ location }) => (
                                  <h2>🙇Page not found: {location.pathname}</h2>
                               )}
                            />
-                        </Switch>
-                     </main>
-                  </div>
-               </div>
+               </Switch>
             </div>
          </Router>
       );

@@ -6,7 +6,7 @@ import notification from "../assets/img/notification.svg";
 function PrimaryNav({ signedIn }) {
    return (
       <nav
-         className="navbar navbar-expand-sm navbar-light "
+         className="navbar navbar-expand-sm navbar-light"
          style={{ background: "#E5E5E5" }}
       >
          <Link to="/" className="mr-3">
