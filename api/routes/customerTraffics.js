@@ -5,7 +5,7 @@ const authMiddleware = require("../middleware/auth");
 const router = new express.Router();
 
 // get list
-router.get("/customerTraffic", (req, res) => {
+router.get("/customerTraffics", (req, res) => {
   CustomerTraffic.find()
     .then(customerTraffic => {
       res.json(customerTraffic);
@@ -16,7 +16,7 @@ router.get("/customerTraffic", (req, res) => {
 });
 
 // Create
-router.post("/customerTraffic", authMiddleware.requireJWT, (req, res) => {
+router.post("/customerTraffics", authMiddleware.requireJWT, (req, res) => {
   CustomerTraffic.create(req.body)
     .then(customerTraffic => {
       res.status(201).json(customerTraffic);

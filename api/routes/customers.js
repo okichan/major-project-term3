@@ -28,7 +28,7 @@ router.post("/customers", authMiddleware.requireJWT, (req, res) => {
 });
 
 // Update
-router.put("/customers/:id", authMiddleware.requireJWT, (req, res) => {
+router.put("/customer/:id", authMiddleware.requireJWT, (req, res) => {
   const { id } = req.params;
   Customer.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
     .then(customer => {
@@ -46,7 +46,7 @@ router.put("/customers/:id", authMiddleware.requireJWT, (req, res) => {
 });
 
 // Delete
-router.delete("/customers/:id", (req, res) => {
+router.delete("/customer/:id", (req, res) => {
   const { id } = req.params;
   Customer.findByIdAndRemove(id)
     .then(customer => {

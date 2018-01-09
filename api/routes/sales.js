@@ -150,7 +150,7 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
 });
 
 // Update
-router.put("/sales/:id", authMiddleware.requireJWT, (req, res) => {
+router.put("/sale/:id", authMiddleware.requireJWT, (req, res) => {
   const { id } = req.params;
   Sale.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
     .then(sale => {
@@ -168,7 +168,7 @@ router.put("/sales/:id", authMiddleware.requireJWT, (req, res) => {
 });
 
 // Delete
-router.delete("/sales/:id", (req, res) => {
+router.delete("/sale/:id", (req, res) => {
   const { id } = req.params;
   Sale.findByIdAndRemove(id)
     .then(sale => {
