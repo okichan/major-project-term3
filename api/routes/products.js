@@ -1,48 +1,63 @@
-const express = require('express')
-const Product = require('../models/Product')
-const authMiddleware = require('../middleware/auth')
+const express = require("express");
+const Product = require("../models/Product");
+const authMiddleware = require("../middleware/auth");
 
-const router = new express.Router()
+const router = new express.Router();
 
-// Read list
-router.get('/products', (req, res) => {
+// get list
+router.get("/products", (req, res) => {
   Product.find()
-    .then((products) => {
-      res.json(products)
+    .then(products => {
+      res.json(products);
     })
-    .catch((error) => {
-      res.json({ error })
-    })
-})
+    .catch(error => {
+      res.json({ error });
+    });
+});
 
 // Create
-router.post('/products', authMiddleware.requireJWT, (req, res) => {
+router.post("/products", authMiddleware.requireJWT, (req, res) => {
   Product.create(req.body)
-    .then((product) => {
-      res.status(201).json(product)
+    .then(product => {
+      res.status(201).json(product);
     })
-    .catch((error) => {
-      res.status(400).json({ error })
-    })
-})
+    .catch(error => {
+      res.status(400).json({ error });
+    });
+});
 
 // Update
-router.put('/products/:id', authMiddleware.requireJWT, (req, res) => {
-  const { id } = req.params
+router.put("/products/:id", authMiddleware.requireJWT, (req, res) => {
+  const { id } = req.params;
   Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
-    .then((product) => {
+    .then(product => {
       if (product) {
-        res.json(product)
-      }
-      else {
+        res.json(product);
+      } else {
         res.status(404).json({
           error: new Error(`Product with id '${id}' not found`)
-        })
+        });
       }
     })
-    .catch((error) => {
-      res.status(400).json({ error })
-    })
-})
+    .catch(error => {
+      res.status(400).json({ error });
+    });
+});
 
-module.exports = router
+// Delete
+router.delete("/products/:id", (req, res) => {
+  const { id } = req.params;
+  Product.findByIdAndRemove(id)
+    .then(product => {
+      if (product) {
+        res.json({ message: `${product.title} is deleted` });
+      } else {
+        res.status(404).json({ message: `could not find id with ${id}` });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ error: error.message });
+    });
+});
+
+module.exports = router;
