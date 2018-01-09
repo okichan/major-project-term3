@@ -1,0 +1,13 @@
+h3 {
+  padding-bottom: 8px;
+}
+
+.customerBtn {
+  float: right;
+  padding: 5px;
+}
+
+.customerBtn button {
+  width: 100px;
+  padding: 5px;
+}
