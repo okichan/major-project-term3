@@ -4,7 +4,7 @@ const timestamps = require("mongoose-timestamp");
 const notificationSchema = new mongoose.Schema({
   title: String,
   body: String,
-  checked: boolean
+  checked: Boolean
 });
 notificationSchema.plugin(timestamps);
 

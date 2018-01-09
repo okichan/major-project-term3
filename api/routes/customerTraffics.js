@@ -7,8 +7,8 @@ const router = new express.Router();
 // get list
 router.get("/customerTraffics", (req, res) => {
   CustomerTraffic.find()
-    .then(customerTraffic => {
-      res.json(customerTraffic);
+    .then(customerTraffics => {
+      res.json(customerTraffics);
     })
     .catch(error => {
       res.json({ error });

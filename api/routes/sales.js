@@ -2,6 +2,7 @@ const express = require("express");
 const Sale = require("../models/Sale");
 const Customer = require("../models/Customer");
 const Product = require("../models/Product");
+const Notification = require("../models/Notification");
 const authMiddleware = require("../middleware/auth");
 const axios = require("axios");
 
@@ -44,6 +45,19 @@ function stockAndTotalSalesCalculator(productId, sold) {
   Product.findById(productId, function(err, productData) {
     if (err) return handleError(err);
     productData.stock -= sold;
+    // judge if need to create a notification
+    if (productData.stock <= 2) {
+      Notification.create({
+        title: "Order reminder",
+        body: `${productData.title}'s stock is now ${productData.stock}.'`
+      })
+        .then(notificationData => {
+          console.log("new notification is created!");
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
+    }
     productData.totalSales += sold;
     productData.save(function(err) {
       if (err) console.error(err.message);
