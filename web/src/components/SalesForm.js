@@ -29,16 +29,11 @@ function SalesForm({ products, submitTitle, onSubmit }) {
                      <input type="date" defaultValue="2000-05-05" />
                   </div>
                </div>
-               {products.map(m => {
-                  console.log(m.name);
-               })}
                <div className="form-group">
-                  <div className="col-md-6">
+                  <div className="col-md-8">
                      <label className="control-label">Product</label>
                      <select name="brandName" className="form-control">
-                        <option>volvo</option>
-                        <option>volvo</option>
-                        <option>volvo</option>
+                        { products.map(m => <option >{ m.title}</option>) }
                      </select>
                   </div>
                </div>
@@ -50,8 +45,8 @@ function SalesForm({ products, submitTitle, onSubmit }) {
                         <input
                            name="mobile"
                            className="form-control"
-                           placeholder="425.00"
-                           type="text"
+                           defaultValue={products[0].price}
+                           type="number"
                         />
                      </div>
                   </div>

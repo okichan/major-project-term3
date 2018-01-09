@@ -10,6 +10,10 @@
    font-size: 1.5em;
 }
 
+.bg-lightgray {
+   background: rgba(109, 23, 8, 0.027);
+}
+
 .box-shadow {
    box-shadow: 7px 7px 12px 0px rgba(153,153,153,1);
 }

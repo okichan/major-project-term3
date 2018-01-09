@@ -7,7 +7,7 @@ function SignUpForm({ onSignUp }) {
       <div className="container-fluid ">
          <div className="row  mt-5">
             <div className="login-screen bg-white box-shadow">
-               <img src={logo} className="logo" />{" "}
+               <img src={logo} className="logo" alt="logo"/>{" "}
                <small>store management system</small>
                <h2 className="text-center mt-4 text-shadow">Sign Up</h2>
                <form

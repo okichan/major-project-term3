@@ -7,7 +7,7 @@ function SignInForm({ onSignIn }) {
       // <div className="container-fluid ">
          <div className="row mt-5">
             <div className="login-screen bg-white box-shadow">
-               <img src={logo} className="logo" />{" "}
+               <img src={logo} className="logo" alt='logo'/>{" "}
                <small>store management system</small>
                <h2 className="text-center mt-4 text-shadow">Sign In</h2>
                <form
@@ -30,7 +30,7 @@ function SignInForm({ onSignIn }) {
                         <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                            <label className="control-label ">Email</label>
                            <div className="input-group">
-                              <input type="email" name="email" />
+                              <input type="email" name="email" required />
                            </div>
                         </div>
                      </div>
@@ -39,7 +39,7 @@ function SignInForm({ onSignIn }) {
                         <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                            <label className="control-label">Password</label>
                            <div className="input-group">
-                              <input type="password" name="password" />
+                              <input type="password" name="password" required/>
                            </div>
                         </div>
                      </div>

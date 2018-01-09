@@ -1,5 +1,7 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTUwNzIxMiwiZXhwIjoxNTE2MTEyMDEyLCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.i2sZmnYKUMlnaMgUL9-tbCAb_lKOkeJ_KdbyweISmCU
+
 GET http://localhost:7000/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxMjUzNDY3MywiZXhwIjoxNTEzMTM5NDczLCJzdWIiOiI1YTI3NTA2MzJkNmEzZDc5ODIwN2VmNjMifQ.zjeQTwytluem7xsesc7JHoUjM-SipTFJHg_nGiWTln4
+Authorization: Bearer {{ token }}
 
 ### Register
 POST http://localhost:7000/auth/register
@@ -23,22 +25,33 @@ Content-Type: application/json
 
 ### Create product
 POST http://localhost:7000/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxMjUzNDY3MywiZXhwIjoxNTEzMTM5NDczLCJzdWIiOiI1YTI3NTA2MzJkNmEzZDc5ODIwN2VmNjMifQ.zjeQTwytluem7xsesc7JHoUjM-SipTFJHg_nGiWTln4
+Authorization: Bearer Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "brandName": "Ford",
-  "name": "Focus"
+  "category": "Wa-Bocho",
+  "code": "41103",
+  "title": "240mm Yanagiba Aoniko Hongasumi with saya"
 }
 
 ### Update product
-PUT http://localhost:7000/products/5a28c95edff50e5b800e28ce
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxMjUzNDY3MywiZXhwIjoxNTEzMTM5NDczLCJzdWIiOiI1YTI3NTA2MzJkNmEzZDc5ODIwN2VmNjMifQ.zjeQTwytluem7xsesc7JHoUjM-SipTFJHg_nGiWTln4
+PUT http://localhost:7000/products/5a54afbe8edb60461c4f45e6
+Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "brandName": "Holden",
-  "name": "Commodore"
+  "price": 85
+}
+
+### Delete product
+DELETE http://localhost:7000/products/5a54adff8edb60461c4f45e3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTQ5ODk4NCwiZXhwIjoxNTE2MTAzNzg0LCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.vvyLNZDa4YYDxe5oMieNBm7WV2GyiKXzm8pwKPlClm4
+Content-Type: application/json
+
+{
+  "category": "Wa-Bocho",
+  "code": "41135",
+  "title": "150mm Deba Aoniko Hongasumi with saya"
 }
 
 ### Read wishlist

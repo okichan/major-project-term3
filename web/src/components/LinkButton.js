@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function LinkButton({ href, name }) {
    return (
-      <div className="float-right">
+      <div className="mr-3">
          <Link to={href} className="btn btn-primary">
             Add new {name}
          </Link>

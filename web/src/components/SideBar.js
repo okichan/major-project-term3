@@ -13,27 +13,27 @@ function SideBar({ signedIn }) {
 
             <li className="nav-item">
                <Link
-                  to="#homeSubmenu"
+                  to="#reportSubmenu"
                   data-toggle="collapse"
                   aria-expanded="false"
                   className="nav-link"
                >
                   Report
                </Link>
-               <ul className="collapse list-unstyled" id="homeSubmenu">
+               <ul className="collapse list-unstyled" id="reportSubmenu">
                   <li className="nav-item">
-                     <Link to="/report-1" className="nav-link ml-3">
+                     <Link to="/report-daily" className="nav-link ml-3">
+                        Daily
+                     </Link>
+                  </li>
+                  <li className="nav-item">
+                     <Link to="/report-weekly" className="nav-link ml-3">
+                        Weekly
+                     </Link>
+                  </li>
+                  <li className="nav-item">
+                     <Link to="/report-monthly" className="nav-link ml-3">
                         Monthly
-                     </Link>
-                  </li>
-                  <li className="nav-item">
-                     <Link to="#" className="nav-link ml-3">
-                        Customer Origin
-                     </Link>
-                  </li>
-                  <li className="nav-item">
-                     <Link to="#" className="nav-link ml-3">
-                        Something
                      </Link>
                   </li>
                </ul>
@@ -48,7 +48,7 @@ function SideBar({ signedIn }) {
                   Customers
                </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
                <Link to="/notification" className="nav-link" style={{textDecoration: "line-through"}}>
                   Notification
                </Link>
@@ -57,7 +57,7 @@ function SideBar({ signedIn }) {
                <Link to="/tools" className="nav-link" style={{textDecoration: "line-through"}}>
                   Tools
                </Link>
-            </li>
+            </li> */}
          </ul>
       </nav>
    );

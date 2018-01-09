@@ -1,9 +1,8 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/img/logo.png";
-import notification from "../assets/img/notification.svg";
 
-function PrimaryNav({ signedIn }) {
+function PrimaryNav({ signedIn, signOut }) {
    return (
       
       <nav
@@ -56,9 +55,13 @@ function PrimaryNav({ signedIn }) {
                            </Link>
                         </li>
                         <li className="nav-item">
-                           <Link to="/account" className="nav-link" title="Logout">
+                           <Link to="/account" className="nav-link" title="Logout" onClick={ signOut }>
                               <i className="fa fa-sign-out big" ></i>
                            </Link>
+
+                           {/* <button >
+                           <i className="fa fa-sign-out big" ></i>
+                                    </button> */}
                         </li>
                      </Fragment>
                   ) : (
