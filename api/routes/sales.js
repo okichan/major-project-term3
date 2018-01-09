@@ -23,17 +23,42 @@ getWeatherByDate = date => {
 };
 
 // calculate product stock and total sales
+//
+// ***** due to the update validation issue, cant use this function ****
+// function stockAndTotalSalesCalculator(productId, sold) {
+//   Product.findByIdAndUpdate(
+//     productId,
+//     { $inc: { stock: -sold, totalSales: sold } },
+//     { new: true }
+//   )
+//     .then(data => {
+//       console.log(data);
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
+// }
+// ***************************************************************
+
 function stockAndTotalSalesCalculator(productId, sold) {
-  Product.findByIdAndUpdate(
-    productId,
-    { $inc: { stock: -sold, totalSales: sold } },
-    { new: true }
-  )
-    .then(data => {
-      console.log(data);
+  Product.findById(productId, function(err, productData) {
+    if (err) return handleError(err);
+    productData.stock -= sold;
+    productData.totalSales += sold;
+    productData.save(function(err) {
+      if (err) console.error(err.message);
+    });
+  });
+}
+
+// judge if the sale doesn't make any stock problems.
+function stockIsFine(productId, sold) {
+  return Product.findById(productId)
+    .then(product => {
+      return product.stock - sold > 0;
     })
     .catch(error => {
-      console.log(error);
+      console.log(error.message);
     });
 }
 
@@ -55,14 +80,21 @@ router.get("/sales", (req, res) => {
 
 // Create
 router.post("/sales", authMiddleware.requireJWT, (req, res) => {
+  const stockOk = true;
   const currentUser = req.user;
   // get customer's id
   const customer_id = req.body.customer;
   const saleDate = req.body.date;
-  const unitAmount = req.body.products;
-  console.log(unitAmount);
 
   const saleObject = new Sale(req.body);
+
+  // check if number of stock wouldn't be negative
+  // req.body.products.forEach(product => {
+  //   return stockIsFine(product.product, product.unitAmount).then(result =>
+  // {console.log(result)}
+  //   );
+  // });
+
   // set currentUser as this document's inCharge
   saleObject.inCharge = currentUser;
   getWeatherByDate(saleDate)
