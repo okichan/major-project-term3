@@ -10,9 +10,28 @@
    font-size: 1.5em;
 }
 
-.bg-lightgray {
-   background: rgba(109, 23, 8, 0.027);
+.med {
+   font-size: 1.2em;
 }
+
+td a {
+   color: #222;
+}
+
+td a:hover {
+   color: rgb(24, 122, 219);
+   text-decoration: none;
+}
+
+
+#trash {
+   transition: 0.4s ease;
+}
+
+#trash:hover {
+   color: red;
+}
+
 
 .box-shadow {
    box-shadow: 7px 7px 12px 0px rgba(153,153,153,1);

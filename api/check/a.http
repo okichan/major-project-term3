@@ -25,13 +25,15 @@ Content-Type: application/json
 
 ### Create product
 POST http://localhost:7000/products
-Authorization: Bearer Bearer {{ token }}
+Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
   "category": "Wa-Bocho",
   "code": "41103",
-  "title": "240mm Yanagiba Aoniko Hongasumi with saya"
+  "title": "240mm Yanagiba Aoniko Hongasumi with saya",
+  "price": 100,
+  "totalSales": 32
 }
 
 ### Update product

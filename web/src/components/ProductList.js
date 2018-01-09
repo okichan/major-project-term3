@@ -35,13 +35,13 @@ function ProductList({
       <div className="col">
          <h2 className=" text-center mb-3 mt-3">Products</h2>
 
-         <table className="table table-border">
+         <table className="table table-sm">
             <thead>
                <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">RRP</th>
-                  <th scope="col" colSpan="2" />
+                  <th scope="col" colSpan="2"></th>
                </tr>
             </thead>
 
@@ -49,34 +49,75 @@ function ProductList({
                return (
                   <Fragment key={product._id}>
                      <tbody>
-                        <tr className="header">
+                        <tr
+                           className="header"
+                           style={{ borderBottom: "2px solid transparent" }}
+                        >
                            <td>{product.code}</td>
-                           <td>{product.title}</td>
-                           <td>${product.price}</td>
+
                            <td>
-                              <button
-                                 className="btn btn-sm btn-secondary"
-                                 type="button"
+                              <a
                                  data-toggle="collapse"
-                                 data-target={`#${product._id}`}
+                                 href={`#${product.code}`}
+                                 role="button"
                                  aria-expanded="false"
                                  aria-controls="collapseExample"
                               >
-                                 <i className="fa fa-caret-down" />
-                              </button>
+                                 {product.title}
+                              </a>
+                           </td>
+                           <td>${product.price}</td>
+                           <td>
+                              <a href={`/products/${product._id}`}>
+                                 <i
+                                    className="fa fa-pencil-square-o med"
+                                    id="edit"
+                                    title="Edit"
+                                    />
+                              </a>
+                              </td>
+                                    <td>
+                              <i
+                                 className="fa fa-trash med"
+                                 id="trash"
+                                 style={{ cursor: "pointer" }}
+                                 onClick={() => {
+                                    alert("delete function here");
+                                 }}
+                                 title="Delete"
+                                 />
+                                 </td>
+                        </tr>
+                        <tr>
+                           <td colSpan="5">
+                              <div className="collapse" id={product.code}>
+                                 <div className="card card-body">
+                                    <div className="row">
+                                       <div className="col-2">
+                                          <p>Stock: {product.stock}</p>
+                                       </div>
+                                       <div className="col-3">
+                                          <p>
+                                             Total sales: {product.totalSales}
+                                          </p>
+                                          <p>
+                                             Total Orders: {product.totalOrders}
+                                          </p>
+                                       </div>
+                                       <div className="col-3">
+                                          <p>Cost JPY: xxx</p>
+                                          <p>Cost AUD: xxx</p>
+                                       </div>
+                                    </div>
+
+                                    <img
+                                       src="https://www.qthotelsandresorts.com/melbourne/wp-content/uploads/sites/9/2017/05/Jam-on-Your-Collar-Tanto-0098.jpg"
+                                       style={{ width: "100%" }}
+                                    />
+                                 </div>
+                              </div>
                            </td>
                         </tr>
-                        <div className="collapse" id={product._id}>
-                           <div className="card card-body">
-                              {/* <tr> */}
-                                 {/* <td colSpan="5"> */}
-                                    <p>Stock: {product.stock}</p>
-                                    <p>Cost JPY: xxx</p>
-                                    <p>Cost AUD: xxx</p>
-                                 {/* </td> */}
-                              {/* </tr> */}
-                           </div>
-                        </div>
                      </tbody>
                   </Fragment>
                );
