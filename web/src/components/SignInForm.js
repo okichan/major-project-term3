@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 function SignInForm({ onSignIn }) {
    return (
-      <div className="container-fluid ">
-         <div className="row  mt-5">
+      // <div className="container-fluid ">
+         <div className="row mt-5">
             <div className="login-screen bg-white box-shadow">
                <img src={logo} className="logo" />{" "}
                <small>store management system</small>
@@ -58,7 +58,7 @@ function SignInForm({ onSignIn }) {
 
             </div>
          </div>
-      </div>
+      // </div>
    );
 }
 

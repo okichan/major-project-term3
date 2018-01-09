@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 
 function LinkButton({ href, name }) {
    return (
-      <Link to={href}
-      className="btn btn-primary float-right">Add new { name } </Link>
+      <div className="float-right">
+         <Link to={href} className="btn btn-primary">
+            Add new {name}
+         </Link>
+      </div>
    );
 }
 

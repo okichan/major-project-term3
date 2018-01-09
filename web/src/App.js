@@ -146,211 +146,207 @@ class App extends Component {
       return (
          <Router>
             <div className="App">
-               { signedIn &&
-                  <Fragment>
-                     <header>
-                        <PrimaryNav signedIn={signedIn} />
-                     </header>
-                     <div className="container-fluid">
-                        <div className="row">
-                           <SideBar signedIn={signedIn} />
-                        </div>
-                     </div>
-                  </Fragment>
-               }
+               {signedIn && (
+                  <header>
+                     <PrimaryNav signedIn={signedIn} />
+                  </header>
+               )}
+               <div className="container-fluid">
+                  {error && <Error error={error} />}
 
-               {error && <Error error={error} />}
+                  <div className="row">
+                     {signedIn && <SideBar signedIn={signedIn} />}
 
-               <Switch>
-                  {/* login page before sign in */}
-                  <Route
-                     path="/signin"
-                     exact
-                     render={({ match }) =>
-                        signedIn ? (
-                           <Redirect to="/" />
-                        ) : (
-                           <Fragment>
-                              <div className="signin">
-                                 <SignInForm onSignIn={this.onSignIn} />
-                              </div>
-                           </Fragment>
-                        )
-                     }
-                  />
-
-                  <Route
-                     path="/signup"
-                     exact
-                     render={() =>
-                        signedIn ? (
-                           <Redirect to="/products" />
-                        ) : (
-                           <Fragment>
-                              <SignUpForm onSignUp={this.onSignUp} />
-                           </Fragment>
-                        )
-                     }
-                  />
-
-                  <Route path="/" exact render={requireAuth(() => (
-                     <Fragment>
-                        <Home />
-                     </Fragment>
-                  ))} />
-
-
-
-                  {/* after signed in */}
-                  {/* <div> */}
-                     {/* <div className="container-fluid"> */}
-                        {/* <div className="row"> */}
-                           {/* <SideBar signedIn={signedIn} /> */}
-                           {/* main content */}
-                           {/* <main className="container-fluid"> */}
-                           {/* <div className="col-md-4 test"> */}
-
-                           
-
-
-                           <Route
-                              path="/account"
-                              exact
-                              render={requireAuth(() => (
+                     <Switch>
+                        {/* login page before sign in */}
+                        <Route
+                           path="/signin"
+                           exact
+                           render={({ match }) =>
+                              signedIn ? (
+                                 <Redirect to="/" />
+                              ) : (
                                  <Fragment>
-                                    <div className="mb-3">
-                                       <p>Email: {decodedToken.email}</p>
-                                       <p>
-                                          Signed in at:{" "}
-                                          {new Date(
-                                             decodedToken.iat * 1000
-                                          ).toISOString()}
-                                       </p>
-                                       <p>
-                                          Expire at:{" "}
-                                          {new Date(
-                                             decodedToken.exp * 1000
-                                          ).toISOString()}
-                                       </p>
-                                       <button onClick={this.onSignOut}>
-                                          Sign Out
-                                       </button>
+                                    <div className="signin">
+                                       <SignInForm onSignIn={this.onSignIn} />
                                     </div>
                                  </Fragment>
-                              ))}
-                           />
+                              )
+                           }
+                        />
 
-                           <Route
-                              path="/products"
-                              exact
-                              render={requireAuth(() => (
+                        <Route
+                           path="/signup"
+                           exact
+                           render={() =>
+                              signedIn ? (
+                                 <Redirect to="/" />
+                              ) : (
                                  <Fragment>
-                                    <LinkButton
-                                       href="/admin/products"
-                                       name="product"
-                                    />
-                                    {products && (
-                                       <ProductList
-                                          products={products}
-                                          productsInWishlist={
-                                             !!wishlist
-                                                ? wishlist.products
-                                                : null
-                                          }
-                                          editedProductID={editedProductID}
-                                          onEditProduct={
-                                             this.onBeginEditingProduct
-                                          }
-                                          onAddProductToWishlist={
-                                             this.onAddProductToWishlist
-                                          }
-                                          onRemoveProductFromWishlist={
-                                             this.onRemoveProductFromWishlist
-                                          }
-                                          renderEditForm={product => (
-                                             <div className="ml-3">
-                                                <ProductForm
-                                                   initialProduct={product}
-                                                   submitTitle="Update Product"
-                                                   onSubmit={
-                                                      this.onUpdateEditedProduct
-                                                   }
-                                                />
-                                             </div>
-                                          )}
-                                       />
-                                    )}
+                                    <SignUpForm onSignUp={this.onSignUp} />
                                  </Fragment>
-                              ))}
-                           />
+                              )
+                           }
+                        />
 
-                           <Route
-                              path="/admin/products"
-                              exact
-                              render={requireAuth(() => (
-                                 <Fragment>
-                                    {signedIn && (
-                                       <div className="mb-3">
-                                          <h2>Create Product</h2>
-                                          <ProductForm
-                                             submitTitle="Create Product"
-                                             onSubmit={this.onCreateProduct}
-                                          />
-                                       </div>
-                                    )}
-                                 </Fragment>
-                              ))}
-                           />
+                        <Route
+                           path="/"
+                           exact
+                           render={requireAuth(() => (
+                              <Fragment>
+                                 <Home />
+                              </Fragment>
+                           ))}
+                        />
 
-                           <Route
-                              path="/wishlist"
-                              exact
-                              render={requireAuth(() => (
-                                 <Fragment>
-                                    {wishlist && (
-                                       <Wishlist
-                                          products={wishlist.products}
-                                          onRemoveProductFromWishlist={
-                                             this.onRemoveProductFromWishlist
-                                          }
-                                       />
-                                    )}
-                                 </Fragment>
-                              ))}
-                           />
+                        {/* after signed in */}
+                        {/* <div> */}
+                        {/* <div className="container-fluid"> */}
+                        {/* <div className="row"> */}
+                        {/* <SideBar signedIn={signedIn} /> */}
+                        {/* main content */}
+                        {/* <main className="container-fluid"> */}
+                        {/* <div className="col-md-4 test"> */}
 
-                           <Route
-                              path="/new-sales"
-                              exact
-                              render={requireAuth(() => (
-                                 <SalesForm products={products} />
-                              ))}
-                           />
-
-                           <Route
-                              path="/report-1"
-                              exact
-                              render={requireAuth(() => (
-                                 <div>
-                                    <img
-                                       src="https://i1.wp.com/familylocket.com/wp-content/uploads/2016/01/pie-slice.png"
-                                       width="200"
-                                    />
+                        <Route
+                           path="/account"
+                           exact
+                           render={requireAuth(() => (
+                              <Fragment>
+                                 <div className="mb-3">
+                                    <p>Email: {decodedToken.email}</p>
+                                    <p>
+                                       Signed in at:{" "}
+                                       {new Date(
+                                          decodedToken.iat * 1000
+                                       ).toISOString()}
+                                    </p>
+                                    <p>
+                                       Expire at:{" "}
+                                       {new Date(
+                                          decodedToken.exp * 1000
+                                       ).toISOString()}
+                                    </p>
+                                    <button onClick={this.onSignOut}>
+                                       Sign Out
+                                    </button>
                                  </div>
-                              ))}
-                           />
+                              </Fragment>
+                           ))}
+                        />
 
-                           {/* </div> */}
+                        <Route
+                           path="/products"
+                           exact
+                           render={requireAuth(() => (
+                              <Fragment>
+
+                                 {products && (
+                                    <ProductList
+                                       products={products}
+                                       productsInWishlist={
+                                          !!wishlist ? wishlist.products : null
+                                       }
+                                       editedProductID={editedProductID}
+                                       onEditProduct={
+                                          this.onBeginEditingProduct
+                                       }
+                                       onAddProductToWishlist={
+                                          this.onAddProductToWishlist
+                                       }
+                                       onRemoveProductFromWishlist={
+                                          this.onRemoveProductFromWishlist
+                                       }
+                                       renderEditForm={product => (
+                                          <div className="ml-3">
+                                             <ProductForm
+                                                initialProduct={product}
+                                                submitTitle="Update Product"
+                                                onSubmit={
+                                                   this.onUpdateEditedProduct
+                                                }
+                                             />
+                                          </div>
+                                       )}
+                                    />
+                                 )}
+                                 <LinkButton
+                                    href="/admin/products"
+                                    name="product"
+                                 />
+                              </Fragment>
+                           ))}
+                        />
+
+                        <Route
+                           path="/admin/products"
+                           exact
+                           render={requireAuth(() => (
+                              <Fragment>
+                                 {signedIn && (
+                                    <div className="mb-3">
+                                       <h2>Create Product</h2>
+                                       <ProductForm
+                                          submitTitle="Create Product"
+                                          onSubmit={this.onCreateProduct}
+                                       />
+                                    </div>
+                                 )}
+                              </Fragment>
+                           ))}
+                        />
+
+                        <Route
+                           path="/wishlist"
+                           exact
+                           render={requireAuth(() => (
+                              <Fragment>
+                                 {wishlist && (
+                                    <Wishlist
+                                       products={wishlist.products}
+                                       onRemoveProductFromWishlist={
+                                          this.onRemoveProductFromWishlist
+                                       }
+                                    />
+                                 )}
+                              </Fragment>
+                           ))}
+                        />
+
+                        <Route
+                           path="/new-sales"
+                           exact
+                           render={requireAuth(() => (
+                              <SalesForm products={products} />
+                           ))}
+                        />
+
+                        <Route
+                           path="/report-1"
+                           exact
+                           render={requireAuth(() => (
+                              <div>
+                                 <img
+                                    src="https://i1.wp.com/familylocket.com/wp-content/uploads/2016/01/pie-slice.png"
+                                    width="200"
+                                 />
+                              </div>
+                           ))}
+                        />
+
+                        {/* </div> */}
                         {/* </div> */}
                         {/* </main> */}
-                     {/* </div> */}
-                  {/* </div> */}
-                           <Route
-                              render={({ location }) => (
-                                 <h2>🙇Page not found: {location.pathname}</h2>
-                              )}
-                           />
-               </Switch>
+                        {/* </div> */}
+                        {/* </div> */}
+                        <Route
+                           render={({ location }) => (
+                              <h2>🙇Page not found: {location.pathname}</h2>
+                           )}
+                        />
+                     </Switch>
+                  </div>
+               </div>
             </div>
          </Router>
       );
