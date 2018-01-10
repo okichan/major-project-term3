@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import './css/App.css'
 import './css/Customer.css'
 import './css/DeleteCustomer.css'
+import './css/CurrencyConverter.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,6 +22,7 @@ import Customer from './components/Customer'
 import CustomerForm from './components/CustomerForm'
 import EditCustomerForm from './components/EditCustomerForm'
 import DeleteCustomer from './components/DeleteCustomer'
+import CurrencyConverter from './components/CurrencyConverter'
 
 import Error from './components/Error'
 import { signIn, signUp, signOutNow } from './api/auth'
@@ -167,11 +169,7 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        <h3 className="mb-5">
-                          Welcome to Tanto Sales Management System
-                        </h3>
-                        <h4>Today's weather: xxx</h4>
-                        <h4>1 AUD = 89 JPY</h4>
+                        <CurrencyConverter />
                       </Fragment>
                     ))}
                   />
