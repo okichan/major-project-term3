@@ -25,12 +25,17 @@ class CurrencyConverter extends Component {
       <div className="App">
         <div className="currencyConverter">
           <h1>Currency Converter</h1>
+
           <div className="country">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Flag_of_Australia.svg/1200px-Flag_of_Australia.svg.png"
-              className="ausFlag"
-              alt="Australian flag"
-            />
+            <div className="flagContainer">
+              <div className="countryFlag">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Flag_of_Australia.svg/1200px-Flag_of_Australia.svg.png"
+                  className="ausFlag"
+                  alt="Australian flag"
+                />
+              </div>
+            </div>
             <div className="currencyAmount">
               <p>$</p>
               <input
@@ -44,17 +49,20 @@ class CurrencyConverter extends Component {
             </div>
           </div>
 
-          <br />
           <div className="country">
-            {!!error && <p>{error.message}</p>}
+            <div className="flagContainer">
+              <div className="countryFlag">
+                {!!error && <p>{error.message}</p>}
 
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png"
-              className="jpyFlag"
-              alt="Japanese flag"
-            />
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png"
+                  className="jpyFlag"
+                  alt="Japanese flag"
+                />
+              </div>
+            </div>
             {!!currency ? (
-              <div className="curdrencyAmount">
+              <div className="currencyAmount">
                 {' '}
                 <p>¥</p>
                 <input

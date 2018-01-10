@@ -6,15 +6,30 @@
 }
 
 .country {
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
   padding: 5px;
+  display: flex;
 }
 
-.currencyConverter img {
+.flagContainer {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.countryFlag {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.countryFlag img {
   width: 120px;
   height: 70px;
   object-fit: cover;
-  border-radius: 5px;
-  padding-right: 10px;
+  border-radius: 10px;
 }
 
 .currencyAmount {
