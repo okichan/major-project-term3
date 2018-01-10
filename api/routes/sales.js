@@ -81,9 +81,9 @@ const router = new express.Router();
 // get list
 router.get("/sales", (req, res) => {
   Sale.find()
-    .populate("products", "title")
-    .populate("customer", "firstName")
-    .populate("inCharge", "userName")
+    .populate("products")
+    .populate("customer")
+    .populate("inCharge")
     .then(sales => {
       res.json(sales);
     })
