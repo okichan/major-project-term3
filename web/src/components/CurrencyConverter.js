@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
-import { fetchCurrency } from '../api/forex'
-import Yen from '../components/Yen'
-
-fetchCurrency(200).then(res => {
-  console.log('Loaded AUD', res)
-})
+import { fetchCurrency } from '../api/currency'
 
 class CurrencyConverter extends Component {
   state = {
@@ -14,34 +9,11 @@ class CurrencyConverter extends Component {
   }
 
   componentDidMount() {
-    fetchCurrency(200)
+    fetchCurrency()
       .then(currency => {
         this.setState({ currency: currency })
       })
       .catch(error => {
-        this.setState({ error: error })
-        console.log('Error loading currency conversion', error)
-      })
-  }
-
-  onChangeEnteredNumber = event => {
-    const input = event.target
-    const value = input.value
-    this.setState({
-      enteredNumber: value
-    })
-  }
-
-  fetchJapanCurrency = () => {
-    const { enteredNumber } = this.state
-    fetchCurrency(enteredNumber)
-      .then(currency => {
-        this.setState({ currency: currency })
-      })
-      .catch(error => {
-        // if (error.response.status === 404) {
-        //   error = new Error('Thats not a number')
-        // }
         this.setState({ error: error })
         console.log('Error loading currency conversion', error)
       })
@@ -53,25 +25,50 @@ class CurrencyConverter extends Component {
       <div className="App">
         <div className="currencyConverter">
           <h1>Currency Converter</h1>
-          <h1>JPY</h1>
-          <input
-            value={enteredNumber}
-            placeholder="1"
-            aria-label="entered number"
-            onChange={this.onChangeEnteredNumber}
-          />
+          <div className="country">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Flag_of_Australia.svg/1200px-Flag_of_Australia.svg.png"
+              className="ausFlag"
+              alt="Australian flag"
+            />
+            <div className="currencyAmount">
+              <p>$</p>
+              <input
+                value={enteredNumber}
+                placeholder="1"
+                aria-label="entered number"
+                onChange={e => {
+                  this.setState({ enteredNumber: e.target.value })
+                }}
+              />
+            </div>
+          </div>
 
-          <button className="currencyConvert" onClick={this.fetchJapanCurrency}>
-            Convert
-          </button>
+          <br />
+          <div className="country">
+            {!!error && <p>{error.message}</p>}
 
-          {!!error && <p>{error.message}</p>}
-
-          {!!currency ? (
-            <Yen japaneseYen={currency.value} />
-          ) : (
-            <p>Loading...</p>
-          )}
+            <img
+              src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png"
+              className="jpyFlag"
+              alt="Japanese flag"
+            />
+            {!!currency ? (
+              <div className="curdrencyAmount">
+                {' '}
+                <p>¥</p>
+                <input
+                  value={(currency.JPY * enteredNumber).toFixed(2)}
+                  placeholder="1"
+                  onChange={e => {
+                    this.setState({ enteredNumber: e.target.value })
+                  }}
+                />
+              </div>
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
         </div>
       </div>
     )

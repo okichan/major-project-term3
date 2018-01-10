@@ -3,6 +3,7 @@ import './css/App.css'
 import './css/Customer.css'
 import './css/DeleteCustomer.css'
 import './css/CurrencyConverter.css'
+import './css/Weather.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,6 +24,7 @@ import CustomerForm from './components/CustomerForm'
 import EditCustomerForm from './components/EditCustomerForm'
 import DeleteCustomer from './components/DeleteCustomer'
 import CurrencyConverter from './components/CurrencyConverter'
+import Weather from './components/Weather'
 
 import Error from './components/Error'
 import { signIn, signUp, signOutNow } from './api/auth'
@@ -33,6 +35,11 @@ import {
   addProductToWishlist,
   removeProductFromWishlist
 } from './api/wishlist'
+import { fetchWeather } from './api/weather'
+
+fetchWeather().then(res => {
+  console.log('Loaded Weather', res)
+})
 
 class App extends Component {
   state = {
@@ -45,7 +52,8 @@ class App extends Component {
       { id: 4, name: 'sleep', completed: false }
     ],
     editedProductID: null,
-    wishlist: null
+    wishlist: null,
+    weather: null
   }
 
   onSignIn = ({ email, password }) => {
@@ -143,7 +151,8 @@ class App extends Component {
       decodedToken,
       products,
       editedProductID,
-      wishlist
+      wishlist,
+      weather
     } = this.state
     const signedIn = !!decodedToken
 
@@ -169,6 +178,17 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
+                        {!!weather ? (
+                          <Weather
+                            temperature={weather.temp}
+                            date={weather.date}
+                            forecast={weather.weather.description}
+                            icon={weather.weather.icon}
+                          />
+                        ) : (
+                          <p>Loading</p>
+                        )}
+
                         <CurrencyConverter />
                       </Fragment>
                     ))}
@@ -449,6 +469,14 @@ class App extends Component {
 
   // When this App first appears on screen
   componentDidMount() {
+    fetchWeather()
+      .then(weather => {
+        this.setState({ weather: weather })
+      })
+      .catch(error => {
+        this.setState({ error: error })
+        console.log('Error loading weather conversion', error)
+      })
     this.load()
   }
 

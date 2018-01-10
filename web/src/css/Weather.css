@@ -1,0 +1,26 @@
+.weatherForcast {
+  border: 2px solid;
+  text-align: center;
+  width: 50%;
+  margin: 5px;
+  padding: 5px;
+}
+
+.forecastContainer {
+  display: flex;
+}
+
+.forecast {
+  width: 60%;
+  font-size: 30px;
+}
+
+.forecastTemp {
+  font-size: 50px;
+}
+
+.forecastTemp p {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin: 0px;
+}

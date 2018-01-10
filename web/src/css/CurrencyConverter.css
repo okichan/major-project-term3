@@ -1,3 +1,37 @@
 .currencyConverter {
   border: 2px solid;
+  text-align: center;
+  width: 50%;
+  margin: 5px;
+}
+
+.country {
+  padding: 5px;
+}
+
+.currencyConverter img {
+  width: 120px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 5px;
+  padding-right: 10px;
+}
+
+.currencyAmount {
+  display: flex;
+  margin: 0 auto;
+}
+
+.currencyAmount p {
+  padding-right: 10px;
+  font-size: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin: 0px;
+}
+
+.currencyAmount input {
+  border: none;
+  background: transparent;
+  font-size: 20px;
 }
