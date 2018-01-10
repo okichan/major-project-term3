@@ -151,7 +151,7 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
                 }); // save error catch
             })
             .catch(error => {
-              res.status(400).json({ error });
+              res.status(400).json({ error: error.message });
             }); // weather api catch
         } else {
           // stock validation faild

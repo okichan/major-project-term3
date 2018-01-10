@@ -24,6 +24,7 @@ const saleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
+  reminded: { type: Boolean, default: false },
   date: { type: Date, default: Date.now }
 });
 
