@@ -2,7 +2,10 @@ const mongoose = require("./init");
 const timestamps = require("mongoose-timestamp");
 
 const customerTrafficSchema = new mongoose.Schema({
-  number: Number,
+  number: {
+    type: Number,
+    min: 0
+  },
   isChef: String
 });
 

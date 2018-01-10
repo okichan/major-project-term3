@@ -1,13 +1,18 @@
 const mongoose = require("./init");
 
 const saleSchema = new mongoose.Schema({
+  type: { type: String, default: "store" },
   products: [
     {
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
       },
-      unitAmount: Number
+      unitAmount: {
+        type: Number,
+        min: 0,
+        default: 1
+      }
     }
   ],
   customer: {
@@ -19,7 +24,10 @@ const saleSchema = new mongoose.Schema({
     maxTemp: Number,
     minTemp: Number
   },
-  totalPrice: Number,
+  totalPrice: {
+    type: Number,
+    min: 0
+  },
   inCharge: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"

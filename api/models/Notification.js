@@ -3,7 +3,7 @@ const mongoose = require("./init");
 const notificationSchema = new mongoose.Schema({
   type: String,
   data: String,
-  checked: Boolean,
+  checked: { type: Boolean, default: false },
   notificationDate: { type: Date, default: Date.now }
 });
 
