@@ -6,13 +6,25 @@ const router = new express.Router();
 
 // get list
 router.get("/products", (req, res) => {
-  Product.find()
-    .then(products => {
-      res.json(products);
-    })
-    .catch(error => {
-      res.json({ error });
-    });
+  const { category } = req.query;
+  if (category) {
+    Product.find({ category })
+      .then(products => {
+        res.json(products);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  } else {
+    // when no string query is found
+    Product.find()
+      .then(products => {
+        res.json(products);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  }
 });
 
 // Create
