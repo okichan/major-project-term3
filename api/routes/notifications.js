@@ -6,43 +6,20 @@ const authMiddleware = require("../middleware/auth");
 
 const router = new express.Router();
 
-// check if any sales date is 3 months ago to create notifications
-Sale.find({ reminded: false })
-  .then(sales => {
-    sales.forEach(sale => {
-      if (isThreeMonthAgo(sale.date)) {
-        console.log("remind");
-      }
-    });
-  })
-  .catch(error => {
-    console.error(error.message);
-  });
-
 // Notice 1 week beforehand
-function isThreeMonthAgo(date) {
-  // for the one week notice
-  var sevenDays = 7 * 1000 * 60 * 60 * 24;
-  var day = new Date();
-  var threeMonthAgo = day.setMonth(day.getMonth() - 3);
-  var saleDay = new Date(date).getTime();
-
-  return threeMonthAgo > saleDay - sevenDays ? true : false;
-}
-
-// create sharpening reminder notification
-function createSharpeningReminder(product, customer, sale) {
-  Notification.create({
-    title: "Sharpening Reminder",
-    body: `${customer.firstName} purchased ${product.title} on ${
-      sale.date
-    }. Please send a sharpening reminder message.`
-  });
-}
+// function isThreeMonthAgo(date) {
+//   // for the one week notice
+//   var sevenDays = 7 * 1000 * 60 * 60 * 24;
+//   var day = new Date();
+//   var threeMonthAgo = day.setMonth(day.getMonth() - 3);
+//   var saleDay = new Date(date).getTime();
+//
+//   return threeMonthAgo > saleDay - sevenDays ? true : false;
+// }
 
 // get list
 router.get("/notifications", (req, res) => {
-  Notification.find()
+  Notification.find({ notificationDate: { $lte: new Date() } })
     .then(notifications => {
       res.json(notifications);
     })

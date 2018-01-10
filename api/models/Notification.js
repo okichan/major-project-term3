@@ -1,12 +1,11 @@
 const mongoose = require("./init");
-const timestamps = require("mongoose-timestamp");
 
 const notificationSchema = new mongoose.Schema({
-  title: String,
-  body: String,
-  checked: Boolean
+  type: String,
+  data: String,
+  checked: Boolean,
+  notificationDate: { type: Date, default: Date.now }
 });
-notificationSchema.plugin(timestamps);
 
 const Notification = mongoose.model("Notification", notificationSchema);
 
