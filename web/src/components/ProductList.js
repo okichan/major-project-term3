@@ -32,16 +32,20 @@ function ProductList({
    const hasWishlist = !!productsInWishlist;
 
    return (
-      <div className="col">
+      <div className="col ">
          <h2 className=" text-center mb-3 mt-3">Products</h2>
 
-         <table className="table table-sm">
+         <table
+            className="table table-sm"
+            style={{ borderBottom: "1px solid silver" }}
+         >
             <thead>
                <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">RRP</th>
-                  <th scope="col" colSpan="2"></th>
+                  <th scope="col">Stock</th>
+                  <th scope="col" />
                </tr>
             </thead>
 
@@ -67,16 +71,18 @@ function ProductList({
                               </a>
                            </td>
                            <td>${product.price}</td>
+                              <td className="text-center">
+                                 { product.stock }
+                              </td>
                            <td>
                               <a href={`/products/${product._id}`}>
                                  <i
                                     className="fa fa-pencil-square-o med"
                                     id="edit"
                                     title="Edit"
-                                    />
+                                 />
                               </a>
-                              </td>
-                                    <td>
+                                 <span className="mr-2"> </span>
                               <i
                                  className="fa fa-trash med"
                                  id="trash"
@@ -85,8 +91,8 @@ function ProductList({
                                     alert("delete function here");
                                  }}
                                  title="Delete"
-                                 />
-                                 </td>
+                              />
+                           </td>
                         </tr>
                         <tr>
                            <td colSpan="5">
@@ -94,12 +100,11 @@ function ProductList({
                                  <div className="card card-body">
                                     <div className="row">
                                        <div className="col-2">
-                                          <p>Stock: {product.stock}</p>
-                                       </div>
-                                       <div className="col-3">
                                           <p>
                                              Total sales: {product.totalSales}
                                           </p>
+                                       </div>
+                                       <div className="col-3">
                                           <p>
                                              Total Orders: {product.totalOrders}
                                           </p>

@@ -56,14 +56,34 @@ Content-Type: application/json
   "title": "150mm Deba Aoniko Hongasumi with saya"
 }
 
-### Read wishlist
-GET http://localhost:7000/wishlist
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxMjY5NDQyOCwiZXhwIjoxNTEzMjk5MjI4LCJzdWIiOiI1YTI3NTA2MzJkNmEzZDc5ODIwN2VmNjMifQ.tzEjvcsj3cHCG7t6M7R-ufvmD1ddRj-J5OMapXcz5H8
+### Read customer
+GET http://localhost:7000/customers
+Authorization: Bearer {{ token }}
 
-### Add to wishlist
-POST http://localhost:7000/wishlist/products/5a2742308714fc738c09968b
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxMjY5NDQyOCwiZXhwIjoxNTEzMjk5MjI4LCJzdWIiOiI1YTI3NTA2MzJkNmEzZDc5ODIwN2VmNjMifQ.tzEjvcsj3cHCG7t6M7R-ufvmD1ddRj-J5OMapXcz5H8
+### Add to customer
+POST http://localhost:7000/customers
+Authorization: Bearer {{ token }}
 
-### Remove from wishlist
-DELETE http://localhost:7000/wishlist/products/5a2742308714fc738c09968b
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxMjY5NDQyOCwiZXhwIjoxNTEzMjk5MjI4LCJzdWIiOiI1YTI3NTA2MzJkNmEzZDc5ODIwN2VmNjMifQ.tzEjvcsj3cHCG7t6M7R-ufvmD1ddRj-J5OMapXcz5H8
+{
+   "firstName": "Tomomi",
+   "lastName": "Oki",
+   "gender": "Female",
+   "phone": "0433001122",
+   "email": "patrick.smith@coderacademy.edu.au",
+   "isChef": 1
+}
+
+
+### Update customer
+PUT http://localhost:7000/customers/5a555f3ae51e644448cd7812
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+   "purchasedHistory": [],
+   "workAt": "Kmart",
+   "origin": "SNS (Facebook, Twitter etc)",
+   "note": "Japan OTAKU, traveling at least once a year to Japan, love JP knives too, have many JP knives",
+   
+}
+

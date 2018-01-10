@@ -39,6 +39,11 @@ function SideBar({ signedIn }) {
                </ul>
             </li>
             <li className="nav-item">
+               <Link to="/sales" className="nav-link" >
+                  Sales
+               </Link>
+            </li>
+            <li className="nav-item">
                <Link to="/products" className="nav-link">
                   Products
                </Link>
@@ -49,11 +54,6 @@ function SideBar({ signedIn }) {
                </Link>
             </li>
             {/* <li className="nav-item">
-               <Link to="/notification" className="nav-link" style={{textDecoration: "line-through"}}>
-                  Notification
-               </Link>
-            </li>
-            <li className="nav-item">
                <Link to="/tools" className="nav-link" style={{textDecoration: "line-through"}}>
                   Tools
                </Link>

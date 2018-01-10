@@ -13,6 +13,7 @@ import SignUpForm from "./components/SignUpForm";
 import Home from "./components/Home";
 import ProductList from "./components/ProductList";
 import ProductForm from "./components/ProductForm";
+import CustomerList from "./components/CustomerList";
 import SalesForm from "./components/SalesForm";
 import Wishlist from "./components/Wishlist";
 import PrimaryNav from "./components/PrimaryNav";
@@ -27,6 +28,7 @@ import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct } from "./api/products";
+import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
 import {
    listWishlist,
    addProductToWishlist,
@@ -37,7 +39,8 @@ class App extends Component {
    state = {
       error: null,
       decodedToken: getDecodedToken(), // Restore the previous signed in data
-      products: [{ title: "" }],
+      products: null,
+      customers: null,
       editedProductID: null,
       wishlist: null
    };
@@ -136,6 +139,7 @@ class App extends Component {
          error,
          decodedToken,
          products,
+         customers,
          editedProductID,
          wishlist
       } = this.state;
@@ -378,43 +382,35 @@ class App extends Component {
                         />
 
                         <Route
-                           path="/customers"
+                           path="/sales"
                            exact
                            render={requireAuth(() => (
                               <Fragment>
+                                 {customers && ( 
+                                    <CustomerList customers={ customers } />
+                                    // <div>yay</div>
+                                 )}
                                  <LinkButton
                                     href="/admin/customers"
                                     name="customers"
                                  />
-                                 {products && (
-                                    <ProductList
-                                       products={products}
-                                       productsInWishlist={
-                                          !!wishlist ? wishlist.products : null
-                                       }
-                                       editedProductID={editedProductID}
-                                       onEditProduct={
-                                          this.onBeginEditingProduct
-                                       }
-                                       onAddProductToWishlist={
-                                          this.onAddProductToWishlist
-                                       }
-                                       onRemoveProductFromWishlist={
-                                          this.onRemoveProductFromWishlist
-                                       }
-                                       renderEditForm={product => (
-                                          <div className="ml-3">
-                                             <ProductForm
-                                                initialProduct={product}
-                                                submitTitle="Update Product"
-                                                onSubmit={
-                                                   this.onUpdateEditedProduct
-                                                }
-                                             />
-                                          </div>
-                                       )}
-                                    />
+                              </Fragment>
+                           ))}
+                        />
+
+                        <Route
+                           path="/customers"
+                           exact
+                           render={requireAuth(() => (
+                              <Fragment>
+                                 {customers && ( 
+                                    <CustomerList customers={ customers } />
+                                    // <div>yay</div>
                                  )}
+                                 <LinkButton
+                                    href="/admin/customers"
+                                    name="customers"
+                                 />
                               </Fragment>
                            ))}
                         />
@@ -464,6 +460,13 @@ class App extends Component {
             this.setState({ products });
          })
          .catch(saveError);
+
+      listCustomers()
+         .then(customers => {
+            this.setState({ customers });
+         })
+         .catch(saveError);
+
 
       const { decodedToken } = this.state;
       const signedIn = !!decodedToken;
