@@ -4,6 +4,7 @@ import './css/Customer.css'
 import './css/DeleteCustomer.css'
 import './css/CurrencyConverter.css'
 import './css/Weather.css'
+import './css/ProductForm.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,6 +15,7 @@ import SignInForm from './components/SignInForm'
 import SignUpForm from './components/SignUpForm'
 import ProductList from './components/ProductList'
 import ProductForm from './components/ProductForm'
+import EditProductForm from './components/EditProductForm'
 import SalesForm from './components/SalesForm'
 import Wishlist from './components/Wishlist'
 import PrimaryNav from './components/PrimaryNav'
@@ -285,7 +287,6 @@ class App extends Component {
                       <Fragment>
                         {signedIn && (
                           <div className="mb-3">
-                            <h2>Create Product</h2>
                             <ProductForm
                               submitTitle="Create Product"
                               onSubmit={this.onCreateProduct}
@@ -294,6 +295,12 @@ class App extends Component {
                         )}
                       </Fragment>
                     ))}
+                  />
+
+                  <Route
+                    path="/edit-product"
+                    exact
+                    render={requireAuth(() => <EditProductForm />)}
                   />
 
                   <Route

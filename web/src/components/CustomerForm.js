@@ -226,7 +226,7 @@ function CustomerForm({ products, submitTitle, onSubmit }) {
 
           <button
             type="button"
-            className="btn btn-danger btn-lg btn-block info"
+            className="btn btn-primary btn-lg btn-block info"
           >
             Create
           </button>
