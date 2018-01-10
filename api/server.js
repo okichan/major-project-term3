@@ -19,6 +19,8 @@ server.use([
   require("./routes/products"),
   require("./routes/customers"),
   require("./routes/sales"),
+  require("./routes/notifications"),
+  require("./routes/customerTraffics"),
   require("./routes/auth")
 ]);
 

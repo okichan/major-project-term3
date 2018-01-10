@@ -27,7 +27,7 @@ router.post("/products", authMiddleware.requireJWT, (req, res) => {
 });
 
 // Update
-router.put("/products/:id", authMiddleware.requireJWT, (req, res) => {
+router.put("/product/:id", authMiddleware.requireJWT, (req, res) => {
   const { id } = req.params;
   Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
     .then(product => {
@@ -45,7 +45,7 @@ router.put("/products/:id", authMiddleware.requireJWT, (req, res) => {
 });
 
 // Delete
-router.delete("/products/:id", (req, res) => {
+router.delete("/product/:id", (req, res) => {
   const { id } = req.params;
   Product.findByIdAndRemove(id)
     .then(product => {
