@@ -20,9 +20,9 @@ const saleSchema = new mongoose.Schema({
     ref: "Customer"
   },
   weather: {
-    description: String,
-    maxTemp: Number,
-    minTemp: Number
+    description: { type: String, default: null },
+    maxTemp: { type: Number, default: null },
+    minTemp: { type: Number, default: null }
   },
   totalPrice: {
     type: Number,
@@ -32,7 +32,7 @@ const saleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now } // require YYYY-MM-DD form
 });
 
 const Sale = mongoose.model("Sale", saleSchema);
