@@ -52,7 +52,7 @@ function stockAndTotalSalesCalculator(productId, sold) {
         data: productData
       })
         .then(notificationData => {
-          console.log("new notification is created!");
+          console.log("Stock notification is created!");
         })
         .catch(error => {
           console.error(error.message);
@@ -81,7 +81,7 @@ const router = new express.Router();
 // get list
 router.get("/sales", (req, res) => {
   Sale.find()
-    .populate("products")
+    .populate("products.product")
     .populate("customer")
     .populate("inCharge")
     .then(sales => {
@@ -139,29 +139,46 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
                     { new: true }
                   ).exec();
 
+                  let sharpReminderNeeded = false;
+                  let ctr2 = 0;
                   // calculate product stock and totalSales
-                  sale.products.forEach(product => {
+                  sale.products.forEach((product, index, array) => {
                     stockAndTotalSalesCalculator(
                       product.product,
                       product.unitAmount
                     );
-                  });
+                    // check if sharpen reminder needed
+                    Product.findById(product.product).then(product => {
+                      ctr2++;
+                      if (product.category !== "stone") {
+                        sharpReminderNeeded = true;
+                      }
+                      // after forEach execute below code
+                      if (ctr2 === array.length) {
+                        if (sharpReminderNeeded) {
+                          // if sharp Reminder is needed to create
+                          // create sharp reminder notifications
+                          const saleDateObject = new Date(saleDate);
+                          saleDateObject.setDate(saleDateObject.getDate() + 80);
 
-                  const saleDateObject = new Date(saleDate);
-                  saleDateObject.setDate(saleDateObject.getDate() + 80);
-
-                  // create sharp reminder notifications
-                  Notification.create({
-                    type: "sharpening",
-                    data: sale,
-                    notificationDate: saleDateObject
-                  })
-                    .then(notification => {
-                      console.log("notification created");
-                    })
-                    .catch(error => {
-                      res.status(400).json({ error: error.message });
+                          Notification.create({
+                            type: "sharpening",
+                            data: sale,
+                            notificationDate: saleDateObject
+                          })
+                            .then(notification => {
+                              console.log("Sharpening Notification created");
+                            })
+                            .catch(error => {
+                              res.status(400).json({ error: error.message });
+                            }); // notification create catch
+                        } else {
+                          // if  sharp Reminder is NOT needed to create
+                          console.log("sharpening notification is not needed");
+                        }
+                      }
                     });
+                  });
                 })
                 .catch(error => {
                   res.status(400).json({ error });

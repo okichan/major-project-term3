@@ -20,7 +20,7 @@ const router = new express.Router();
 // get list
 router.get("/notifications", (req, res) => {
   // check if notificationDate is less or equal than now
-  Notification.find({ notificationDate: { $lte: new Date() } })
+  Notification.find()
     .then(notifications => {
       res.json(notifications);
     })

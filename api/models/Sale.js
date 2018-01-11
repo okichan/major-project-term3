@@ -32,7 +32,7 @@ const saleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now } // require YYYY-MM-DD form
 });
 
 const Sale = mongoose.model("Sale", saleSchema);
