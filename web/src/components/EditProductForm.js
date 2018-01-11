@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function ProductForm({ initialProduct = {}, submitTitle, onSubmit }) {
+function EditProductForm({ initialProduct = {}, submitTitle, onSubmit }) {
   return (
     <div className="container">
-      <h1 className="text-center mb-5">New Product</h1>
+      <h1 className="text-center mb-5">Edit Product</h1>
       <form
         onSubmit={event => {
           // Prevent old-school form submission
@@ -86,7 +86,7 @@ function ProductForm({ initialProduct = {}, submitTitle, onSubmit }) {
           <div className="productBtn">
             <Link to="/products">
               <button type="button" className="btn btn-primary btn-lg info">
-                Create
+                Save
               </button>
             </Link>
           </div>
@@ -96,4 +96,4 @@ function ProductForm({ initialProduct = {}, submitTitle, onSubmit }) {
   )
 }
 
-export default ProductForm
+export default EditProductForm

@@ -1,0 +1,15 @@
+.productButton {
+  display: flex;
+  float: right;
+  padding-top: 30px;
+}
+
+.productBtn {
+  float: right;
+  padding: 5px;
+}
+
+.productBtn button {
+  width: 100px;
+  padding: 5px;
+}
