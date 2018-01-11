@@ -1,13 +1,18 @@
 const mongoose = require("./init");
 
 const saleSchema = new mongoose.Schema({
+  type: { type: String, default: "store" },
   products: [
     {
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
       },
-      unitAmount: Number
+      unitAmount: {
+        type: Number,
+        min: 0,
+        default: 1
+      }
     }
   ],
   customer: {
@@ -15,16 +20,19 @@ const saleSchema = new mongoose.Schema({
     ref: "Customer"
   },
   weather: {
-    description: String,
-    maxTemp: Number,
-    minTemp: Number
+    description: { type: String, default: null },
+    maxTemp: { type: Number, default: null },
+    minTemp: { type: Number, default: null }
   },
-  totalPrice: Number,
+  totalPrice: {
+    type: Number,
+    min: 0
+  },
   inCharge: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now } // require YYYY-MM-DD form
 });
 
 const Sale = mongoose.model("Sale", saleSchema);

@@ -6,13 +6,31 @@ const router = new express.Router();
 
 // get list
 router.get("/products", (req, res) => {
-  Product.find()
-    .then(products => {
-      res.json(products);
-    })
-    .catch(error => {
-      res.json({ error });
-    });
+  const { category } = req.query;
+  if (category) {
+    Product.find({ category })
+      .then(products => {
+        if (products.length !== 0) {
+          // when find some
+          res.json(products);
+        } else {
+          // when no result
+          res.status(404).json({ error: `no result with ${category}` });
+        }
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  } else {
+    // when no string query is found
+    Product.find()
+      .then(products => {
+        res.json(products);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  }
 });
 
 // Create
@@ -27,7 +45,7 @@ router.post("/products", authMiddleware.requireJWT, (req, res) => {
 });
 
 // Update
-router.put("/products/:id", authMiddleware.requireJWT, (req, res) => {
+router.put("/product/:id", authMiddleware.requireJWT, (req, res) => {
   const { id } = req.params;
   Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
     .then(product => {
@@ -45,7 +63,7 @@ router.put("/products/:id", authMiddleware.requireJWT, (req, res) => {
 });
 
 // Delete
-router.delete("/products/:id", (req, res) => {
+router.delete("/product/:id", (req, res) => {
   const { id } = req.params;
   Product.findByIdAndRemove(id)
     .then(product => {
