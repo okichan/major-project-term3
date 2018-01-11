@@ -55,17 +55,15 @@ function SalesForm({
               <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                 <label className="control-label">Sold for</label>
                 <div className="input-group">
-                  {productPrice && (
-                    <input
-                      name="mobile"
-                      className="form-control"
-                      value={productPrice || "0"}
-                      type="number"
-                      onChange={e => {
-                        onChangePrice(e);
-                      }}
-                    />
-                  )}
+                  <input
+                    name="mobile"
+                    className="form-control"
+                    value={productPrice ? productPrice : "0"}
+                    type="number"
+                    onChange={e => {
+                      onChangePrice(e);
+                    }}
+                  />
                 </div>
               </div>
             </div>
