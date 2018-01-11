@@ -2,6 +2,9 @@ import React, { Component, Fragment } from "react";
 import "./css/App.css";
 import "./css/Customer.css";
 import "./css/DeleteCustomer.css";
+import "./css/CurrencyConverter.css";
+import "./css/Weather.css";
+import "./css/ProductForm.css";
 import {
    BrowserRouter as Router,
    Switch,
@@ -14,6 +17,7 @@ import Home from "./components/Home";
 import ProductList from "./components/ProductList";
 import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
+import EditProductForm from "./components/EditProductForm";
 import SalesForm from "./components/SalesForm";
 import Wishlist from "./components/Wishlist";
 import PrimaryNav from "./components/PrimaryNav";
@@ -23,6 +27,8 @@ import Customer from "./components/Customer";
 import CustomerForm from "./components/CustomerForm";
 import EditCustomerForm from "./components/EditCustomerForm";
 import DeleteCustomer from "./components/DeleteCustomer";
+import CurrencyConverter from "./components/CurrencyConverter";
+import Weather from "./components/Weather";
 
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
@@ -34,6 +40,7 @@ import {
    addProductToWishlist,
    removeProductFromWishlist
 } from "./api/wishlist";
+import { fetchWeather } from "./api/weather";
 
 class App extends Component {
    state = {
@@ -42,7 +49,8 @@ class App extends Component {
       products: null,
       customers: null,
       editedProductID: null,
-      wishlist: null
+      wishlist: null,
+      weather: null
    };
 
    onSignIn = ({ email, password }) => {
@@ -141,7 +149,8 @@ class App extends Component {
          products,
          customers,
          editedProductID,
-         wishlist
+         wishlist,
+         weather
       } = this.state;
       const signedIn = !!decodedToken;
 
@@ -168,7 +177,18 @@ class App extends Component {
                            exact
                            render={requireAuth(() => (
                               <Fragment>
-                                 <Home />
+                                 {!!weather ? (
+                                    <Weather
+                                       temperature={weather.temp}
+                                       date={weather.date}
+                                       forecast={weather.weather.description}
+                                       icon={weather.weather.icon}
+                                    />
+                                 ) : (
+                                    <p>Loading</p>
+                                 )}
+
+                                 <CurrencyConverter />
                               </Fragment>
                            ))}
                         />
@@ -286,6 +306,12 @@ class App extends Component {
                         />
 
                         <Route
+                           path="/edit-product"
+                           exact
+                           render={requireAuth(() => <EditProductForm />)}
+                        />
+
+                        <Route
                            path="/wishlist"
                            exact
                            render={requireAuth(() => (
@@ -386,7 +412,7 @@ class App extends Component {
                            exact
                            render={requireAuth(() => (
                               <Fragment>
-                                 {customers && ( 
+                                 {customers && (
                                     <CustomerList customers={ customers } />
                                     // <div>yay</div>
                                  )}
@@ -403,7 +429,7 @@ class App extends Component {
                            exact
                            render={requireAuth(() => (
                               <Fragment>
-                                 {customers && ( 
+                                 {customers && (
                                     <CustomerList customers={ customers } />
                                     // <div>yay</div>
                                  )}
@@ -460,14 +486,14 @@ class App extends Component {
             this.setState({ products });
          })
          .catch(saveError);
-
-      listCustomers()
+         
+         listCustomers()
          .then(customers => {
             this.setState({ customers });
          })
          .catch(saveError);
-
-
+         
+         
       const { decodedToken } = this.state;
       const signedIn = !!decodedToken;
 
@@ -488,6 +514,14 @@ class App extends Component {
 
    // When this App first appears on screen
    componentDidMount() {
+      fetchWeather()
+         .then(weather => {
+            this.setState({ weather: weather });
+         })
+         .catch(error => {
+            this.setState({ error: error });
+            console.log("Error loading weather conversion", error);
+         });
       this.load();
    }
 
