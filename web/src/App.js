@@ -5,6 +5,7 @@ import './css/DeleteCustomer.css'
 import './css/CurrencyConverter.css'
 import './css/Weather.css'
 import './css/ProductForm.css'
+import './css/CustomerTraffic.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,6 +28,7 @@ import EditCustomerForm from './components/EditCustomerForm'
 import DeleteCustomer from './components/DeleteCustomer'
 import CurrencyConverter from './components/CurrencyConverter'
 import Weather from './components/Weather'
+import CustomerTraffic from './components/CustomerTraffic'
 
 import Error from './components/Error'
 import { signIn, signUp, signOutNow } from './api/auth'
@@ -52,6 +54,43 @@ class App extends Component {
       { id: 2, name: 'sing', completed: false },
       { id: 3, name: 'wash', completed: false },
       { id: 4, name: 'sleep', completed: false }
+    ],
+    traffics: [
+      {
+        date: '01-01-2018',
+        time: '10:55am',
+        count: 2,
+        isChef: 'yes',
+        weather: 'sunny 27'
+      },
+      {
+        date: '01-01-2018',
+        time: '10:55am',
+        count: 2,
+        isChef: 'yes',
+        weather: 'sunny 27'
+      },
+      {
+        date: '01-01-2018',
+        time: '10:55am',
+        count: 2,
+        isChef: 'yes',
+        weather: 'sunny 27'
+      },
+      {
+        date: '01-01-2018',
+        time: '10:55am',
+        count: 2,
+        isChef: 'yes',
+        weather: 'sunny 27'
+      },
+      {
+        date: '01-01-2018',
+        time: '10:55am',
+        count: 2,
+        isChef: 'yes',
+        weather: 'sunny 27'
+      }
     ],
     editedProductID: null,
     wishlist: null,
@@ -154,7 +193,8 @@ class App extends Component {
       products,
       editedProductID,
       wishlist,
-      weather
+      weather,
+      traffics
     } = this.state
     const signedIn = !!decodedToken
 
@@ -363,6 +403,20 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <DeleteCustomer firstName={'John'} lastName={'Smith'} />
+                    ))}
+                  />
+
+                  <Route
+                    path="/customertraffic"
+                    exact
+                    render={requireAuth(() => (
+                      <Fragment>
+                        {!!traffics ? (
+                          <CustomerTraffic traffics={traffics} />
+                        ) : (
+                          <p>Loading</p>
+                        )}
+                      </Fragment>
                     ))}
                   />
 

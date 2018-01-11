@@ -17,10 +17,12 @@
 
 .forecastTemp {
   font-size: 50px;
+  display: flex;
 }
 
 .forecastTemp p {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0px;
 }
