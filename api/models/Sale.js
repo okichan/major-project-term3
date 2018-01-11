@@ -20,9 +20,9 @@ const saleSchema = new mongoose.Schema({
     ref: "Customer"
   },
   weather: {
-    description: String,
-    maxTemp: Number,
-    minTemp: Number
+    description: { type: String, default: null },
+    maxTemp: { type: Number, default: null },
+    minTemp: { type: Number, default: null }
   },
   totalPrice: {
     type: Number,

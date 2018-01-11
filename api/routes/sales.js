@@ -124,69 +124,72 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
               saleObject.weather.description = weatherData.day.condition.text;
               saleObject.weather.maxTemp = weatherData.day.maxtemp_c;
               saleObject.weather.minTemp = weatherData.day.mintemp_c;
-              saleObject
-                .save()
-                .then(sale => {
-                  res.status(201).json(sale);
-                  // push products to Customer's purchasedProducts array
-                  Customer.findByIdAndUpdate(
-                    customer_id,
-                    {
-                      $push: {
-                        purchasedHistory: sale._id
-                      }
-                    },
-                    { new: true }
-                  ).exec();
-
-                  let sharpReminderNeeded = false;
-                  let ctr2 = 0;
-                  // calculate product stock and totalSales
-                  sale.products.forEach((product, index, array) => {
-                    stockAndTotalSalesCalculator(
-                      product.product,
-                      product.unitAmount
-                    );
-                    // check if sharpen reminder needed
-                    Product.findById(product.product).then(product => {
-                      ctr2++;
-                      if (product.category !== "stone") {
-                        sharpReminderNeeded = true;
-                      }
-                      // after forEach execute below code
-                      if (ctr2 === array.length) {
-                        if (sharpReminderNeeded) {
-                          // if sharp Reminder is needed to create
-                          // create sharp reminder notifications
-                          const saleDateObject = new Date(saleDate);
-                          saleDateObject.setDate(saleDateObject.getDate() + 80);
-
-                          Notification.create({
-                            type: "sharpening",
-                            data: sale,
-                            notificationDate: saleDateObject
-                          })
-                            .then(notification => {
-                              console.log("Sharpening Notification created");
-                            })
-                            .catch(error => {
-                              res.status(400).json({ error: error.message });
-                            }); // notification create catch
-                        } else {
-                          // if  sharp Reminder is NOT needed to create
-                          console.log("sharpening notification is not needed");
-                        }
-                      }
-                    });
-                  });
-                })
-                .catch(error => {
-                  res.status(400).json({ error });
-                }); // save error catch
             })
             .catch(error => {
-              res.status(400).json({ error: error.message });
-            }); // weather api catch
+              console.error(
+                "Sale date is not valid. within last 30 days is available"
+              );
+              // weather api catch
+            })
+            .then(() => {
+              saleObject.save().then(sale => {
+                res.status(201).json(sale);
+                // push products to Customer's purchasedProducts array
+                Customer.findByIdAndUpdate(
+                  customer_id,
+                  {
+                    $push: {
+                      purchasedHistory: sale._id
+                    }
+                  },
+                  { new: true }
+                ).exec();
+
+                let sharpReminderNeeded = false;
+                let ctr2 = 0;
+                // calculate product stock and totalSales
+                sale.products.forEach((product, index, array) => {
+                  stockAndTotalSalesCalculator(
+                    product.product,
+                    product.unitAmount
+                  );
+                  // check if sharpen reminder needed
+                  Product.findById(product.product).then(product => {
+                    ctr2++;
+                    if (product.category !== "stone") {
+                      sharpReminderNeeded = true;
+                    }
+                    // after forEach execute below code
+                    if (ctr2 === array.length) {
+                      if (sharpReminderNeeded) {
+                        // if sharp Reminder is needed to create
+                        // create sharp reminder notifications
+                        const saleDateObject = new Date(saleDate);
+                        saleDateObject.setDate(saleDateObject.getDate() + 80);
+
+                        Notification.create({
+                          type: "sharpening",
+                          data: sale,
+                          notificationDate: saleDateObject
+                        })
+                          .then(notification => {
+                            console.log("Sharpening Notification created");
+                          })
+                          .catch(error => {
+                            res.status(400).json({ error: error.message });
+                          }); // notification create catch
+                      } else {
+                        // if  sharp Reminder is NOT needed to create
+                        console.log("sharpening notification is not needed");
+                      }
+                    }
+                  });
+                });
+              });
+            })
+            .catch(error => {
+              res.status(400).json({ error });
+            }); // save error catch
         } else {
           // stock validation faild
           res.status(400).json({ error: "stock validation is faild" });
