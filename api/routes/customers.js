@@ -6,14 +6,32 @@ const router = new express.Router();
 
 // get list
 router.get("/customers", (req, res) => {
-  Customer.find()
-    .populate("purchasedHistory")
-    .then(customers => {
-      res.json(customers);
-    })
-    .catch(error => {
-      res.json({ error });
-    });
+  const { phone } = req.query;
+  if (phone) {
+    Customer.find({ phone })
+      .populate("purchasedHistory")
+      .then(customers => {
+        if (customers.length !== 0) {
+          // when find some
+          res.json(customers);
+        } else {
+          // when no result
+          res.status(404).json({ error: `no result with ${phone}` });
+        }
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  } else {
+    Customer.find()
+      .populate("purchasedHistory")
+      .then(customers => {
+        res.json(customers);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  }
 });
 
 // Create

@@ -48,8 +48,8 @@ function stockAndTotalSalesCalculator(productId, sold) {
     // judge if need to create a notification
     if (productData.stock <= 2) {
       Notification.create({
-        title: "Order reminder",
-        body: `${productData.title}'s stock is now ${productData.stock}.'`
+        type: "stock",
+        data: productData
       })
         .then(notificationData => {
           console.log("new notification is created!");
@@ -81,9 +81,9 @@ const router = new express.Router();
 // get list
 router.get("/sales", (req, res) => {
   Sale.find()
-    .populate("products", "title")
-    .populate("customer", "firstName")
-    .populate("inCharge", "userName")
+    .populate("products")
+    .populate("customer")
+    .populate("inCharge")
     .then(sales => {
       res.json(sales);
     })
@@ -118,6 +118,7 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
 
           // set currentUser as this document's inCharge
           saleObject.inCharge = currentUser;
+          // get weather api for the table
           getWeatherByDate(saleDate)
             .then(weatherData => {
               saleObject.weather.description = weatherData.day.condition.text;
@@ -145,6 +146,22 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
                       product.unitAmount
                     );
                   });
+
+                  const saleDateObject = new Date(saleDate);
+                  saleDateObject.setDate(saleDateObject.getDate() + 80);
+
+                  // create sharp reminder notifications
+                  Notification.create({
+                    type: "sharpening",
+                    data: sale,
+                    notificationDate: saleDateObject
+                  })
+                    .then(notification => {
+                      console.log("notification created");
+                    })
+                    .catch(error => {
+                      res.status(400).json({ error: error.message });
+                    });
                 })
                 .catch(error => {
                   res.status(400).json({ error });

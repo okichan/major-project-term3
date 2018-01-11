@@ -2,10 +2,13 @@ const mongoose = require("./init");
 
 const productSchema = new mongoose.Schema({
   category: String,
-  code: String,
+  code: { type: String, unique: true },
   title: String,
   image: String,
-  price: Number,
+  price: {
+    type: Number,
+    min: 0
+  },
   stock: {
     type: Number,
     min: 0,
