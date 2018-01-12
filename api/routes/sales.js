@@ -49,7 +49,7 @@ function stockAndTotalSalesCalculator(productId, sold) {
     if (productData.stock <= 2) {
       Notification.create({
         type: "stock",
-        data: productData
+        product: productData._id
       })
         .then(notificationData => {
           console.log("Stock notification is created!");
@@ -169,7 +169,7 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
 
                         Notification.create({
                           type: "sharpening",
-                          data: sale,
+                          sale: sale._id,
                           notificationDate: saleDateObject
                         })
                           .then(notification => {

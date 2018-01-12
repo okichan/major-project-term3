@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from "react"
-import "./css/App.css"
-import "./css/Customer.css"
-import "./css/DeleteCustomer.css"
-import "./css/CurrencyConverter.css"
-import "./css/Weather.css"
-import "./css/ProductForm.css"
-import "./css/CustomerTraffic.css"
-import "./css/CustomerTrafficForm.css"
+import React, { Component, Fragment } from "react";
+import "./css/App.css";
+import "./css/Customer.css";
+import "./css/DeleteCustomer.css";
+import "./css/CurrencyConverter.css";
+import "./css/Weather.css";
+import "./css/ProductForm.css";
+import "./css/CustomerTraffic.css";
+import "./css/CustomerTrafficForm.css";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -20,7 +20,6 @@ import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
 import EditProductForm from "./components/EditProductForm";
 import SalesForm from "./components/SalesForm";
-import Wishlist from "./components/Wishlist";
 import PrimaryNav from "./components/PrimaryNav";
 import SideBar from "./components/SideBar";
 import LinkButton from "./components/LinkButton";
@@ -32,6 +31,7 @@ import CurrencyConverter from "./components/CurrencyConverter";
 import Weather from "./components/Weather";
 import CustomerTraffic from "./components/CustomerTraffic";
 import CustomerTrafficForm from "./components/CustomerTrafficForm";
+import NotificationList from "./components/NotificationList";
 
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
@@ -39,18 +39,18 @@ import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct } from "./api/products";
 import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
 import {
-	listWishlist,
-	addProductToWishlist,
-	removeProductFromWishlist
-} from "./api/wishlist";
+	listNotifications,
+	updateNotifications,
+	deleteNotifications
+} from "./api/notifications";
 import { fetchWeather } from "./api/weather";
 
 class App extends Component {
 	state = {
 		error: null,
 		decodedToken: getDecodedToken(), // Restore the previous signed in data
-      products: null,
-      customers: null,
+		products: null,
+		customers: null,
 		traffics: [
 			{
 				date: "01-01-2018",
@@ -89,8 +89,9 @@ class App extends Component {
 			}
 		],
 		editedProductID: null,
-		wishlist: null,
-		weather: null
+		productPrice: null,
+		weather: null,
+		notifications: null
 	};
 
 	onSignIn = ({ email, password }) => {
@@ -103,8 +104,8 @@ class App extends Component {
 			});
 	};
 
-	onSignUp = ({ email, password, firstName, lastName }) => {
-		signUp({ email, password, firstName, lastName })
+	onSignUp = ({ email, password, userName }) => {
+		signUp({ email, password, userName })
 			.then(decodedToken => {
 				this.setState({ decodedToken });
 			})
@@ -162,23 +163,37 @@ class App extends Component {
 			});
 	};
 
-	onAddProductToWishlist = productID => {
-		addProductToWishlist(productID)
-			.then(wishlist => {
-				this.setState({ wishlist });
+	// onChange function for saleForm.js select menu
+	onChangeTitle = title => {
+		const { products } = this.state;
+		const chosenProdut = products.filter(product => {
+			return product.title === title;
+		})[0];
+		this.setState({ productPrice: chosenProdut.price });
+	};
+
+	onChangePrice = e => {
+		const value = e.target.value;
+		this.setState({ productPrice: value });
+	};
+
+	onClickDelete = () => {
+		deleteNotifications()
+			.then(data => {
+				this.load();
 			})
 			.catch(error => {
-				this.setState({ error });
+				console.error(error.message);
 			});
 	};
 
-	onRemoveProductFromWishlist = productID => {
-		removeProductFromWishlist(productID)
-			.then(wishlist => {
-				this.setState({ wishlist });
+	onClickToggoleCheckedField = (id, data) => {
+		updateNotifications(id, data)
+			.then(data => {
+				this.load();
 			})
 			.catch(error => {
-				this.setState({ error });
+				console.error(error.message);
 			});
 	};
 
@@ -191,7 +206,9 @@ class App extends Component {
 			editedProductID,
 			wishlist,
 			weather,
-			traffics
+			traffics,
+			productPrice,
+			notifications
 		} = this.state;
 		const signedIn = !!decodedToken;
 
@@ -204,7 +221,13 @@ class App extends Component {
 					{error && <Error error={error} />}
 					{signedIn && (
 						<header>
-							<PrimaryNav signedIn={signedIn} signOut={this.onSignOut} />
+							<PrimaryNav
+								signedIn={signedIn}
+								signOut={this.onSignOut}
+								notificationCount={
+									notifications ? notifications.length : "0"
+								}
+							/>
 						</header>
 					)}
 
@@ -229,10 +252,31 @@ class App extends Component {
 													/>
 												) : (
 													<p>Loading</p>
-                                    )}
-                                    
+												)}
+
 												<CurrencyConverter />
 											</div>
+										</Fragment>
+									))}
+								/>
+
+								<Route
+									path="/notifications"
+									exact
+									render={requireAuth(() => (
+										<Fragment>
+											{signedIn && (
+												<div className="mb-3">
+													<h2>Notification list</h2>
+													<NotificationList
+														notifications={notifications}
+														onClickDelete={this.onClickDelete}
+														onClickToggle={
+															this.onClickToggoleCheckedField
+														}
+													/>
+												</div>
+											)}
 										</Fragment>
 									))}
 								/>
@@ -297,18 +341,9 @@ class App extends Component {
 											{products && (
 												<ProductList
 													products={products}
-													productsInWishlist={
-														!!wishlist ? wishlist.products : null
-													}
 													editedProductID={editedProductID}
 													onEditProduct={
 														this.onBeginEditingProduct
-													}
-													onAddProductToWishlist={
-														this.onAddProductToWishlist
-													}
-													onRemoveProductFromWishlist={
-														this.onRemoveProductFromWishlist
 													}
 													renderEditForm={product => (
 														<div className="ml-3">
@@ -355,27 +390,15 @@ class App extends Component {
 								/>
 
 								<Route
-									path="/wishlist"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											{wishlist && (
-												<Wishlist
-													products={wishlist.products}
-													onRemoveProductFromWishlist={
-														this.onRemoveProductFromWishlist
-													}
-												/>
-											)}
-										</Fragment>
-									))}
-								/>
-
-								<Route
 									path="/new-sales"
 									exact
 									render={requireAuth(() => (
-										<SalesForm products={products} />
+										<SalesForm
+											products={products}
+											productPrice={productPrice}
+											onChangeTitle={this.onChangeTitle}
+											onChangePrice={this.onChangePrice}
+										/>
 									))}
 								/>
 
@@ -470,7 +493,7 @@ class App extends Component {
 									render={requireAuth(() => (
 										<Fragment>
 											{customers && (
-												<CustomerList customers={ customers } />
+												<CustomerList customers={customers} />
 												// <div>yay</div>
 											)}
 											<LinkButton
@@ -487,7 +510,7 @@ class App extends Component {
 									render={requireAuth(() => (
 										<Fragment>
 											{customers && (
-												<CustomerList customers={ customers } />
+												<CustomerList customers={customers} />
 												// <div>yay</div>
 											)}
 											<LinkButton
@@ -550,27 +573,12 @@ class App extends Component {
 			})
 			.catch(saveError);
 
+		listNotifications()
+			.then(notifications => {
+				this.setState({ notifications });
+			})
+			.catch(saveError);
 
-		const { decodedToken } = this.state;
-		const signedIn = !!decodedToken;
-
-		if (signedIn) {
-			// Load only for signed in users
-			listWishlist()
-				.then(wishlist => {
-					this.setState({ wishlist });
-				})
-				.catch(saveError);
-		} else {
-			// Clear sign-in-only data
-			this.setState({
-				wishlist: null
-			});
-		}
-	}
-
-	// When this App first appears on screen
-	componentDidMount() {
 		fetchWeather()
 			.then(weather => {
 				this.setState({ weather: weather });
@@ -579,6 +587,27 @@ class App extends Component {
 				this.setState({ error: error });
 				console.log("Error loading weather conversion", error);
 			});
+
+		const { decodedToken } = this.state;
+		const signedIn = !!decodedToken;
+
+		if (signedIn) {
+			// Load only for signed in users
+		} else {
+			// Clear sign-in-only data
+		}
+	}
+
+	// When this App first appears on screen
+	componentDidMount() {
+      fetchWeather()
+      .then(weather => {
+         this.setState({ weather: weather });
+      })
+      .catch(error => {
+         this.setState({ error: error });
+         console.log("Error loading weather conversion", error);
+      });
 		this.load();
 	}
 
