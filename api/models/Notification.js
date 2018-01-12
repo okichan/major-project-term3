@@ -2,7 +2,14 @@ const mongoose = require("./init");
 
 const notificationSchema = new mongoose.Schema({
   type: String,
-  data: String,
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product"
+  },
+  sale: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Sale"
+  },
   checked: { type: Boolean, default: false },
   notificationDate: { type: Date, default: Date.now }
 });
