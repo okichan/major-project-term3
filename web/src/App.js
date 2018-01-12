@@ -28,12 +28,18 @@ import EditCustomerForm from "./components/EditCustomerForm";
 import DeleteCustomer from "./components/DeleteCustomer";
 import CurrencyConverter from "./components/CurrencyConverter";
 import Weather from "./components/Weather";
+import NotificationList from "./components/NotificationList";
 
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct } from "./api/products";
 import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
+import {
+  listNotifications,
+  updateNotifications,
+  deleteNotifications
+} from "./api/notifications";
 import { fetchWeather } from "./api/weather";
 
 class App extends Component {
@@ -44,7 +50,8 @@ class App extends Component {
     customers: null,
     editedProductID: null,
     productPrice: null,
-    weather: null
+    weather: null,
+    notifications: null
   };
 
   onSignIn = ({ email, password }) => {
@@ -130,6 +137,26 @@ class App extends Component {
     this.setState({ productPrice: value });
   };
 
+  onClickDelete = () => {
+    deleteNotifications()
+      .then(data => {
+        this.load();
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
+  };
+
+  onClickToggoleCheckedField = (id, data) => {
+    updateNotifications(id, data)
+      .then(data => {
+        this.load();
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
+  };
+
   render() {
     const {
       error,
@@ -139,7 +166,8 @@ class App extends Component {
       editedProductID,
       wishlist,
       weather,
-      productPrice
+      productPrice,
+      notifications
     } = this.state;
     const signedIn = !!decodedToken;
 
@@ -152,7 +180,11 @@ class App extends Component {
           {error && <Error error={error} />}
           {signedIn && (
             <header>
-              <PrimaryNav signedIn={signedIn} signOut={this.onSignOut} />
+              <PrimaryNav
+                signedIn={signedIn}
+                signOut={this.onSignOut}
+                notificationCount={notifications ? notifications.length : "0"}
+              />
             </header>
           )}
 
@@ -178,6 +210,25 @@ class App extends Component {
                       )}
 
                       <CurrencyConverter />
+                    </Fragment>
+                  ))}
+                />
+
+                <Route
+                  path="/notifications"
+                  exact
+                  render={requireAuth(() => (
+                    <Fragment>
+                      {signedIn && (
+                        <div className="mb-3">
+                          <h2>Notification list</h2>
+                          <NotificationList
+                            notifications={notifications}
+                            onClickDelete={this.onClickDelete}
+                            onClickToggle={this.onClickToggoleCheckedField}
+                          />
+                        </div>
+                      )}
                     </Fragment>
                   ))}
                 />
@@ -238,15 +289,8 @@ class App extends Component {
                       {products && (
                         <ProductList
                           products={products}
-                          productsInWishlist={
-                            !!wishlist ? wishlist.products : null
-                          }
                           editedProductID={editedProductID}
                           onEditProduct={this.onBeginEditingProduct}
-                          onAddProductToWishlist={this.onAddProductToWishlist}
-                          onRemoveProductFromWishlist={
-                            this.onRemoveProductFromWishlist
-                          }
                           renderEditForm={product => (
                             <div className="ml-3">
                               <ProductForm
@@ -448,6 +492,21 @@ class App extends Component {
       })
       .catch(saveError);
 
+    listNotifications()
+      .then(notifications => {
+        this.setState({ notifications });
+      })
+      .catch(saveError);
+
+    fetchWeather()
+      .then(weather => {
+        this.setState({ weather: weather });
+      })
+      .catch(error => {
+        this.setState({ error: error });
+        console.log("Error loading weather conversion", error);
+      });
+
     const { decodedToken } = this.state;
     const signedIn = !!decodedToken;
 
@@ -460,14 +519,6 @@ class App extends Component {
 
   // When this App first appears on screen
   componentDidMount() {
-    fetchWeather()
-      .then(weather => {
-        this.setState({ weather: weather });
-      })
-      .catch(error => {
-        this.setState({ error: error });
-        console.log("Error loading weather conversion", error);
-      });
     this.load();
   }
 

@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/img/logo.png";
 
-function PrimaryNav({ signedIn, signOut }) {
+function PrimaryNav({ signedIn, signOut, notificationCount }) {
   return (
     <nav
       className="navbar navbar-expand-sm navbar-light"
@@ -39,11 +39,11 @@ function PrimaryNav({ signedIn, signOut }) {
               <Fragment>
                 <li className="nav-item">
                   <Link
-                    to="/notification"
+                    to="/notifications"
                     className="nav-link"
                     title="Notification"
                   >
-                    <i className="fa fa-bell big mr-3" />
+                    <i className="fa fa-bell big mr-3">{notificationCount}</i>
                   </Link>
                 </li>
                 <li className="nav-item">
