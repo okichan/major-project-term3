@@ -61,16 +61,11 @@ router.put("/notification/:id", authMiddleware.requireJWT, (req, res) => {
     });
 });
 
-// Delete
-router.delete("/notification/:id", (req, res) => {
-  const { id } = req.params;
-  Notification.findByIdAndRemove(id)
+// delete checked notifications
+router.delete("/notifications", (req, res) => {
+  Notification.remove({ checked: true })
     .then(notification => {
-      if (notification) {
-        res.json({ message: `${notification.firstName} is deleted` });
-      } else {
-        res.status(404).json({ message: `could not find id with ${id}` });
-      }
+      res.json({ message: "chekced notifications are deleted" });
     })
     .catch(error => {
       res.status(500).json({ error: error.message });
