@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { fetchCurrency } from '../api/currency'
+import React, { Component } from "react"
+import { fetchCurrency } from "../api/currency"
 
 class CurrencyConverter extends Component {
   state = {
@@ -15,7 +15,7 @@ class CurrencyConverter extends Component {
       })
       .catch(error => {
         this.setState({ error: error })
-        console.log('Error loading currency conversion', error)
+        console.log("Error loading currency conversion", error)
       })
   }
 
@@ -38,14 +38,16 @@ class CurrencyConverter extends Component {
             </div>
             <div className="currencyAmount">
               <p>$</p>
-              <input
-                value={enteredNumber}
-                placeholder="1"
-                aria-label="entered number"
-                onChange={e => {
-                  this.setState({ enteredNumber: e.target.value })
-                }}
-              />
+              <div className="currencyAmountInput">
+                <input
+                  value={enteredNumber}
+                  placeholder="1"
+                  aria-label="entered number"
+                  onChange={e => {
+                    this.setState({ enteredNumber: e.target.value })
+                  }}
+                />
+              </div>
             </div>
           </div>
 
@@ -63,15 +65,17 @@ class CurrencyConverter extends Component {
             </div>
             {!!currency ? (
               <div className="currencyAmount">
-                {' '}
+                {" "}
                 <p>¥</p>
-                <input
-                  value={(currency.JPY * enteredNumber).toFixed(2)}
-                  placeholder="1"
-                  onChange={e => {
-                    this.setState({ enteredNumber: e.target.value })
-                  }}
-                />
+                <div className="currencyAmountInput">
+                  <input
+                    value={(currency.JPY * enteredNumber).toFixed(2)}
+                    placeholder="1"
+                    onChange={e => {
+                      this.setState({ enteredNumber: e.target.value })
+                    }}
+                  />
+                </div>
               </div>
             ) : (
               <p>Loading...</p>
