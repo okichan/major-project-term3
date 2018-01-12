@@ -1,48 +1,50 @@
-import React, { Component, Fragment } from 'react'
-import './css/App.css'
-import './css/Customer.css'
-import './css/DeleteCustomer.css'
-import './css/CurrencyConverter.css'
-import './css/Weather.css'
-import './css/ProductForm.css'
-import './css/CustomerTraffic.css'
+import React, { Component, Fragment } from "react"
+import "./css/App.css"
+import "./css/Customer.css"
+import "./css/DeleteCustomer.css"
+import "./css/CurrencyConverter.css"
+import "./css/Weather.css"
+import "./css/ProductForm.css"
+import "./css/CustomerTraffic.css"
+import "./css/CustomerTrafficForm.css"
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect
-} from 'react-router-dom'
-import SignInForm from './components/SignInForm'
-import SignUpForm from './components/SignUpForm'
-import ProductList from './components/ProductList'
-import ProductForm from './components/ProductForm'
-import EditProductForm from './components/EditProductForm'
-import SalesForm from './components/SalesForm'
-import Wishlist from './components/Wishlist'
-import PrimaryNav from './components/PrimaryNav'
-import SideBar from './components/SideBar'
-import LinkButton from './components/LinkButton'
-import Customer from './components/Customer'
-import CustomerForm from './components/CustomerForm'
-import EditCustomerForm from './components/EditCustomerForm'
-import DeleteCustomer from './components/DeleteCustomer'
-import CurrencyConverter from './components/CurrencyConverter'
-import Weather from './components/Weather'
-import CustomerTraffic from './components/CustomerTraffic'
+} from "react-router-dom"
+import SignInForm from "./components/SignInForm"
+import SignUpForm from "./components/SignUpForm"
+import ProductList from "./components/ProductList"
+import ProductForm from "./components/ProductForm"
+import EditProductForm from "./components/EditProductForm"
+import SalesForm from "./components/SalesForm"
+import Wishlist from "./components/Wishlist"
+import PrimaryNav from "./components/PrimaryNav"
+import SideBar from "./components/SideBar"
+import LinkButton from "./components/LinkButton"
+import Customer from "./components/Customer"
+import CustomerForm from "./components/CustomerForm"
+import EditCustomerForm from "./components/EditCustomerForm"
+import DeleteCustomer from "./components/DeleteCustomer"
+import CurrencyConverter from "./components/CurrencyConverter"
+import Weather from "./components/Weather"
+import CustomerTraffic from "./components/CustomerTraffic"
+import CustomerTrafficForm from "./components/CustomerTrafficForm"
 
-import Error from './components/Error'
-import { signIn, signUp, signOutNow } from './api/auth'
-import { getDecodedToken } from './api/token'
-import { listProducts, createProduct, updateProduct } from './api/products'
+import Error from "./components/Error"
+import { signIn, signUp, signOutNow } from "./api/auth"
+import { getDecodedToken } from "./api/token"
+import { listProducts, createProduct, updateProduct } from "./api/products"
 import {
   listWishlist,
   addProductToWishlist,
   removeProductFromWishlist
-} from './api/wishlist'
-import { fetchWeather } from './api/weather'
+} from "./api/wishlist"
+import { fetchWeather } from "./api/weather"
 
 fetchWeather().then(res => {
-  console.log('Loaded Weather', res)
+  console.log("Loaded Weather", res)
 })
 
 class App extends Component {
@@ -50,46 +52,46 @@ class App extends Component {
     error: null,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     products: [
-      { id: 1, name: 'eat', completed: false },
-      { id: 2, name: 'sing', completed: false },
-      { id: 3, name: 'wash', completed: false },
-      { id: 4, name: 'sleep', completed: false }
+      { id: 1, name: "eat", completed: false },
+      { id: 2, name: "sing", completed: false },
+      { id: 3, name: "wash", completed: false },
+      { id: 4, name: "sleep", completed: false }
     ],
     traffics: [
       {
-        date: '01-01-2018',
-        time: '10:55am',
+        date: "01-01-2018",
+        time: "10:55am",
         count: 2,
-        isChef: 'yes',
-        weather: 'sunny 27'
+        isChef: "yes",
+        weather: "sunny 27"
       },
       {
-        date: '01-01-2018',
-        time: '10:55am',
+        date: "01-01-2018",
+        time: "10:55am",
         count: 2,
-        isChef: 'yes',
-        weather: 'sunny 27'
+        isChef: "yes",
+        weather: "sunny 27"
       },
       {
-        date: '01-01-2018',
-        time: '10:55am',
+        date: "01-01-2018",
+        time: "10:55am",
         count: 2,
-        isChef: 'yes',
-        weather: 'sunny 27'
+        isChef: "yes",
+        weather: "sunny 27"
       },
       {
-        date: '01-01-2018',
-        time: '10:55am',
+        date: "01-01-2018",
+        time: "10:55am",
         count: 2,
-        isChef: 'yes',
-        weather: 'sunny 27'
+        isChef: "yes",
+        weather: "sunny 27"
       },
       {
-        date: '01-01-2018',
-        time: '10:55am',
+        date: "01-01-2018",
+        time: "10:55am",
         count: 2,
-        isChef: 'yes',
-        weather: 'sunny 27'
+        isChef: "yes",
+        weather: "sunny 27"
       }
     ],
     editedProductID: null,
@@ -220,18 +222,20 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        {!!weather ? (
-                          <Weather
-                            temperature={weather.temp}
-                            date={weather.date}
-                            forecast={weather.weather.description}
-                            icon={weather.weather.icon}
-                          />
-                        ) : (
-                          <p>Loading</p>
-                        )}
-
-                        <CurrencyConverter />
+                        <div className="dashboardContainer">
+                          <CustomerTrafficForm />
+                          {!!weather ? (
+                            <Weather
+                              temperature={weather.temp}
+                              date={weather.date}
+                              forecast={weather.weather.description}
+                              icon={weather.weather.icon}
+                            />
+                          ) : (
+                            <p>Loading</p>
+                          )}
+                          <CurrencyConverter />
+                        </div>
                       </Fragment>
                     ))}
                   />
@@ -274,11 +278,11 @@ class App extends Component {
                         <div className="mb-3">
                           <p>Email: {decodedToken.email}</p>
                           <p>
-                            Signed in at:{' '}
+                            Signed in at:{" "}
                             {new Date(decodedToken.iat * 1000).toISOString()}
                           </p>
                           <p>
-                            Expire at:{' '}
+                            Expire at:{" "}
                             {new Date(decodedToken.exp * 1000).toISOString()}
                           </p>
                           <button onClick={this.onSignOut}>Sign Out</button>
@@ -373,15 +377,15 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Customer
-                        firstName={'John'}
-                        lastName={'Smith'}
-                        sex={'male'}
-                        email={'johnsmith@gmail.com'}
-                        phone={'000'}
-                        date={'01/01/2015'}
-                        chef={'yes'}
-                        customerOrigin={'McDonalds'}
-                        notes={'i hate this guy'}
+                        firstName={"John"}
+                        lastName={"Smith"}
+                        sex={"male"}
+                        email={"johnsmith@gmail.com"}
+                        phone={"000"}
+                        date={"01/01/2015"}
+                        chef={"yes"}
+                        customerOrigin={"McDonalds"}
+                        notes={"i hate this guy"}
                       />
                     ))}
                   />
@@ -402,7 +406,7 @@ class App extends Component {
                     path="/delete-customer"
                     exact
                     render={requireAuth(() => (
-                      <DeleteCustomer firstName={'John'} lastName={'Smith'} />
+                      <DeleteCustomer firstName={"John"} lastName={"Smith"} />
                     ))}
                   />
 
@@ -536,7 +540,7 @@ class App extends Component {
       })
       .catch(error => {
         this.setState({ error: error })
-        console.log('Error loading weather conversion', error)
+        console.log("Error loading weather conversion", error)
       })
     this.load()
   }

@@ -1,8 +1,9 @@
 .currencyConverter {
   border: 2px solid;
   text-align: center;
-  width: 50%;
+  width: 80%;
   margin: 5px;
+  margin: 0 auto;
 }
 
 .country {
@@ -35,6 +36,8 @@
 .currencyAmount {
   display: flex;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .currencyAmount p {
@@ -45,7 +48,7 @@
   margin: 0px;
 }
 
-.currencyAmount input {
+.currencyAmountInput input {
   border: none;
   background: transparent;
   font-size: 20px;
