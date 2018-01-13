@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/img/logo.png";
+import logo from "../logo.png";
 
 function PrimaryNav({ signedIn, signOut, notificationCount }) {
   return (
@@ -10,7 +10,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
     >
       <Link to="/" className="mr-3">
         {" "}
-        <img src={logo} style={{ width: "140px" }} />
+        <img src={logo} style={{ width: "140px" }} alt="logo" />
       </Link>
 
       <button

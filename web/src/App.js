@@ -2,8 +2,6 @@ import React, { Component, Fragment } from "react";
 import "./css/App.css";
 import "./css/Customer.css";
 import "./css/DeleteCustomer.css";
-import "./css/CurrencyConverter.css";
-import "./css/Weather.css";
 import "./css/ProductForm.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
@@ -27,12 +25,9 @@ import Customer from "./components/Customer";
 import CustomerForm from "./components/CustomerForm";
 import EditCustomerForm from "./components/EditCustomerForm";
 import DeleteCustomer from "./components/DeleteCustomer";
-import CurrencyConverter from "./components/CurrencyConverter";
-import Weather from "./components/Weather";
+import Home from "./components/Home";
 import CustomerTraffic from "./components/CustomerTraffic";
-import CustomerTrafficForm from "./components/CustomerTrafficForm";
 import NotificationList from "./components/NotificationList";
-
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
@@ -43,7 +38,6 @@ import {
 	updateNotifications,
 	deleteNotifications
 } from "./api/notifications";
-import { fetchWeather } from "./api/weather";
 
 class App extends Component {
 	state = {
@@ -90,9 +84,12 @@ class App extends Component {
 		],
 		editedProductID: null,
 		productPrice: null,
-		weather: null,
 		notifications: null
-	};
+   };
+
+   componentDidMount() {
+      this.load();
+   }
 
 	onSignIn = ({ email, password }) => {
 		signIn({ email, password })
@@ -204,8 +201,6 @@ class App extends Component {
 			products,
 			customers,
 			editedProductID,
-			wishlist,
-			weather,
 			traffics,
 			productPrice,
 			notifications
@@ -241,21 +236,7 @@ class App extends Component {
 									exact
 									render={requireAuth(() => (
 										<Fragment>
-											<div className="dashboardContainer">
-												<CustomerTrafficForm />
-												{!!weather ? (
-													<Weather
-														temperature={weather.temp}
-														date={weather.date}
-														forecast={weather.weather.description}
-														icon={weather.weather.icon}
-													/>
-												) : (
-													<p>Loading</p>
-												)}
-
-												<CurrencyConverter />
-											</div>
+											<Home />
 										</Fragment>
 									))}
 								/>
@@ -541,13 +522,10 @@ class App extends Component {
 
 								<Route
 									render={({ location }) => (
-										<h2>🙇Page not found: {location.pathname}</h2>
+										<h2>Page not found: {location.pathname}</h2>
 									)}
 								/>
 							</Switch>
-
-							{/* <main role="main" className="col-sm-9 ml-sm-auto col-md-10 pt-3"> */}
-							{/* </main> */}
 						</div>
 					</div>
 				</div>
@@ -579,15 +557,6 @@ class App extends Component {
 			})
 			.catch(saveError);
 
-		fetchWeather()
-			.then(weather => {
-				this.setState({ weather: weather });
-			})
-			.catch(error => {
-				this.setState({ error: error });
-				console.log("Error loading weather conversion", error);
-			});
-
 		const { decodedToken } = this.state;
 		const signedIn = !!decodedToken;
 
@@ -596,19 +565,6 @@ class App extends Component {
 		} else {
 			// Clear sign-in-only data
 		}
-	}
-
-	// When this App first appears on screen
-	componentDidMount() {
-      fetchWeather()
-      .then(weather => {
-         this.setState({ weather: weather });
-      })
-      .catch(error => {
-         this.setState({ error: error });
-         console.log("Error loading weather conversion", error);
-      });
-		this.load();
 	}
 
 	// When state changes

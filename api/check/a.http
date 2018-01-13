@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTUwNzIxMiwiZXhwIjoxNTE2MTEyMDEyLCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.i2sZmnYKUMlnaMgUL9-tbCAb_lKOkeJ_KdbyweISmCU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTgzNTc5OCwiZXhwIjoxNTE2NDQwNTk4LCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.z3FdvZFBhZ7aI9Wvtqy94cuvG73Vz8GYcik7Ym7oT0M
 
 GET http://localhost:7000/products
 Authorization: Bearer {{ token }}
@@ -30,31 +30,26 @@ Content-Type: application/json
 
 {
   "category": "Wa-Bocho",
-  "code": "41103",
+  "code": "41107",
   "title": "240mm Yanagiba Aoniko Hongasumi with saya",
   "price": 100,
   "totalSales": 32
 }
 
 ### Update product
-PUT http://localhost:7000/products/5a54afbe8edb60461c4f45e6
+PUT http://localhost:7000/product/5a54e6dce51e644448cd7811
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "price": 85
+  "code": "41109"
 }
 
 ### Delete product
-DELETE http://localhost:7000/products/5a54adff8edb60461c4f45e3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTQ5ODk4NCwiZXhwIjoxNTE2MTAzNzg0LCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.vvyLNZDa4YYDxe5oMieNBm7WV2GyiKXzm8pwKPlClm4
+DELETE http://localhost:7000/product/5a54e6dce51e644448cd7811
+Authorization: Bearer {{ token }}
 Content-Type: application/json
 
-{
-  "category": "Wa-Bocho",
-  "code": "41135",
-  "title": "150mm Deba Aoniko Hongasumi with saya"
-}
 
 ### Read customer
 GET http://localhost:7000/customers
@@ -65,25 +60,28 @@ POST http://localhost:7000/customers
 Authorization: Bearer {{ token }}
 
 {
-   "firstName": "Tomomi",
-   "lastName": "Oki",
-   "gender": "Female",
+   "gender": "Male",
    "phone": "0433001122",
    "email": "patrick.smith@coderacademy.edu.au",
+   "firstName": "Taro",
+   "lastName": "Yamada",
    "isChef": 1
 }
 
 
 ### Update customer
-PUT http://localhost:7000/customers/5a555f3ae51e644448cd7812
+PUT http://localhost:7000/customer/5a555f3ae51e644448cd7812
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
+   "firstName": "",
+   "lastName": "",
+   "gender": "female",
    "purchasedHistory": [],
+   "isChef": false,
    "workAt": "Kmart",
    "origin": "SNS (Facebook, Twitter etc)",
-   "note": "Japan OTAKU, traveling at least once a year to Japan, love JP knives too, have many JP knives",
-   
+   "note": "Blah blah"   
 }
 
