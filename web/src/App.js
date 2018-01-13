@@ -28,7 +28,7 @@ import NotificationList from "./components/NotificationList";
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
-import { listProducts, createProduct, updateProduct } from "./api/products";
+import { listProducts, createProduct, updateProduct, deleteProduct } from "./api/products";
 import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
 import { listSales, createSale, updateSale } from "./api/sales";
 import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
@@ -121,6 +121,17 @@ class App extends Component {
 						products: updatedProducts
 					};
 				});
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+	};
+
+	onDeleteProduct = id => {
+		console.log(id);
+		deleteProduct(id)
+			.then(product => {
+				this.load();
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -313,6 +324,7 @@ class App extends Component {
 													products={products}
 													editedProductID={editedProductID}
 													onEditProduct={this.onBeginEditingProduct}
+													deleteProduct={this.onDeleteProduct}
 													renderEditForm={product => (
 														<div className="ml-3">
 															<ProductForm

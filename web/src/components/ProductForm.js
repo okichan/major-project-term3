@@ -5,7 +5,6 @@ function ProductForm({ products, submitTitle, onSubmit }) {
 	const clear = () => {
 		document.getElementById("create-product").reset();
 	};
-	let a = [];
 
 	return (
 		<div className="row ">
@@ -25,12 +24,12 @@ function ProductForm({ products, submitTitle, onSubmit }) {
 						const category = elements.category.value;
 						const code = elements.code.value;
 						const title = elements.title.value;
-						const rrp = elements.rrp.value;
+						const price = elements.price.value;
 						const stock = elements.stock.value;
 						const productImage = elements.productImage.value;
 
 						// Pass this information along to the parent component
-						onSubmit({ category, code, title, rrp, stock, productImage });
+						onSubmit({ category, code, title, price, stock, productImage });
 						clear();
 						window.location.href = "/products";
 						return false;
@@ -70,11 +69,11 @@ function ProductForm({ products, submitTitle, onSubmit }) {
 						/>
 					</div>
 					<div className="form-group">
-						<label htmlFor="rrp">RRP</label>
+						<label htmlFor="price">RRP</label>
 						<input
 							type="number"
 							className="form-control"
-							name="rrp"
+							name="price"
 							placeholder="e.g.100"
 							required
 						/>
