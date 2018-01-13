@@ -68,6 +68,12 @@ td a:hover {
    overflow-y: scroll;
 }
 
+#notification-badge {
+   font-size: 0.4em;
+   position: absolute;
+   font-family: sans-serif;
+}
+
 @media (min-width: 768px) {
    .logo {
       width: 160px;

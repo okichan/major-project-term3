@@ -27,14 +27,20 @@ class Weather extends Component {
 					{!!weather ? (
 						<Fragment>
 							<h3> {weather.city_name} </h3>
-							<p>{weather.weather.description}</p>
-							<img
-								src={`https://www.weatherbit.io/static/img/icons/${
-									weather.weather.icon
-								}.png`}
-								alt="icon"
-							/>
-							<span>{`${weather.temp} \u2103`} </span>
+							<div className="row">
+								<div className="col">
+									<img
+										src={`https://www.weatherbit.io/static/img/icons/${
+											weather.weather.icon
+										}.png`}
+                              alt="icon"
+									/>
+								</div>
+								<div className="col-7">
+									<h2>{`${weather.temp} \u2103`} </h2>
+									<p>{weather.weather.description}</p>
+								</div>
+							</div>
 						</Fragment>
 					) : (
 						<p>Loading...</p>
