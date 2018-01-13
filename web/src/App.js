@@ -450,13 +450,8 @@ class App extends Component {
 										exact
 										render={requireAuth(() => (
 											<Fragment>
-												<LinkButton href="/admin/sale" name="sale" />
-												{sales && (
-													<div>
-														yay
-														<SaleList />
-													</div>
-												)}
+												<LinkButton href="/new-sales" name="sale" />
+												<SaleList sales={ sales }/>
 											</Fragment>
 										))}
 									/>
@@ -466,7 +461,7 @@ class App extends Component {
 										exact
 										render={requireAuth(() => (
 											<Fragment>
-												<LinkButton href="/admin/customers" name="customers" />
+												<LinkButton href="/admin/customers" name="customer" />
 												{customers && (
 													<CustomerList customers={customers} />
 													// <div>yay</div>

@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 function ProductList({ products, editedProductID, onEditProduct, renderEditForm }) {
 	return (
 		<div>
-			<h2 className=" text-center mb-3 mt-3">Products</h2>
+			<h2 className="text-center mb-4">Products</h2>
 
 			{products && (
 				<table className="table" >

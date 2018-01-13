@@ -3,47 +3,47 @@ import React, { Fragment } from "react";
 function SaleList({ sales }) {
 	return (
 		<div className="col ">
-			<h2 className=" text-center mb-3 mt-3">Products</h2>
+			<h2 className="text-center mb-4">Sales</h2>
 			{sales && (
-				<table
-					className="table table-sm"
-					style={{ borderBottom: "1px solid silver" }}
-				>
+				<table className="table">
 					<thead>
 						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Name</th>
-							<th scope="col">RRP</th>
-							<th scope="col">Stock</th>
+							<th scope="col">Date</th>
+							<th scope="col">Total</th>
+							<th scope="col">At</th>
+							<th scope="col">Operator</th>
+							<th scope="col"><i className="fa fa-phone"/></th>
 							<th scope="col" />
 						</tr>
 					</thead>
 
-					{sales.map(product => {
+					{sales.map(sale => {
+						const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+						const day = days[new Date(sale.date).getDay()];
+						const date = `${day}, ${new Date(sale.date).toLocaleString("ja-JP", {
+							timeZone: "Australia/Melbourne"
+						})}`;
+
 						return (
-							<Fragment key={product._id}>
+							<Fragment key={sale._id}>
 								<tbody>
 									<tr
-										className="header"
-										style={{ borderBottom: "2px solid transparent" }}
+										className="row-hover"
+										data-toggle="collapse"
+										data-target={`#${sale._id}`}
+										role="button"
+										aria-expanded="false"
+										aria-controls="collapseExample"
 									>
-										<td>{product.code}</td>
+										<td>{date}</td>
+
+										<td >$ {"products.price?"}</td>
+										<td>{sale.type}</td>
+										<td >{"inCharge.firstName"}</td>
+										<td >{"buyer's phone"}</td>
 
 										<td>
-											<a
-												data-toggle="collapse"
-												href={`#${product.code}`}
-												role="button"
-												aria-expanded="false"
-												aria-controls="collapseExample"
-											>
-												{product.title}
-											</a>
-										</td>
-										<td>${product.price}</td>
-										<td className="text-center">{product.stock}</td>
-										<td>
-											<a href={`/products/${product._id}`}>
+											<a href={`/products/${sale._id}`}>
 												<i
 													className="fa fa-pencil-square-o med"
 													id="edit"
@@ -62,37 +62,30 @@ function SaleList({ sales }) {
 											/>
 										</td>
 									</tr>
-									<tr>
-										<td colSpan="5">
-											<div className="collapse" id={product.code}>
-												<div className="card card-body">
-													<div className="row">
-														<div className="col-2">
-															<p>
-																Total sales:{" "}
-																{product.totalSales}
-															</p>
-														</div>
-														<div className="col-3">
-															<p>
-																Total Orders:{" "}
-																{product.totalOrders}
-															</p>
-														</div>
-														<div className="col-3">
-															<p>Cost JPY: xxx</p>
-															<p>Cost AUD: xxx</p>
-														</div>
-													</div>
 
-													<img
-														src="https://www.qthotelsandresorts.com/melbourne/wp-content/uploads/sites/9/2017/05/Jam-on-Your-Collar-Tanto-0098.jpg"
-														style={{ width: "100%" }}
-													/>
+									{/* collapse begin */}
+									<tr>
+										<td colSpan="5" className="p-0">
+											<div className="collapse" id={sale._id}>
+												<div className="card card-body m-3">
+													<div className="row">
+														<p className="col-12 ">Item:</p>
+													</div>
+													<div id="purchase-history">
+														<ul>
+															{/* {sale.purchasedHistory.map(m => {
+                                                   <li>{m.sale._id}</li>
+                                                })} */}
+															<li>product array</li>
+															<li>product array</li>
+															<li>product array</li>
+														</ul>
+													</div>
 												</div>
 											</div>
 										</td>
 									</tr>
+									{/* collapse end */}
 								</tbody>
 							</Fragment>
 						);

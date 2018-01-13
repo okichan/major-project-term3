@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 function CustomerList({ customers, editedCustomerID, onEditCustomer, renderEditForm }) {
 	return (
 		<Fragment>
-			<h2 className=" text-center mb-3 mt-3">Customers</h2>
+			<h2 className="text-center mb-4">Customers</h2>
 			{customers && (
 				<table className="table">
 					<thead>
@@ -17,7 +17,7 @@ function CustomerList({ customers, editedCustomerID, onEditCustomer, renderEditF
 					</thead>
 
 					{customers.map(customer => {
-						const date = new Date(customer.registerDate).toDateString();
+						const date = new Date(customer.registerDate).toLocaleDateString("ja-JP", { timeZone: 'Australia/Melbourne' });
 						return (
 							<Fragment key={customer._id}>
 								<tbody>
