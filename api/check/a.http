@@ -35,10 +35,7 @@ Content-Type: application/json
 
 {
   "category": "Wa-Bocho",
-  "code": "41107",
-  "title": "240mm Yanagiba Aoniko Hongasumi with saya",
-  "price": 100,
-  "totalSales": 32
+  "code": "12313123123"
 }
 ### Create Sale
 POST http://localhost:7000/sales

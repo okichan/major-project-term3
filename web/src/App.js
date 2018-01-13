@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import "./css/App.css";
 import "./css/Customer.css";
 import "./css/DeleteCustomer.css";
-import "./css/ProductForm.css";
+// import "./css/ProductForm.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
@@ -332,14 +332,11 @@ class App extends Component {
 										exact
 										render={requireAuth(() => (
 											<Fragment>
-												{signedIn && (
-													<div className="mb-3">
-														<ProductForm
-															submitTitle="Create Product"
-															onSubmit={this.onCreateProduct}
-														/>
-													</div>
-												)}
+												<ProductForm
+													products={products}
+													submitTitle="Create Product"
+													onSubmit={this.onCreateProduct}
+												/>
 											</Fragment>
 										))}
 									/>
@@ -451,7 +448,7 @@ class App extends Component {
 										render={requireAuth(() => (
 											<Fragment>
 												<LinkButton href="/new-sales" name="sale" />
-												<SaleList sales={ sales }/>
+												<SaleList sales={sales} />
 											</Fragment>
 										))}
 									/>
