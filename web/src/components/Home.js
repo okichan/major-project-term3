@@ -5,7 +5,7 @@ import CustomerTrafficForm from "./CustomerTrafficForm";
 
 function Home({ signedIn }) {
    return (
-      <div className="col">
+      <div >
          <CustomerTrafficForm />
          <hr/>
          <CurrencyConverter />

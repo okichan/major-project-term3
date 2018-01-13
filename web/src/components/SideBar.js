@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function SideBar({ signedIn }) {
    return (
-      <nav className="col-sm-3 col-md-2 bg-light sidebar" style={{borderRight: "1px solid lightgray"}}>
+      <nav className="col-md-2 bg-light sidebar" style={{borderRight: "1px solid lightgray"}}>
          <ul className="nav nav-pills flex-column">
             <li className="nav-item" style={{display: "inline"}}>
                <Link to="/new-sales" className="nav-link">

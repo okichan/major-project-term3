@@ -5,17 +5,14 @@ import "./css/DeleteCustomer.css";
 import "./css/ProductForm.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ProductList from "./components/ProductList";
 import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
+import SaleList from "./components/SaleList";
+
 import EditProductForm from "./components/EditProductForm";
 import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
@@ -33,17 +30,15 @@ import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct } from "./api/products";
 import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
-import {
-	listNotifications,
-	updateNotifications,
-	deleteNotifications
-} from "./api/notifications";
+import { listSales, createSale, updateSale } from "./api/sales";
+import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
 
 class App extends Component {
 	state = {
 		error: null,
 		decodedToken: getDecodedToken(), // Restore the previous signed in data
 		products: null,
+		sales: null,
 		customers: null,
 		traffics: [
 			{
@@ -85,11 +80,11 @@ class App extends Component {
 		editedProductID: null,
 		productPrice: null,
 		notifications: null
-   };
+	};
 
-   componentDidMount() {
-      this.load();
-   }
+	componentDidMount() {
+		this.load();
+	}
 
 	onSignIn = ({ email, password }) => {
 		signIn({ email, password })
@@ -199,6 +194,7 @@ class App extends Component {
 			error,
 			decodedToken,
 			products,
+			sales,
 			customers,
 			editedProductID,
 			traffics,
@@ -219,9 +215,7 @@ class App extends Component {
 							<PrimaryNav
 								signedIn={signedIn}
 								signOut={this.onSignOut}
-								notificationCount={
-									notifications ? notifications.length : "0"
-								}
+								notificationCount={notifications ? notifications.length : "0"}
 							/>
 						</header>
 					)}
@@ -230,302 +224,282 @@ class App extends Component {
 						<div className="row">
 							{signedIn && <SideBar signedIn={signedIn} />}
 
-							<Switch>
-								<Route
-									path="/"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											<Home />
-										</Fragment>
-									))}
-								/>
+							<div className="col">
+								<Switch>
+									<Route
+										path="/"
+										exact
+										render={requireAuth(() => (
+											<Fragment>
+												<Home />
+											</Fragment>
+										))}
+									/>
 
-								<Route
-									path="/notifications"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											{signedIn && (
+									<Route
+										path="/notifications"
+										exact
+										render={requireAuth(() => (
+											<Fragment>
+												{signedIn && (
+													<div className="mb-3">
+														<h2>Notification list</h2>
+														<NotificationList
+															notifications={notifications}
+															onClickDelete={this.onClickDelete}
+															onClickToggle={this.onClickToggoleCheckedField}
+														/>
+													</div>
+												)}
+											</Fragment>
+										))}
+									/>
+
+									<Route
+										path="/signin"
+										exact
+										render={({ match }) =>
+											signedIn ? (
+												<Redirect to="/" />
+											) : (
+												<Fragment>
+													<SignInForm onSignIn={this.onSignIn} />
+												</Fragment>
+											)
+										}
+									/>
+
+									<Route
+										path="/signup"
+										exact
+										render={() =>
+											signedIn ? (
+												<Redirect to="/" />
+											) : (
+												<Fragment>
+													<SignUpForm onSignUp={this.onSignUp} />
+												</Fragment>
+											)
+										}
+									/>
+
+									<Route
+										path="/account"
+										exact
+										render={requireAuth(() => (
+											<Fragment>
 												<div className="mb-3">
-													<h2>Notification list</h2>
-													<NotificationList
-														notifications={notifications}
-														onClickDelete={this.onClickDelete}
-														onClickToggle={
-															this.onClickToggoleCheckedField
-														}
-													/>
+													<p>Email: {decodedToken.email}</p>
+													<p>
+														Signed in at:{" "}
+														{new Date(decodedToken.iat * 1000).toISOString()}
+													</p>
+													<p>
+														Expire at:{" "}
+														{new Date(decodedToken.exp * 1000).toISOString()}
+													</p>
 												</div>
-											)}
-										</Fragment>
-									))}
-								/>
-
-								<Route
-									path="/signin"
-									exact
-									render={({ match }) =>
-										signedIn ? (
-											<Redirect to="/" />
-										) : (
-											<Fragment>
-												<SignInForm onSignIn={this.onSignIn} />
 											</Fragment>
-										)
-									}
-								/>
+										))}
+									/>
 
-								<Route
-									path="/signup"
-									exact
-									render={() =>
-										signedIn ? (
-											<Redirect to="/" />
-										) : (
+									<Route
+										path="/products"
+										exact
+										render={requireAuth(() => (
 											<Fragment>
-												<SignUpForm onSignUp={this.onSignUp} />
-											</Fragment>
-										)
-									}
-								/>
-
-								<Route
-									path="/account"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											<div className="mb-3">
-												<p>Email: {decodedToken.email}</p>
-												<p>
-													Signed in at:{" "}
-													{new Date(
-														decodedToken.iat * 1000
-													).toISOString()}
-												</p>
-												<p>
-													Expire at:{" "}
-													{new Date(
-														decodedToken.exp * 1000
-													).toISOString()}
-												</p>
-											</div>
-										</Fragment>
-									))}
-								/>
-
-								<Route
-									path="/products"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											{products && (
+												<LinkButton href="/admin/products" name="product" />
 												<ProductList
 													products={products}
 													editedProductID={editedProductID}
-													onEditProduct={
-														this.onBeginEditingProduct
-													}
+													onEditProduct={this.onBeginEditingProduct}
 													renderEditForm={product => (
 														<div className="ml-3">
 															<ProductForm
 																initialProduct={product}
 																submitTitle="Update Product"
-																onSubmit={
-																	this.onUpdateEditedProduct
-																}
+																onSubmit={this.onUpdateEditedProduct}
 															/>
 														</div>
 													)}
 												/>
-											)}
-											<LinkButton
-												href="/admin/products"
-												name="product"
+											</Fragment>
+										))}
+									/>
+
+									<Route
+										path="/admin/products"
+										exact
+										render={requireAuth(() => (
+											<Fragment>
+												{signedIn && (
+													<div className="mb-3">
+														<ProductForm
+															submitTitle="Create Product"
+															onSubmit={this.onCreateProduct}
+														/>
+													</div>
+												)}
+											</Fragment>
+										))}
+									/>
+
+									<Route
+										path="/edit-product"
+										exact
+										render={requireAuth(() => <EditProductForm />)}
+									/>
+
+									<Route
+										path="/new-sales"
+										exact
+										render={requireAuth(() => (
+											<SalesForm
+												products={products}
+												productPrice={productPrice}
+												onChangeTitle={this.onChangeTitle}
+												onChangePrice={this.onChangePrice}
 											/>
-										</Fragment>
-									))}
-								/>
+										))}
+									/>
 
-								<Route
-									path="/admin/products"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											{signedIn && (
-												<div className="mb-3">
-													<ProductForm
-														submitTitle="Create Product"
-														onSubmit={this.onCreateProduct}
-													/>
-												</div>
-											)}
-										</Fragment>
-									))}
-								/>
-
-								<Route
-									path="/edit-product"
-									exact
-									render={requireAuth(() => <EditProductForm />)}
-								/>
-
-								<Route
-									path="/new-sales"
-									exact
-									render={requireAuth(() => (
-										<SalesForm
-											products={products}
-											productPrice={productPrice}
-											onChangeTitle={this.onChangeTitle}
-											onChangePrice={this.onChangePrice}
-										/>
-									))}
-								/>
-
-								<Route
-									path="/customer"
-									exact
-									render={requireAuth(() => (
-										<Customer
-											firstName={"John"}
-											lastName={"Smith"}
-											sex={"male"}
-											email={"johnsmith@gmail.com"}
-											phone={"000"}
-											date={"01/01/2015"}
-											chef={"yes"}
-											customerOrigin={"McDonalds"}
-											notes={"i hate this guy"}
-										/>
-									))}
-								/>
-
-								<Route
-									path="/new-customer"
-									exact
-									render={requireAuth(() => <CustomerForm />)}
-								/>
-
-								<Route
-									path="/edit-customer"
-									exact
-									render={requireAuth(() => <EditCustomerForm />)}
-								/>
-
-								<Route
-									path="/delete-customer"
-									exact
-									render={requireAuth(() => (
-										<DeleteCustomer
-											firstName={"John"}
-											lastName={"Smith"}
-										/>
-									))}
-								/>
-
-								<Route
-									path="/customertraffic"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											{!!traffics ? (
-												<CustomerTraffic traffics={traffics} />
-											) : (
-												<p>Loading</p>
-											)}
-										</Fragment>
-									))}
-								/>
-
-								<Route
-									path="/report-daily"
-									exact
-									render={requireAuth(() => (
-										<div>
-											<h1>Daily report</h1>
-										</div>
-									))}
-								/>
-
-								<Route
-									path="/report-weekly"
-									exact
-									render={requireAuth(() => (
-										<div>
-											<h1>Weekly report</h1>
-										</div>
-									))}
-								/>
-
-								<Route
-									path="/report-monthly"
-									exact
-									render={requireAuth(() => (
-										<div>
-											<h1>Monthly report</h1>
-										</div>
-									))}
-								/>
-
-								<Route
-									path="/sales"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											{customers && (
-												<CustomerList customers={customers} />
-												// <div>yay</div>
-											)}
-											<LinkButton
-												href="/admin/customers"
-												name="customers"
+									<Route
+										path="/customer"
+										exact
+										render={requireAuth(() => (
+											<Customer
+												firstName={"John"}
+												lastName={"Smith"}
+												sex={"male"}
+												email={"johnsmith@gmail.com"}
+												phone={"000"}
+												date={"01/01/2015"}
+												chef={"yes"}
+												customerOrigin={"McDonalds"}
+												notes={"i hate this guy"}
 											/>
-										</Fragment>
-									))}
-								/>
+										))}
+									/>
 
-								<Route
-									path="/customers"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											{customers && (
-												<CustomerList customers={customers} />
-												// <div>yay</div>
-											)}
-											<LinkButton
-												href="/admin/customers"
-												name="customers"
-											/>
-										</Fragment>
-									))}
-								/>
+									<Route
+										path="/new-customer"
+										exact
+										render={requireAuth(() => <CustomerForm />)}
+									/>
 
-								<Route
-									path="/admin/customers"
-									exact
-									render={requireAuth(() => (
-										<Fragment>
-											{signedIn && (
-												<div className="mb-3">
-													<h2>Create Customer</h2>
-													<ProductForm
-														submitTitle="Create Customer"
-														onSubmit={this.onCreateProduct}
-													/>
-												</div>
-											)}
-										</Fragment>
-									))}
-								/>
+									<Route
+										path="/edit-customer"
+										exact
+										render={requireAuth(() => <EditCustomerForm />)}
+									/>
 
-								<Route
-									render={({ location }) => (
-										<h2>Page not found: {location.pathname}</h2>
-									)}
-								/>
-							</Switch>
+									<Route
+										path="/delete-customer"
+										exact
+										render={requireAuth(() => (
+											<DeleteCustomer firstName={"John"} lastName={"Smith"} />
+										))}
+									/>
+
+									<Route
+										path="/customertraffic"
+										exact
+										render={requireAuth(() => (
+											<Fragment>
+												{!!traffics ? (
+													<CustomerTraffic traffics={traffics} />
+												) : (
+													<p>Loading</p>
+												)}
+											</Fragment>
+										))}
+									/>
+
+									<Route
+										path="/report-daily"
+										exact
+										render={requireAuth(() => (
+											<div>
+												<h1>Daily report</h1>
+											</div>
+										))}
+									/>
+
+									<Route
+										path="/report-weekly"
+										exact
+										render={requireAuth(() => (
+											<div>
+												<h1>Weekly report</h1>
+											</div>
+										))}
+									/>
+
+									<Route
+										path="/report-monthly"
+										exact
+										render={requireAuth(() => (
+											<div>
+												<h1>Monthly report</h1>
+											</div>
+										))}
+									/>
+
+									<Route
+										path="/sales"
+										exact
+										render={requireAuth(() => (
+											<Fragment>
+												<LinkButton href="/admin/sale" name="sale" />
+												{sales && (
+													<div>
+														yay
+														<SaleList />
+													</div>
+												)}
+											</Fragment>
+										))}
+									/>
+
+									<Route
+										path="/customers"
+										exact
+										render={requireAuth(() => (
+											<Fragment>
+												<LinkButton href="/admin/customers" name="customers" />
+												{customers && (
+													<CustomerList customers={customers} />
+													// <div>yay</div>
+												)}
+											</Fragment>
+										))}
+									/>
+
+									<Route
+										path="/admin/customers"
+										exact
+										render={requireAuth(() => (
+											<Fragment>
+												{signedIn && (
+													<div className="mb-3">
+														<h2>Create Customer</h2>
+														<ProductForm
+															submitTitle="Create Customer"
+															onSubmit={this.onCreateProduct}
+														/>
+													</div>
+												)}
+											</Fragment>
+										))}
+									/>
+
+									<Route
+										render={({ location }) => (
+											<h2>Page not found: {location.pathname}</h2>
+										)}
+									/>
+								</Switch>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -548,6 +522,12 @@ class App extends Component {
 		listCustomers()
 			.then(customers => {
 				this.setState({ customers });
+			})
+			.catch(saveError);
+
+		listSales()
+			.then(sales => {
+				this.setState({ sales });
 			})
 			.catch(saveError);
 

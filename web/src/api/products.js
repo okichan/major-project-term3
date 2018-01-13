@@ -11,6 +11,6 @@ export function createProduct(data) {
 }
 
 export function updateProduct(id, data) {
-  return api.put(`/products/${id}`, data)
+  return api.put(`/product/${id}`, data)
     .then((res) => res.data)
 }

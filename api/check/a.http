@@ -1,6 +1,20 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTgzNTc5OCwiZXhwIjoxNTE2NDQwNTk4LCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.z3FdvZFBhZ7aI9Wvtqy94cuvG73Vz8GYcik7Ym7oT0M
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTg1MDI1MywiZXhwIjoxNTE2NDU1MDUzLCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.9vAto6y4DTXMtTvPfqPbnXPr02wbBiBZ3Bn7t7CLrFs
 
+### Sign in
+POST http://localhost:7000/auth
+Content-Type: application/json
+
+{
+  "email": "patrick.smith@coderacademy.edu.au",
+  "password": "password123"
+}
+
+### Get Products
 GET http://localhost:7000/products
+Authorization: Bearer {{ token }}
+
+### Get Sales
+GET http://localhost:7000/sales
 Authorization: Bearer {{ token }}
 
 ### Register
@@ -11,15 +25,6 @@ Content-Type: application/json
   "email": "patrick.smith@coderacademy.edu.au",
   "firstName": "Patrick",
   "lastName": "Smith",
-  "password": "password123"
-}
-
-### Sign in
-POST http://localhost:7000/auth
-Content-Type: application/json
-
-{
-  "email": "patrick.smith@coderacademy.edu.au",
   "password": "password123"
 }
 
@@ -34,6 +39,25 @@ Content-Type: application/json
   "title": "240mm Yanagiba Aoniko Hongasumi with saya",
   "price": 100,
   "totalSales": 32
+}
+### Create Sale
+POST http://localhost:7000/sales
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+  "products": [""]
+}
+
+### Edit Sale
+PUT http://localhost:7000/sale/5a5a08e62a428f2e2449b9eb
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+   "products": [
+        "5a54af5f8edb60461c4f45e4"
+    ]
 }
 
 ### Update product
@@ -75,13 +99,13 @@ Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-   "firstName": "",
+   "firstName": "Emma",
    "lastName": "",
    "gender": "female",
    "purchasedHistory": [],
    "isChef": false,
    "workAt": "Kmart",
    "origin": "SNS (Facebook, Twitter etc)",
-   "note": "Blah blah"   
+   "note": "Long text Long text Long text Long text Long text Long text Long text Long text "   
 }
 

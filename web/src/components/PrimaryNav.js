@@ -43,7 +43,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
                     className="nav-link"
                     title="Notification"
                   >
-                    <i className="fa fa-bell big mr-3">{notificationCount}</i>
+                    <i className="fa fa-bell big mr-3">{notificationCount === 0 ? "no" : notificationCount}</i>
                   </Link>
                 </li>
                 <li className="nav-item">
