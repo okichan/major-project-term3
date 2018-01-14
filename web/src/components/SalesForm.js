@@ -10,7 +10,7 @@ function SalesForm({
 }) {
   return (
     <div className="col">
-      <h1 className="text-center mb-5">Log new sales</h1>
+      <h1 className="text-center mb-5">New Sales</h1>
       {products && (
         <form
           className=""

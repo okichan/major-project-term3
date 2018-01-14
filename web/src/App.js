@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import "./css/App.css";
-import "./css/Customer.css";
-import "./css/DeleteCustomer.css";
+// import "./css/Customer.css";
+// import "./css/DeleteCustomer.css";
 // import "./css/ProductForm.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
@@ -18,10 +18,10 @@ import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
 import SideBar from "./components/SideBar";
 import LinkButton from "./components/LinkButton";
-import Customer from "./components/Customer";
+// import Customer from "./components/Customer";
 import CustomerForm from "./components/CustomerForm";
 import EditCustomerForm from "./components/EditCustomerForm";
-import DeleteCustomer from "./components/DeleteCustomer";
+// import DeleteCustomer from "./components/DeleteCustomer";
 import Home from "./components/Home";
 import CustomerTraffic from "./components/CustomerTraffic";
 import NotificationList from "./components/NotificationList";
@@ -29,7 +29,7 @@ import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct, deleteProduct } from "./api/products";
-import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
+import { listCustomers, createCustomer, updateCustomer, deleteCustomer } from "./api/customers";
 import { listSales, createSale, updateSale } from "./api/sales";
 import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
 
@@ -111,7 +111,7 @@ class App extends Component {
 		this.setState({ decodedToken: null });
 	};
 
-	onCreateProduct = productData => {
+   onCreateProduct = productData => {
 		createProduct(productData)
 			.then(newProduct => {
 				this.setState(prevState => {
@@ -128,9 +128,36 @@ class App extends Component {
 	};
 
 	onDeleteProduct = id => {
-		console.log(id);
 		deleteProduct(id)
 			.then(product => {
+				this.load();
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+	};
+
+	onCreateCustomer = customerData => {
+      console.log("i'm from parent", customerData);
+		createCustomer(customerData)
+			.then(newCustomer => {
+				this.setState(prevState => {
+					// Append to existing customers array
+					const updatedCustomers = prevState.customers.concat(newCustomer);
+					return {
+						customers: updatedCustomers
+					};
+				});
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+	};
+
+	onDeleteCustomer = id => {
+		console.log(id);
+		deleteCustomer(id)
+			.then(customer => {
 				this.load();
 			})
 			.catch(error => {
@@ -372,7 +399,7 @@ class App extends Component {
 										))}
 									/>
 
-									<Route
+									{/* <Route
 										path="/customer"
 										exact
 										render={requireAuth(() => (
@@ -388,27 +415,7 @@ class App extends Component {
 												notes={"i hate this guy"}
 											/>
 										))}
-									/>
-
-									<Route
-										path="/new-customer"
-										exact
-										render={requireAuth(() => <CustomerForm />)}
-									/>
-
-									<Route
-										path="/edit-customer"
-										exact
-										render={requireAuth(() => <EditCustomerForm />)}
-									/>
-
-									<Route
-										path="/delete-customer"
-										exact
-										render={requireAuth(() => (
-											<DeleteCustomer firstName={"John"} lastName={"Smith"} />
-										))}
-									/>
+									/> */}
 
 									<Route
 										path="/customertraffic"
@@ -471,10 +478,7 @@ class App extends Component {
 										render={requireAuth(() => (
 											<Fragment>
 												<LinkButton href="/admin/customers" name="customer" />
-												{customers && (
-													<CustomerList customers={customers} />
-													// <div>yay</div>
-												)}
+												<CustomerList customers={customers} deleteCustomer={this.onDeleteCustomer}/>
 											</Fragment>
 										))}
 									/>
@@ -484,15 +488,11 @@ class App extends Component {
 										exact
 										render={requireAuth(() => (
 											<Fragment>
-												{signedIn && (
-													<div className="mb-3">
-														<h2>Create Customer</h2>
-														<ProductForm
-															submitTitle="Create Customer"
-															onSubmit={this.onCreateProduct}
-														/>
-													</div>
-												)}
+												<CustomerForm
+													customers={customers}
+													submitTitle="Create Customer"
+													onSubmit={this.onCreateProduct}
+												/>
 											</Fragment>
 										))}
 									/>

@@ -14,3 +14,7 @@ export function updateCustomer(id, data) {
   return api.put(`/customers/${id}`, data)
     .then((res) => res.data)
 }
+
+export function deleteCustomer(id) {
+	return api.delete(`/customer/${id}`).then(res => res.data);
+}

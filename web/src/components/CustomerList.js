@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
+import { deleteCustomer } from "../api/customers";
 // import Product from "./Product";
 
-function CustomerList({ customers, editedCustomerID, onEditCustomer, renderEditForm }) {
+function CustomerList({ customers, editedCustomerID, onEditCustomer, renderEditForm, deleteCustomer }) {
 	return (
 		<Fragment>
 			<h2 className="text-center mb-4">Customers</h2>
@@ -51,9 +52,14 @@ function CustomerList({ customers, editedCustomerID, onEditCustomer, renderEditF
 												className="fa fa-trash med"
 												id="trash"
 												style={{ cursor: "pointer" }}
-												onClick={() => {
-													alert("delete function here");
-												}}
+                                    onClick={() => {
+                                       const confirm = window.confirm(
+                                          `Do you really want to delete "${customer.firstName}"?`
+                                       );
+                                       if (confirm) {
+                                          deleteCustomer(customer._id);
+                                       }
+                                    }}
 												title="Delete"
 											/>
 										</td>
