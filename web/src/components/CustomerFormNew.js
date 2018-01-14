@@ -1,28 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-function CustomerForm({ products, submitTitle, onSubmit }) {
+function CustomerFormNew({}) {
   return (
     <div className="container">
-      <h1 className="text-center mb-5">New Customer</h1>
-
       <div className="">
-        <form
-        // className=""
-        // onSubmit={event => {
-        //   // Prevent old-school form submission
-        //   event.preventDefault()
-
-        //   const form = event.target
-        //   const elements = form.elements // Allows looking up fields using their 'name' attributes
-        //   // Get entered values from fields
-        //   const brandName = elements.brandName.value
-        //   const name = elements.name.value
-
-        //   // Pass this information along to the parent component
-        //   onSubmit({ brandName, name })
-        // }}
-        >
+        <form>
           <fieldset class="form-group">
             <legend>Gender</legend>
             <div class="form-check form-check-inline">
@@ -223,23 +205,10 @@ function CustomerForm({ products, submitTitle, onSubmit }) {
               <textarea class="form-control" id="exampleTextarea" rows="3" />
             </div>
           </fieldset>
-
-          <button
-            type="button"
-            className="btn btn-primary btn-lg btn-block info"
-          >
-            Create
-          </button>
-          <button
-            type="button"
-            className="btn btn-default btn-lg btn-block info"
-          >
-            Cancel
-          </button>
         </form>
       </div>
     </div>
   );
 }
 
-export default CustomerForm;
+export default CustomerFormNew;

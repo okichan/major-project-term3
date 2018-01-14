@@ -1,0 +1,61 @@
+.salesFormHeading {
+  margin-top: 30px;
+}
+
+.salesForm {
+}
+
+.salesItem {
+  padding-top: 30px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.salesCustomerInfoBtnContainer {
+  display: flex;
+}
+
+.salesCustomerInfoBtn {
+  margin: 0 auto;
+}
+
+.salesCustomerInfoBtn button {
+  text-align: center;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.saleButtons {
+  width: 15%;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.saleButton {
+  color: red;
+  font-size: 40px;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.saleButtonAdd {
+  float: right;
+}
+
+.salesSubmitButton {
+  display: flex;
+  float: right;
+}
+
+.salesButton2 {
+  margin: 5px;
+}
