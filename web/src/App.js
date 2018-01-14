@@ -29,18 +29,33 @@ import DeleteCustomer from "./components/DeleteCustomer";
 import CurrencyConverter from "./components/CurrencyConverter";
 import Weather from "./components/Weather";
 import NotificationList from "./components/NotificationList";
+import DailyReport from "./components/DailyReport";
 
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct } from "./api/products";
 import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
+import { dailySales } from "./api/sales";
 import {
   listNotifications,
   updateNotifications,
   deleteNotifications
 } from "./api/notifications";
 import { fetchWeather } from "./api/weather";
+import moment from "moment";
+
+// recharts
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ReferenceLine
+} from "recharts";
 
 class App extends Component {
   state = {
@@ -51,7 +66,9 @@ class App extends Component {
     editedProductID: null,
     productPrice: null,
     weather: null,
-    notifications: null
+    notifications: null,
+    date: moment(),
+    dailySales: null
   };
 
   onSignIn = ({ email, password }) => {
@@ -156,6 +173,13 @@ class App extends Component {
         console.error(error.message);
       });
   };
+  //for date picker
+  onDate = event => {
+    this.setState({ date: event });
+    dailySales(event.format("YYYY-MM-DD")).then(dailySales => {
+      this.setState({ dailySales });
+    });
+  };
 
   render() {
     const {
@@ -167,13 +191,14 @@ class App extends Component {
       wishlist,
       weather,
       productPrice,
-      notifications
+      notifications,
+      date,
+      dailySales
     } = this.state;
     const signedIn = !!decodedToken;
 
     const requireAuth = render => props =>
       !signedIn ? <Redirect to="/signin" /> : render(props);
-
     return (
       <Router>
         <div className="App">
@@ -387,7 +412,11 @@ class App extends Component {
                   exact
                   render={requireAuth(() => (
                     <div>
-                      <h1>Daily report</h1>
+                      <DailyReport
+                        startDate={date}
+                        dailySales={dailySales}
+                        onClick={this.onDate}
+                      />
                     </div>
                   ))}
                 />
@@ -495,6 +524,12 @@ class App extends Component {
     listNotifications()
       .then(notifications => {
         this.setState({ notifications });
+      })
+      .catch(saveError);
+
+    dailySales(this.state.date.format("YYYY-MM-DD"))
+      .then(dailySales => {
+        this.setState({ dailySales });
       })
       .catch(saveError);
 

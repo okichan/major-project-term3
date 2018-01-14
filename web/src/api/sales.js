@@ -1,0 +1,13 @@
+import api from "./init";
+
+export function dailySales(date) {
+  return api.get(`/sales?date=${date}`).then(res => res.data);
+}
+
+export function createProduct(data) {
+  return api.post("/sales", data).then(res => res.data);
+}
+
+export function updateProduct(id, data) {
+  return api.put(`/sale/${id}`, data).then(res => res.data);
+}
