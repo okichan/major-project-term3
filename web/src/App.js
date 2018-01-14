@@ -8,6 +8,7 @@ import "./css/ProductForm.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
 import "./css/SalesForm.css";
+import "./css/CustomerList.css";
 import {
   BrowserRouter as Router,
   Switch,
@@ -45,6 +46,10 @@ import {
   removeProductFromWishlist
 } from "./api/wishlist";
 import { fetchWeather } from "./api/weather";
+
+listCustomers().then(res => {
+  console.log("Loaded Customers", res);
+});
 
 class App extends Component {
   state = {
@@ -384,7 +389,7 @@ class App extends Component {
                 />
 
                 <Route
-                  path="/new-customer"
+                  path="/admin/new-customer"
                   exact
                   render={requireAuth(() => <CustomerForm />)}
                 />
@@ -470,7 +475,6 @@ class App extends Component {
                         <CustomerList customers={customers} />
                         // <div>yay</div>
                       )}
-                      <LinkButton href="/admin/customers" name="customers" />
                     </Fragment>
                   ))}
                 />

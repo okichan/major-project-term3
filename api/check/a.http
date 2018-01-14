@@ -62,13 +62,13 @@ Authorization: Bearer {{ token }}
 
 ### Add to customer
 POST http://localhost:7000/customers
-Authorization: Bearer {{ token }}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU5MTc3MzcsImV4cCI6MTUxNjUyMjUzNywic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.6nErvlprVuydZtd7nKN80fJwaXN_nJ8fXDtp8t7nASI
 
 {
-   "firstName": "Tomomi",
-   "lastName": "Oki",
-   "gender": "Female",
-   "phone": "0433001122",
+   "firstName": "Mizuki",
+   "lastName": "Zneta",
+   "gender": "Male",
+   "phone": "123445133456",
    "email": "patrick.smith@coderacademy.edu.au",
    "isChef": 1
 }
