@@ -30,7 +30,7 @@ function ProductForm({ products, submitTitle, onSubmit }) {
 
 						// Pass this information along to the parent component
 						onSubmit({ category, code, title, price, stock, productImage });
-						clear();
+						// clear();
 						window.location.href = "/products";
 						return false;
 					}}

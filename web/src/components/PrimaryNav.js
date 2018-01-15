@@ -35,7 +35,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
 						{signedIn ? (
 							<Fragment>
 								<li className="nav-item">
-									<Link to="/notifications" className="nav-link" title="Notification">
+									<Link to="/notifications" className="nav-link " title="Notification">
 										<i className="fa fa-bell big mr-3 ">
 											<span
 												className="badge badge-pill badge-danger "

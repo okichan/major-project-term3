@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 function SideBar({ signedIn }) {
    return (
-      <nav className="col-md-2 bg-light sidebar" style={{borderRight: "1px solid lightgray"}}>
-         <ul className="nav nav-pills flex-column">
+      <nav className="col-md-2 bg-light " id="sidebar" >
+         <ul className="nav nav-pills ">
             <li className="nav-item" style={{display: "inline"}}>
                <Link to="/new-sales" className="nav-link">
                   New Sales
@@ -53,11 +53,6 @@ function SideBar({ signedIn }) {
                   Customers
                </Link>
             </li>
-            {/* <li className="nav-item">
-               <Link to="/tools" className="nav-link" style={{textDecoration: "line-through"}}>
-                  Tools
-               </Link>
-            </li> */}
          </ul>
       </nav>
    );

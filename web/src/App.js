@@ -210,13 +210,13 @@ class App extends Component {
 
 	onProductFilter = query => {
 		this.setState({ prodFilterQuery: query });
-      console.log(this.state.prodFilterQuery);
       listFilteredProducts(query)
       .then(products => {
          this.setState({ products });
       })
       .catch(error => {
-         this.setState({ error });
+         // this.setState({ error });
+         alert(`No item found in category: ${query}!`)
       });
 	};
 

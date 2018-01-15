@@ -43,9 +43,9 @@ Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "products": [{"product": "5a5c021d4b6cfc2fd82e5a96", "salePrice": "500", "unitAmount": "3"}],
+  "products": [{"product": "5a5c418b1716bb3acc7450bb", "salePrice": "287", "unitAmount": "1"}],
   "customer": "5a5560d7e51e644448cd7814",
-  "date": "2017-11-15",
+  "date": "2017-10-15",
   "totalPrice": "12343230"
 }
 
