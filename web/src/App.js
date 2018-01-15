@@ -32,8 +32,7 @@ import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct, deleteProduct } from "./api/products";
 import { listCustomers, createCustomer, updateCustomer, deleteCustomer } from "./api/customers";
-import { listSales, createSale, updateSale } from "./api/sales";
-import { dailySales } from "./api/sales";
+import { listSales, createSale, updateSale, dailySales } from "./api/sales";
 import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
 import moment from "moment";
 

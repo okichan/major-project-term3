@@ -43,7 +43,10 @@ Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "products": [""]
+  "products": [{"product": "5a5c021d4b6cfc2fd82e5a96", "salePrice": "500", "unitAmount": "3"}],
+  "customer": "5a5560d7e51e644448cd7814",
+  "date": "2017-11-15",
+  "totalPrice": "12343230"
 }
 
 ### Edit Sale
@@ -76,7 +79,7 @@ Content-Type: application/json
 GET http://localhost:7000/customers
 Authorization: Bearer {{ token }}
 
-### Add to customer
+### Add new customer
 POST http://localhost:7000/customers
 Authorization: Bearer {{ token }}
 

@@ -41,7 +41,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
 												className="badge badge-pill badge-danger "
 												id="notification-badge"
 											>
-												{notificationCount === 0 ? "1" : notificationCount}
+												{notificationCount === 0 ? "" : notificationCount}
 											</span>
 										</i>
 									</Link>
