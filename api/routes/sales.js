@@ -80,16 +80,30 @@ const router = new express.Router();
 
 // get list
 router.get("/sales", (req, res) => {
-  Sale.find()
-    .populate("products.product")
-    .populate("customer")
-    .populate("inCharge")
-    .then(sales => {
-      res.json(sales);
-    })
-    .catch(error => {
-      res.json({ error });
-    });
+  const { date } = req.query;
+  if (date) {
+    Sale.find({ date: new Date(date) })
+      .populate("products.product")
+      .populate("customer")
+      .populate("inCharge")
+      .then(sales => {
+        res.json(sales);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  } else {
+    Sale.find()
+      .populate("products.product")
+      .populate("customer")
+      .populate("inCharge")
+      .then(sales => {
+        res.json(sales);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  }
 });
 
 // Create
