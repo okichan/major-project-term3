@@ -1,15 +1,16 @@
 import React, { Fragment } from "react";
 
 function ProductList({
-	products,
+   filteredProducts,
 	editedProductID,
 	onEditProduct,
 	renderEditForm,
 	deleteProduct
 }) {
+
 	return (
 		<Fragment>
-			{products && (
+			{filteredProducts && (
             <section className="table-responsive">
 					<table className="table">
 						<thead>
@@ -23,7 +24,7 @@ function ProductList({
 							</tr>
 						</thead>
 
-						{products.map(product => {
+						{filteredProducts.map(product => {
 							return (
 								<tbody key={product._id}>
 									<tr
@@ -57,17 +58,17 @@ function ProductList({
 														`Do you really want to delete "${product.title}"?`
 													);
 													if (confirm) {
-														deleteProduct(product._id);
+                                          deleteProduct(product._id);
 													}
 												}}
 												title="Delete"
 											/>
 										</td>
 									</tr>
-									{/* collapse begin */}
 
+									{/* collapse begin */}
 									<tr>
-										<td colSpan="5" className="p-0">
+										<td colSpan="10" className="p-0">
 											<div className="collapse" id={product._id}>
 												<div className="card card-body m-3">
 													<div className="row">

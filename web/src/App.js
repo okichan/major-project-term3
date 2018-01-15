@@ -1,8 +1,5 @@
 import React, { Component, Fragment } from "react";
 import "./css/App.css";
-// import "./css/Customer.css";
-// import "./css/DeleteCustomer.css";
-// import "./css/ProductForm.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
@@ -19,10 +16,8 @@ import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
 import SideBar from "./components/SideBar";
 import LinkButton from "./components/LinkButton";
-// import Customer from "./components/Customer";
 import CustomerForm from "./components/CustomerForm";
 import EditCustomerForm from "./components/EditCustomerForm";
-// import DeleteCustomer from "./components/DeleteCustomer";
 import Home from "./components/Home";
 import CustomerTraffic from "./components/CustomerTraffic";
 import NotificationList from "./components/NotificationList";
@@ -54,7 +49,7 @@ class App extends Component {
 		error: null,
 		decodedToken: getDecodedToken(), // Restore the previous signed in data
 		products: null,
-		prodFilterQuery: null,
+		filteredProducts: null,
 		sales: null,
 		customers: null,
 		traffics: [
@@ -209,14 +204,12 @@ class App extends Component {
 	};
 
 	onProductFilter = query => {
-		this.setState({ prodFilterQuery: query });
       listFilteredProducts(query)
       .then(products => {
-         this.setState({ products });
+         this.setState({ filteredProducts: products });
       })
       .catch(error => {
-         // this.setState({ error });
-         alert(`No item found in category: ${query}!`)
+         alert(`No product found in category "${query}"!`)
       });
 	};
 
@@ -259,14 +252,18 @@ class App extends Component {
 		dailySales(event.format("YYYY-MM-DD")).then(dailySales => {
 			this.setState({ dailySales });
 		});
-	};
+   };
+   
+   showConfirm = () => {
+      alert("yay")
+   }
 
 	render() {
 		const {
 			error,
 			decodedToken,
-			products,
-			enteredCategory,
+         products,
+         filteredProducts,
 			sales,
 			customers,
 			editedProductID,
@@ -379,15 +376,15 @@ class App extends Component {
 									/>
 
 									<Route
+                           onLeave={ this.showConfirm }
 										path="/products"
 										exact
 										render={requireAuth(() => (
 											<Fragment>
 												<LinkButton href="/admin/products" name="product" />
-												<h2 className="text-center mb-4">Products</h2>
-												<ProductFilter prodCategory={this.onProductFilter} />
+												<ProductFilter prodCategory={this.onProductFilter}/>
 												<ProductList
-													products={products}
+                                       filteredProducts={filteredProducts}
 													editedProductID={editedProductID}
 													onEditProduct={this.onBeginEditingProduct}
 													deleteProduct={this.onDeleteProduct}
@@ -571,7 +568,7 @@ class App extends Component {
 		// Load for everyone
 		listProducts()
 			.then(products => {
-				this.setState({ products });
+				this.setState({ products, filteredProducts: products });
 			})
          .catch(saveError);
          
@@ -620,7 +617,7 @@ class App extends Component {
 		// then the token will have changed
 		if (this.state.decodedToken !== prevState.decodedToken) {
 			this.load();
-		}
+      }
 	}
 }
 
