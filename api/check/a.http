@@ -30,19 +30,19 @@ Content-Type: application/json
 
 {
   "category": "Wa-Boch`o",
-  "code": "41103",
-  "title": "240mm Yanagiba Aoniko Hongasumi with saya",
-  "price": 100,
+  "code": "41113",
+  "title": "Kitchen Knife",
+  "price": 150,
   "totalSales": 32
 }
 
 ### Update product
-PUT http://localhost:7000/products/5a54afbe8edb60461c4f45e6
-Authorization: Bearer {{ token }}
+PUT http://localhost:7000/product/5a584f61071fb4ea0bf70b65
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU5OTM2OTcsImV4cCI6MTUxNjU5ODQ5Nywic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.0p7_YAnuAe-ZlGUh3LQICMZum8wms1mNu9BSCnlY8aQ
 Content-Type: application/json
 
 {
-  "price": 85
+  "stock": 100
 }
 
 ### Delete product
@@ -86,4 +86,12 @@ Content-Type: application/json
    "note": "Japan OTAKU, traveling at least once a year to Japan, love JP knives too, have many JP knives",
    
 }
+
+### Create sale
+POST http://localhost:7000/sales
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU5OTUzMTYsImV4cCI6MTUxNjYwMDExNiwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.50e44cexRalx1F7Qm-4nCB5X-93Px3AY9sF8cb-N_LM
+Content-Type: application/json
+
+{"products":[{"product":"5a584f61071fb4ea0bf70b65","salePrice":"150","unitAmount":"1"}],"customer":"5a5b11bfbe0dfc060148a7c0","date":"2018-01-15","totalPrice":"150"}
+
 
