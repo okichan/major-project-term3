@@ -5,10 +5,12 @@ const Product = require("../models/Product");
 const Notification = require("../models/Notification");
 const authMiddleware = require("../middleware/auth");
 const axios = require("axios");
+const moment = require("moment");
 
 const weatherApi = axios.create({
   baseURL: "http://api.apixu.com/v1"
 });
+
 // get weather data from api
 getWeatherByDate = date => {
   return weatherApi
@@ -78,11 +80,62 @@ function stockIsFine(productId, sold) {
 
 const router = new express.Router();
 
+// get weekly data
+function getWeeklySaleData(weekRange, salesData) {
+  // detect today's weekNumber
+  const WeekBegin = moment().week();
+
+  // detect until which weekNumber
+  let WeekEnd = moment()
+    .subtract(weekRange, "weeks")
+    .week();
+
+  // make weekNumbers array
+  let weekNumberArr = [];
+  for (var n = 0; n < weekRange; n++) {
+    weekNumberArr.push(
+      moment()
+        .subtract(n, "weeks")
+        .week()
+    );
+  }
+
+  // create Data array(container) for sorted sales data
+  let weeklySalesObject = {};
+  for (var n = 0; n < weekRange; n++) {
+    const key = `week${weekNumberArr[n]}`;
+    weeklySalesObject[key] = [];
+  }
+
+  // put the sales data in the container created above
+  for (var i = 0; i < salesData.length; i++) {
+    if (moment(salesData[i].date).week() == WeekEnd) break;
+    let key = `week${moment(salesData[i].date).week()}`;
+    weeklySalesObject[key].push(salesData[i]);
+  }
+  return weeklySalesObject;
+}
+
 // get list
 router.get("/sales", (req, res) => {
-  const { date } = req.query;
+  const { date, monthRange } = req.query;
   if (date) {
     Sale.find({ date: new Date(date) })
+      .populate("products.product")
+      .populate("customer")
+      .populate("inCharge")
+      .then(sales => {
+        res.json(sales);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  } else if (monthRange) {
+    // weekly data
+    let periodDate = new Date();
+    periodDate.setMonth(periodDate.getMonth() - monthRange);
+    // find the data between today to periodDate
+    Sale.find({ date: { $gte: periodDate, $lt: new Date() } })
       .populate("products.product")
       .populate("customer")
       .populate("inCharge")

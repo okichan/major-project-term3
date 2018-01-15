@@ -30,13 +30,14 @@ import CurrencyConverter from "./components/CurrencyConverter";
 import Weather from "./components/Weather";
 import NotificationList from "./components/NotificationList";
 import DailyReport from "./components/DailyReport";
+import WeeklyReport from "./components/WeeklyReport";
 
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct } from "./api/products";
 import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
-import { dailySales } from "./api/sales";
+import { dailySales, monthRangeSales } from "./api/sales";
 import {
   listNotifications,
   updateNotifications,
@@ -44,18 +45,6 @@ import {
 } from "./api/notifications";
 import { fetchWeather } from "./api/weather";
 import moment from "moment";
-
-// recharts
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ReferenceLine
-} from "recharts";
 
 class App extends Component {
   state = {
@@ -68,7 +57,8 @@ class App extends Component {
     weather: null,
     notifications: null,
     date: moment(),
-    dailySales: null
+    dailySales: null,
+    monthRangeSales: null
   };
 
   onSignIn = ({ email, password }) => {
@@ -193,7 +183,8 @@ class App extends Component {
       productPrice,
       notifications,
       date,
-      dailySales
+      dailySales,
+      monthRangeSales
     } = this.state;
     const signedIn = !!decodedToken;
 
@@ -426,7 +417,7 @@ class App extends Component {
                   exact
                   render={requireAuth(() => (
                     <div>
-                      <h1>Weekly report</h1>
+                      <WeeklyReport monthRangeSales={monthRangeSales} />
                     </div>
                   ))}
                 />
@@ -530,6 +521,12 @@ class App extends Component {
     dailySales(this.state.date.format("YYYY-MM-DD"))
       .then(dailySales => {
         this.setState({ dailySales });
+      })
+      .catch(saveError);
+
+    monthRangeSales(3)
+      .then(monthRangeSales => {
+        this.setState({ monthRangeSales });
       })
       .catch(saveError);
 

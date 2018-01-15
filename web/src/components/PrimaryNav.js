@@ -46,11 +46,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
                     <i className="fa fa-bell big mr-3">{notificationCount}</i>
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/account" className="nav-link" title="Account">
-                    <i className="fa fa-user big mr-3" />
-                  </Link>
-                </li>
+
                 <li className="nav-item">
                   <Link
                     to="/account"
