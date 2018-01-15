@@ -6,7 +6,7 @@ const api = axios.create({
 })
 
 export function fetchWeather() {
-  return api.get(``).then(res => {
+  return api.get().then(res => {
     return res.data.data[0]
   })
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CustomerFormNew from "./CustomerFormNew";
 import CustomerFormReturn from "./CustomerFormReturn";
 import { listProducts } from "../api/products";
-import { listSales, createSales, deleteSales } from "../api/sales";
+import { listSale, createSale, deleteSale } from "../api/sales";
 
 class SalesForm extends Component {
   state = {
@@ -126,7 +126,7 @@ class SalesForm extends Component {
   }
 
   onCreateSale = saleData => {
-    createSales(saleData).then(newSale =>
+    createSale(saleData).then(newSale =>
       this.setState(prevState => {
         const updatedSales = prevState.products.concat(newSale);
         sales: updatedSales;

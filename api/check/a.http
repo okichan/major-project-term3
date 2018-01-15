@@ -1,6 +1,20 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTUwNzIxMiwiZXhwIjoxNTE2MTEyMDEyLCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.i2sZmnYKUMlnaMgUL9-tbCAb_lKOkeJ_KdbyweISmCU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTg1MDI1MywiZXhwIjoxNTE2NDU1MDUzLCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.9vAto6y4DTXMtTvPfqPbnXPr02wbBiBZ3Bn7t7CLrFs
 
+### Sign in
+POST http://localhost:7000/auth
+Content-Type: application/json
+
+{
+  "email": "patrick.smith@coderacademy.edu.au",
+  "password": "password123"
+}
+
+### Get Products
 GET http://localhost:7000/products
+Authorization: Bearer {{ token }}
+
+### Get Sales
+GET http://localhost:7000/sales
 Authorization: Bearer {{ token }}
 
 ### Register
@@ -14,47 +28,50 @@ Content-Type: application/json
   "password": "password123"
 }
 
-### Sign in
-POST http://localhost:7000/auth
-Content-Type: application/json
-
-{
-  "email": "chymeng24@gmail.com",
-  "password": "123456"
-}
-
 ### Create product
 POST http://localhost:7000/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU3MzY4NzcsImV4cCI6MTUxNjM0MTY3Nywic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.VgJYyj33b9ajFfCzLQXaA7Mkml3cPnaP-bnXhSiBJkk
-Content-Type: application/json
-
-{
-  "category": "Wa-Boch`o",
-  "code": "41113",
-  "title": "Kitchen Knife",
-  "price": 150,
-  "totalSales": 32
-}
-
-### Update product
-PUT http://localhost:7000/product/5a584f61071fb4ea0bf70b65
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU5OTM2OTcsImV4cCI6MTUxNjU5ODQ5Nywic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.0p7_YAnuAe-ZlGUh3LQICMZum8wms1mNu9BSCnlY8aQ
-Content-Type: application/json
-
-{
-  "stock": 100
-}
-
-### Delete product
-DELETE http://localhost:7000/products/5a54adff8edb60461c4f45e3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTQ5ODk4NCwiZXhwIjoxNTE2MTAzNzg0LCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.vvyLNZDa4YYDxe5oMieNBm7WV2GyiKXzm8pwKPlClm4
+Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
   "category": "Wa-Bocho",
-  "code": "41135",
-  "title": "150mm Deba Aoniko Hongasumi with saya"
+  "code": "12313123123"
 }
+
+### Create Sale
+POST http://localhost:7000/sales
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+  "products": [""]
+}
+
+### Edit Sale
+PUT http://localhost:7000/sale/5a5a08e62a428f2e2449b9eb
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+   "products": [
+        "5a54af5f8edb60461c4f45e4"
+    ]
+}
+
+### Update product
+PUT http://localhost:7000/product/5a54e6dce51e644448cd7811
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+  "code": "41109"
+}
+
+### Delete product
+DELETE http://localhost:7000/product/5a54e6dce51e644448cd7811
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
 
 ### Read customer
 GET http://localhost:7000/customers
@@ -65,26 +82,29 @@ POST http://localhost:7000/customers
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU5MTc3MzcsImV4cCI6MTUxNjUyMjUzNywic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.6nErvlprVuydZtd7nKN80fJwaXN_nJ8fXDtp8t7nASI
 
 {
-   "firstName": "Mizuki",
-   "lastName": "Zneta",
    "gender": "Male",
-   "phone": "123445133456",
+   "phone": "0433001122",
    "email": "patrick.smith@coderacademy.edu.au",
+   "firstName": "Taro",
+   "lastName": "Yamada",
    "isChef": 1
 }
 
 
 ### Update customer
-PUT http://localhost:7000/customers/5a555f3ae51e644448cd7812
+PUT http://localhost:7000/customer/5a555f3ae51e644448cd7812
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
+   "firstName": "Emma",
+   "lastName": "",
+   "gender": "female",
    "purchasedHistory": [],
+   "isChef": false,
    "workAt": "Kmart",
    "origin": "SNS (Facebook, Twitter etc)",
-   "note": "Japan OTAKU, traveling at least once a year to Japan, love JP knives too, have many JP knives",
-   
+   "note": "Long text Long text Long text Long text Long text Long text Long text Long text "   
 }
 
 ### Create sale
@@ -92,6 +112,6 @@ POST http://localhost:7000/sales
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU5OTUzMTYsImV4cCI6MTUxNjYwMDExNiwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.50e44cexRalx1F7Qm-4nCB5X-93Px3AY9sF8cb-N_LM
 Content-Type: application/json
 
-{"products":[{"product":"5a584f61071fb4ea0bf70b65","salePrice":"150","unitAmount":"1"}],"customer":"5a5b11bfbe0dfc060148a7c0","date":"2018-01-15","totalPrice":"150"}
+{"products":[{"product":"5a5bf31f5fdac41a583aedf3","salePrice":"150","unitAmount":"1"}],"customer":"5a5b11bfbe0dfc060148a7c0","date":"2018-01-15","totalPrice":"150"}
 
 

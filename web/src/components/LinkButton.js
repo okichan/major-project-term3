@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 function LinkButton({ href, name }) {
    return (
-      <div className="mr-3">
-         <Link to={href} className="btn btn-primary">
-            Add new {name}
+      <div className="row m-2">
+         <Link to={href} className="btn btn-primary ml-auto">
+            <i className="fa fa-plus"/> {name} 
          </Link>
       </div>
    );

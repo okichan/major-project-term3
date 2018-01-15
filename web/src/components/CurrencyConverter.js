@@ -1,90 +1,56 @@
-import React, { Component } from "react"
-import { fetchCurrency } from "../api/currency"
+import React, { Component, Fragment } from "react";
+import { fetchCurrency } from "../api/currency";
 
 class CurrencyConverter extends Component {
-  state = {
-    enteredNumber: 1,
-    currency: null
-    // error: null
-  }
+	state = {
+		enteredNumber: 1,
+		currency: null,
+		error: null
+	};
 
-  componentDidMount() {
-    fetchCurrency()
-      .then(currency => {
-        this.setState({ currency: currency })
-      })
-      .catch(error => {
-        this.setState({ error: error })
-        console.log("Error loading currency conversion", error)
-      })
-  }
+	componentDidMount() {
+		fetchCurrency()
+			.then(currency => {
+				this.setState({ currency: currency });
+			})
+			.catch(error => {
+				this.setState({ error: error });
+				console.log("Error loading currency conversion", error);
+			});
+	}
 
-  render() {
-    const { enteredNumber, currency, error } = this.state
-    return (
-      <div className="App">
-        <div className="currencyConverter">
-          <h1>Currency Converter</h1>
-
-          <div className="country">
-            <div className="flagContainer">
-              <div className="countryFlag">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Flag_of_Australia.svg/1200px-Flag_of_Australia.svg.png"
-                  className="ausFlag"
-                  alt="Australian flag"
-                />
-              </div>
-            </div>
-            <div className="currencyAmount">
-              <p>$</p>
-              <div className="currencyAmountInput">
-                <input
-                  value={enteredNumber}
-                  placeholder="1"
-                  aria-label="entered number"
-                  onChange={e => {
-                    this.setState({ enteredNumber: e.target.value })
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="country">
-            <div className="flagContainer">
-              <div className="countryFlag">
-                {!!error && <p>{error.message}</p>}
-
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png"
-                  className="jpyFlag"
-                  alt="Japanese flag"
-                />
-              </div>
-            </div>
-            {!!currency ? (
-              <div className="currencyAmount">
-                {" "}
-                <p>¥</p>
-                <div className="currencyAmountInput">
-                  <input
-                    value={(currency.JPY * enteredNumber).toFixed(2)}
-                    placeholder="1"
-                    onChange={e => {
-                      this.setState({ enteredNumber: e.target.value })
-                    }}
-                  />
-                </div>
-              </div>
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
-        </div>
-      </div>
-    )
-  }
+	render() {
+		const { enteredNumber, currency, error } = this.state;
+		return (
+			<div className="row m-1">
+				<div className="col-md-6 mx-auto ">
+					{!!error && <p>{error.message}</p>}
+					{!!currency ? (
+						<Fragment>
+							<h3>Currency</h3>
+                     <div className="form-inline">
+									<input
+										className="form-control w-25 mr-1"
+										value={enteredNumber}
+										aria-label="entered number"
+										onChange={e => {
+											this.setState({
+												enteredNumber: e.target.value
+											});
+										}}
+                              />
+								<span>
+									AUD = {(currency.JPY * enteredNumber).toFixed(2)} JPY
+								</span>
+                              </div>
+						</Fragment>
+					) : (
+						<p>Loading...</p>
+					)}
+				</div>
+			</div>
+		);
+	}
 }
 
-export default CurrencyConverter
+export default CurrencyConverter;

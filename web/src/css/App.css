@@ -59,6 +59,27 @@ td a:hover {
   display: none;
 }
 
+.row-hover {
+   /* background: rgb(228, 228, 228); */
+   transition: .2s;
+}
+
+.row-hover:hover {
+   cursor: pointer;
+   background: rgb(228, 228, 228);
+}
+
+#purchase-history {
+   max-height: 25vh;
+   overflow-y: scroll;
+}
+
+#notification-badge {
+   font-size: 0.4em;
+   position: absolute;
+   font-family: sans-serif;
+}
+
 @media (min-width: 768px) {
   .logo {
     width: 160px;

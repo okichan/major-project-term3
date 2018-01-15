@@ -9,107 +9,112 @@ function CustomerList({
   renderEditForm
 }) {
   return (
-    <div className="col ">
-      <div className="customerListHeader">
-        <div className="customerListHeading">
-          <h2>Customers</h2>
-        </div>
-        <div className="customerListHeadingButton">
-          <Link to="/admin/new-customer">
-            <button type="button" className="btn btn-primary btn-lg info">
-              Add New Customers
-            </button>
-          </Link>
-        </div>
-      </div>
-      <table
-        className="table table-sm"
-        style={{ borderBottom: "1px solid silver" }}
-      >
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">RRP</th>
-            <th scope="col">Stock</th>
-            <th scope="col" />
-          </tr>
-        </thead>
+    <Fragment>
+      <h2 className="text-center mb-4">Customers</h2>
+      {customers && (
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Note</th>
+              <th scope="col" />
+            </tr>
+          </thead>
 
-        {customers.map(customer => {
-          return (
-            <Fragment key={customer._id}>
-              <tbody>
-                <tr
-                  className="header"
-                  style={{ borderBottom: "2px solid transparent" }}
-                >
-                  <td>{customer.firstName}</td>
+          {customers.map(customer => {
+            const date = new Date(customer.registerDate).toLocaleDateString(
+              "ja-JP",
+              { timeZone: "Australia/Melbourne" }
+            );
+            return (
+              <Fragment key={customer._id}>
+                <tbody>
+                  <tr
+                    className="row-hover"
+                    data-toggle="collapse"
+                    data-target={`#${customer._id}`}
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    <td>
+                      {customer.firstName ? customer.firstName : "(unknown)"}{" "}
+                      {customer.lastName ? customer.lastName : ""}
+                    </td>
 
-                  <td>
-                    <a
-                      data-toggle="collapse"
-                      href={`#${customer.lastName}`}
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
-                      {customer.note}
-                    </a>
-                  </td>
-                  <td>${customer.firstName}</td>
-                  <td className="text-center">{customer.isChef}</td>
-                  <td>
-                    <a href={`/products/${customer._id}`}>
+                    <td>{customer.phone ? customer.phone : "(unknown)"}</td>
+
+                    <td className="w-50">{customer.note}</td>
+
+                    <td>
+                      <a href={`/products/${customer._id}`}>
+                        <i
+                          className="fa fa-pencil-square-o med"
+                          id="edit"
+                          title="Edit"
+                        />
+                      </a>
+                      <span className="mr-2"> </span>
                       <i
-                        className="fa fa-pencil-square-o med"
-                        id="edit"
-                        title="Edit"
+                        className="fa fa-trash med"
+                        id="trash"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          alert("delete function here");
+                        }}
+                        title="Delete"
                       />
-                    </a>
-                    <span className="mr-2"> </span>
-                    <i
-                      className="fa fa-trash med"
-                      id="trash"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        alert("delete function here");
-                      }}
-                      title="Delete"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan="5">
-                    <div className="collapse" id={customer.firstName}>
-                      <div className="card card-body">
-                        <div className="row">
-                          <div className="col-2">
-                            <p>Total sales: {customer.firstName}</p>
+                    </td>
+                  </tr>
+
+                  {/* collapse begin */}
+                  <tr>
+                    <td colSpan="5" className="p-0">
+                      <div className="collapse" id={customer._id}>
+                        <div className="card card-body m-3">
+                          <div className="row">
+                            <div className="col-md-6 ">
+                              <p>Registered: {date}</p>
+                              <p>{customer.gender}</p>
+                              <p>
+                                Email:
+                                {customer.email ? customer.email : " (unknown)"}
+                              </p>
+                            </div>
+                            <div className="col-md-6 ">
+                              <p>Customer Origin: {customer.origin}</p>
+                              <p>Chef: {customer.isChef ? "Yes" : "No"}</p>
+                            </div>
                           </div>
-                          <div className="col-3">
-                            <p>Total Orders: {customer.firstName}</p>
+                          <hr />
+                          <div className="row">
+                            <p className="col-12 ">Purchase History:</p>
                           </div>
-                          <div className="col-3">
-                            <p>Cost JPY: xxx</p>
-                            <p>Cost AUD: xxx</p>
+                          <div id="purchase-history">
+                            <ul>
+                              {/* {customer.purchasedHistory.map(m => {
+															<li>{m.sale._id}</li>
+														})} */}
+                              <li>test</li>
+                              <li>test</li>
+                              <li>test</li>
+                              <li>test</li>
+                              <li>test</li>
+                            </ul>
                           </div>
                         </div>
-
-                        <img
-                          src="https://www.qthotelsandresorts.com/melbourne/wp-content/uploads/sites/9/2017/05/Jam-on-Your-Collar-Tanto-0098.jpg"
-                          style={{ width: "100%" }}
-                        />
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </Fragment>
-          );
-        })}
-      </table>
-    </div>
+                    </td>
+                  </tr>
+                  {/* collapse end */}
+                </tbody>
+              </Fragment>
+            );
+          })}
+        </table>
+      )}
+    </Fragment>
   );
 }
 

@@ -21,6 +21,15 @@ const router = new express.Router();
 router.get("/notifications", (req, res) => {
   // check if notificationDate is less or equal than now
   Notification.find({ notificationDate: { $lte: new Date() } })
+    .populate("product")
+    .populate("sale")
+    .populate({
+      path: "sale",
+      populate: {
+        path: "customer",
+        model: "Customer"
+      }
+    })
     .then(notifications => {
       res.json(notifications);
     })
@@ -61,16 +70,11 @@ router.put("/notification/:id", authMiddleware.requireJWT, (req, res) => {
     });
 });
 
-// Delete
-router.delete("/notification/:id", (req, res) => {
-  const { id } = req.params;
-  Notification.findByIdAndRemove(id)
+// delete checked notifications
+router.delete("/notifications", (req, res) => {
+  Notification.remove({ checked: true })
     .then(notification => {
-      if (notification) {
-        res.json({ message: `${notification.firstName} is deleted` });
-      } else {
-        res.status(404).json({ message: `could not find id with ${id}` });
-      }
+      res.json({ message: "chekced notifications are deleted" });
     })
     .catch(error => {
       res.status(500).json({ error: error.message });
