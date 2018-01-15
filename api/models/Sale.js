@@ -8,6 +8,10 @@ const saleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
       },
+      salePrice: {
+        type: Number,
+        min: 0
+      },
       unitAmount: {
         type: Number,
         min: 0,
