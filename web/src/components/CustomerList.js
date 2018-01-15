@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { deleteCustomer } from "../api/customers";
-// import Product from "./Product";
 
 function CustomerList({
 	customers,
@@ -25,9 +24,10 @@ function CustomerList({
 						</thead>
 
 						{customers.map(customer => {
-							const date = new Date(customer.registerDate).toLocaleDateString("ja-JP", {
-								timeZone: "Australia/Melbourne"
-							});
+							const dateFormatter = date =>
+								new Date(date).toLocaleDateString("ja-JP", {
+									timeZone: "Australia/Melbourne"
+								});
 							return (
 								<Fragment key={customer._id}>
 									<tbody>
@@ -78,16 +78,21 @@ function CustomerList({
 
 										{/* collapse begin */}
 										<tr>
-											<td colSpan="5" className="p-0">
+											<td colSpan="10" className="p-0">
 												<div className="collapse" id={customer._id}>
 													<div className="card card-body m-3">
 														<div className="row">
 															<div className="col-md-6 ">
-																<p>Registered: {date}</p>
+																<p>
+																	Registered:{" "}
+																	{dateFormatter(customer.registerDate)}
+																</p>
 																<p>{customer.gender}</p>
 																<p>
 																	Email:
-																	{customer.email ? customer.email : " (unknown)"}
+																	{customer.email
+																		? customer.email
+																		: " (unknown)"}
 																</p>
 															</div>
 															<div className="col-md-6 ">
@@ -97,19 +102,27 @@ function CustomerList({
 														</div>
 														<hr />
 														<div className="row">
-															<p className="col-12 ">Purchase History:</p>
+															<h5 className="col-12">Purchase History:</h5>
 														</div>
 														<div id="purchase-history">
-															<ul>
-																{/* {customer.purchasedHistory.map(m => {
-															<li>{m.sale._id}</li>
-														})} */}
-																<li>test</li>
-																<li>test</li>
-																<li>test</li>
-																<li>test</li>
-																<li>test</li>
-															</ul>
+															<div className="d-flex flex-column-reverse">
+																{customer.purchasedHistory.map((m, index) => {
+																	return (
+																		<p
+																			className="p-1 m-0"
+																			key={Math.random()}
+																		>
+																			{dateFormatter(m.date)} -- ${
+																				m.totalPrice
+																			}
+																			<br />
+																			{m.products.map(m => {
+																				return <p>{m._id}</p>;
+																			})}
+																		</p>
+																	);
+																})}
+															</div>
 														</div>
 													</div>
 												</div>

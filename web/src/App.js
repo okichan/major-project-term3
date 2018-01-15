@@ -94,8 +94,8 @@ class App extends Component {
 		notifications: null,
 		date: moment(),
 		dailySales: null
-	};
-
+   };
+   
 	onSignIn = ({ email, password }) => {
 		signIn({ email, password })
 			.then(decodedToken => {
@@ -253,10 +253,6 @@ class App extends Component {
 			this.setState({ dailySales });
 		});
    };
-   
-   showConfirm = () => {
-      alert("yay")
-   }
 
 	render() {
 		const {
@@ -520,7 +516,7 @@ class App extends Component {
 												<LinkButton href="/admin/customers" name="customer" />
 												<CustomerList
 													customers={customers}
-													deleteCustomer={this.onDeleteCustomer}
+                                       deleteCustomer={this.onDeleteCustomer}
 												/>
 											</Fragment>
 										))}

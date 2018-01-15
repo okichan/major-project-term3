@@ -43,20 +43,20 @@ Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "products": [{"product": "5a5c418b1716bb3acc7450bb", "salePrice": "287", "unitAmount": "1"}],
-  "customer": "5a5560d7e51e644448cd7814",
-  "date": "2017-10-15",
-  "totalPrice": "12343230"
+  "products": [{"product": "5a5ca4dc1716bb3acc7450cc", "salePrice": "20087", "unitAmount": "1"}],
+  "customer": "5a59d2ef795d2619d8fa5264",
+  "date": "2018-01-12"
 }
 
 ### Edit Sale
-PUT http://localhost:7000/sale/5a5a08e62a428f2e2449b9eb
+PUT http://localhost:7000/sale/5a5c03c94b6cfc2fd82e5a99
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
    "products": [
-        "5a54af5f8edb60461c4f45e4"
+        {"product": "5a54af5f8edb60461c4f45e4", "salePrice": "199", "unitAmount": "1"},
+        {"product": "5a5a922155d7671ab84f1408", "salePrice": "85", "unitAmount": "1"}
     ]
 }
 
@@ -87,24 +87,25 @@ Authorization: Bearer {{ token }}
    "gender": "Male",
    "phone": "0433001122",
    "email": "patrick.smith@coderacademy.edu.au",
-   "firstName": "Taro",
+   "firstName": "Emma",
    "lastName": "Yamada",
-   "isChef": 1
+   "isChef": "1",
+   "workAt": "Maccas"
 }
 
 
 ### Update customer
-PUT http://localhost:7000/customer/5a555f3ae51e644448cd7812
+PUT http://localhost:7000/customer/5a5cc8084935a62288120879
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
    "firstName": "Emma",
-   "lastName": "",
+   "lastName": "Watson",
    "gender": "female",
    "purchasedHistory": [],
    "isChef": false,
-   "workAt": "Kmart",
+   "workAt": "Maccas",
    "origin": "SNS (Facebook, Twitter etc)",
    "note": "Long text Long text Long text Long text Long text Long text Long text Long text "   
 }

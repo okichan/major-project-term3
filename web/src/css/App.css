@@ -1,3 +1,15 @@
+a {
+   color: rgb(99, 99, 99);
+   transition: .2s;
+}
+
+a:hover {
+   color: rgb(48, 35, 35);
+   /* text-shadow: 3px 2px 2px rgba(175, 175, 175, 0.527); */
+   text-shadow: 1px 1px 2px rgba(150, 150, 150, 0.59);
+}
+
+
 .test {
 	border: 1px solid #0f0;
 }
@@ -23,7 +35,7 @@ td a:hover {
 	text-decoration: none;
 }
 
-/* when mobile view create a separator */
+/* in mobile view, create a line separator */
 #sidebar {
    border-bottom: 1px solid lightgray;
 }
@@ -53,11 +65,9 @@ td a:hover {
 
 .logo {
 	width: 80px;
-	/* height: 30%; */
 }
 
 .row-hover {
-	/* background: rgb(228, 228, 228); */
 	transition: 0.2s;
 }
 
@@ -67,6 +77,10 @@ td a:hover {
 }
 
 #purchase-history {
+   border: 1px dotted rgb(202, 202, 202);
+   background: rgb(245, 251, 255);
+   border-radius: .3em;
+   padding: 0.6em;
 	max-height: 25vh;
 	overflow-y: scroll;
 }
