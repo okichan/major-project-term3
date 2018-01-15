@@ -1,15 +1,22 @@
 import React, { Fragment } from "react";
 
-function ProductList({ products, editedProductID, onEditProduct, renderEditForm, deleteProduct }) {
+function ProductList({
+	products,
+	editedProductID,
+	onEditProduct,
+	renderEditForm,
+	deleteProduct
+}) {
 	return (
 		<Fragment>
-			<h2 className="text-center mb-4">Products</h2>
-
 			{products && (
+            <section>
+
 				<table className="table">
 					<thead>
 						<tr>
 							<th scope="col">#</th>
+							<th scope="col">Category</th>
 							<th scope="col">Name</th>
 							<th scope="col">RRP</th>
 							<th scope="col">Stock</th>
@@ -29,12 +36,17 @@ function ProductList({ products, editedProductID, onEditProduct, renderEditForm,
 									aria-controls="collapseExample"
 								>
 									<td>{product.code}</td>
+									<td>{product.category}</td>
 									<td>{product.title}</td>
 									<td>${product.price}</td>
 									<td className="text-center">{product.stock}</td>
 									<td>
 										<a href={`/products/${product._id}`}>
-											<i className="fa fa-pencil-square-o med" id="edit" title="Edit" />
+											<i
+												className="fa fa-pencil-square-o med"
+												id="edit"
+												title="Edit"
+											/>
 										</a>
 										<span className="mr-2"> </span>
 										<i
@@ -85,9 +97,12 @@ function ProductList({ products, editedProductID, onEditProduct, renderEditForm,
 						);
 					})}
 				</table>
+            </section>
+            
 			)}
 		</Fragment>
 	);
 }
 
-export default ProductList;
+
+export default ProductList

@@ -89,7 +89,7 @@ function ProductForm({ products, submitTitle, onSubmit }) {
 						/>
 					</div>
 					<div className="form-group">
-						<label htmlFor="productImage">Upload image</label>
+						<label htmlFor="productImage">Upload image (NOT WORKING)</label>
 						<input type="file" className="form-control" name="productImage" />
 					</div>
 
