@@ -186,7 +186,7 @@ function getDataCustomerGraph(weeklyCustomerData) {
         return a + b;
       }, 0);
 
-    weeklyCustomerGraph["unKnown"] =
+    weeklyCustomerGraph["unknown"] =
       weeklyCustomerGraph["totalCustomer"] -
       weeklyCustomerGraph["chef"] -
       weeklyCustomerGraph["nonChef"];
@@ -399,7 +399,7 @@ function WeeklyReport({ monthRangeSales, customerTraffics }) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <CartesianGrid stroke="#f5f5f5" />
+          <CartesianGrid strokeDasharray="3 3" />
           <Bar
             dataKey="totalCustomer"
             name="Total customer"
@@ -415,7 +415,7 @@ function WeeklyReport({ monthRangeSales, customerTraffics }) {
           />
           <Line
             type="monotone"
-            dataKey="unKnown"
+            dataKey="unknown"
             name="Unknown"
             stroke="rgb(191, 30, 86)"
           />
