@@ -20,18 +20,233 @@ function ProductList({ filteredProducts, onEditedProductSubmit, deleteProduct })
 						{filteredProducts.map(product => {
 							return (
 								<tbody key={product._id}>
-									<tr
-										className="row-hover"
-										data-toggle="collapse"
-										data-target={`#${product._id}`}
-										role="button"
-										aria-expanded="false"
-										aria-controls="collapseExample"
-									>
-										<td>{product.code}</td>
-										<td>{product.category}</td>
-										<td>{product.title}</td>
-										<td>${product.price}</td>
+									<tr className="row-hover">
+										<td
+										>
+											{product.code}
+
+											{/* modal begin */}
+											<div
+												className="modal fade"
+												id={`modal-${product.code}`}
+												tabIndex="-1"
+												role="dialog"
+												aria-labelledby="exampleModalLabel"
+												aria-hidden="true"
+											>
+												<div className="modal-dialog" role="document">
+													<div className="modal-content">
+														<div className="modal-header">
+															<h5
+																className="modal-title"
+																id="exampleModalLabel"
+															>
+																Edit product
+															</h5>
+															<button
+																type="button"
+																className="close"
+																data-dismiss="modal"
+																aria-label="Close"
+															>
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div className="modal-body">
+															<form
+																id={`editForm-${product.code}`}
+																onSubmit={event => {
+																	// Prevent old-school form submission
+																	event.preventDefault();
+
+																	const form = event.target;
+																	const elements = form.elements; // Allows looking up fields using their 'name' attributes
+
+																	// Get entered values from fields
+																	const id = elements.id.value;
+																	const category = elements.category.value;
+																	const code = elements.code.value;
+																	const title = elements.title.value;
+																	const price = elements.price.value;
+																	const stock = elements.stock.value;
+
+																	onEditedProductSubmit({
+																		id,
+																		code,
+																		category,
+																		title,
+																		price,
+																		stock
+																	});
+																	window.location.href = "/products";
+																	return false;
+																}}
+															>
+																<div className="form-group">
+																	<input
+																		type="hidden"
+																		className="form-control w-25"
+																		id="id"
+																		name={product._id}
+																		disabled
+																		defaultValue={product._id}
+																	/>
+																</div>
+																<div className="form-group">
+																	<label>Code</label>
+																	<input
+																		type="text"
+																		className="form-control w-25"
+																		id="code"
+																		name={product.code}
+																		defaultValue={product.code}
+																	/>
+																</div>
+																<div className="form-group">
+																	<label>Category</label>
+																	<input
+																		type="text"
+																		className="form-control"
+																		id="category"
+																		name={product.category}
+																		defaultValue={product.category}
+																	/>
+																</div>
+																<div className="form-group">
+																	<label>Name</label>
+																	<input
+																		type="text"
+																		className="form-control"
+																		id="title"
+																		name={product.title}
+																		defaultValue={product.title}
+																	/>
+																</div>
+																<div className="form-group">
+																	<label>RRP</label>
+																	<input
+																		type="number"
+																		className="form-control w-25"
+																		id="price"
+																		name={product.price}
+																		defaultValue={product.price}
+																	/>
+																</div>
+																<div className="form-group">
+																	<label>Stock</label>
+																	<input
+																		type="number"
+																		className="form-control w-25"
+																		id="stock"
+																		name={product.stock}
+																		defaultValue={product.stock}
+																	/>
+																</div>
+															</form>
+														</div>
+														<div className="modal-footer ">
+															<button
+																type="button"
+																className="btn btn-secondary "
+																data-dismiss="modal"
+															>
+																Cancel
+															</button>
+
+															<button
+																type="submit"
+																form={`editForm-${product.code}`}
+																className="btn btn-primary "
+															>
+																Save changes
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											{/* begin delete moda/ */}
+											<div
+												className="modal fade"
+												id={`modaldelete-${product.code}`}
+												tabIndex="-1"
+												role="dialog"
+												aria-labelledby="exampleModalLabel"
+												aria-hidden="true"
+											>
+												<div className="modal-dialog" role="document">
+													<div className="modal-content">
+														<div className="modal-header">
+															<h5
+																className="modal-title"
+																id="exampleModalLabel"
+															>
+																{`Are you sure you want to delete "${
+																	product.title
+																}"?`}
+															</h5>
+															<button
+																type="button"
+																className="close"
+																data-dismiss="modal"
+																aria-label="Close"
+															>
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														{/* <div className="modal-body">{`Are you sure you want to delete ${product.title}?`}</div> */}
+														<div className="modal-footer">
+															<button
+																type="button"
+																className="btn btn-secondary"
+																data-dismiss="modal"
+															>
+																Cancel
+															</button>
+															<button
+																type="button"
+																className="btn btn-danger "
+																onClick={() => {
+																	deleteProduct(product._id);
+																	window.location.href = "/products";
+																	return false;
+																}}
+															>
+																Delete
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											{/* end delete moda/ */}
+											{/* modal end */}
+										</td>
+										<td
+											data-toggle="collapse"
+											data-target={`#${product._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											{product.category}
+										</td>
+										<td
+											data-toggle="collapse"
+											data-target={`#${product._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											{product.title}
+										</td>
+										<td
+											data-toggle="collapse"
+											data-target={`#${product._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											${product.price}
+										</td>
 										<td className="text-center">{product.stock}</td>
 										<td>
 											<i
@@ -71,201 +286,6 @@ function ProductList({ filteredProducts, onEditedProductSubmit, deleteProduct })
 														src="https://www.qthotelsandresorts.com/melbourne/wp-content/uploads/sites/9/2017/05/Jam-on-Your-Collar-Tanto-0098.jpg"
 														style={{ width: "100%" }}
 													/>
-													{/* modal begin */}
-													<div
-														className="modal fade"
-														id={`modal-${product.code}`}
-														tabIndex="-1"
-														role="dialog"
-														aria-labelledby="exampleModalLabel"
-														aria-hidden="true"
-													>
-														<div className="modal-dialog" role="document">
-															<div className="modal-content">
-																<div className="modal-header">
-																	<h5
-																		className="modal-title"
-																		id="exampleModalLabel"
-																	>
-																		Edit product
-																	</h5>
-																	<button
-																		type="button"
-																		className="close"
-																		data-dismiss="modal"
-																		aria-label="Close"
-																	>
-																		<span aria-hidden="true">&times;</span>
-																	</button>
-																</div>
-																<div className="modal-body">
-																	<form
-																		id={`editForm-${product.code}`}
-																		onSubmit={event => {
-																			// Prevent old-school form submission
-																			event.preventDefault();
-
-																			const form = event.target;
-																			const elements = form.elements; // Allows looking up fields using their 'name' attributes
-
-																			// Get entered values from fields
-																			const id = elements.id.value;
-																			const category =
-																				elements.category.value;
-																			const code = elements.code.value;
-																			const title = elements.title.value;
-																			const price = elements.price.value;
-																			const stock = elements.stock.value;
-
-																			onEditedProductSubmit({
-																				id,
-																				code,
-																				category,
-																				title,
-																				price,
-																				stock
-																			});
-																			window.location.href = "/products";
-																			return false;
-																		}}
-																	>
-																		<div className="form-group">
-																			<input
-																				type="hidden"
-																				className="form-control w-25"
-																				id="id"
-																				name={product._id}
-																				disabled
-																				defaultValue={product._id}
-																			/>
-																		</div>
-																		<div className="form-group">
-																			<label>Code</label>
-																			<input
-																				type="text"
-																				className="form-control w-25"
-																				id="code"
-																				name={product.code}
-																				defaultValue={product.code}
-																			/>
-																		</div>
-																		<div className="form-group">
-																			<label>Category</label>
-																			<input
-																				type="text"
-																				className="form-control"
-																				id="category"
-																				name={product.category}
-																				defaultValue={product.category}
-																			/>
-																		</div>
-																		<div className="form-group">
-																			<label>Name</label>
-																			<input
-																				type="text"
-																				className="form-control"
-																				id="title"
-																				name={product.title}
-																				defaultValue={product.title}
-																			/>
-																		</div>
-																		<div className="form-group">
-																			<label>RRP</label>
-																			<input
-																				type="number"
-																				className="form-control w-25"
-																				id="price"
-																				name={product.price}
-																				defaultValue={product.price}
-																			/>
-																		</div>
-																		<div className="form-group">
-																			<label>Stock</label>
-																			<input
-																				type="number"
-																				className="form-control w-25"
-																				id="stock"
-																				name={product.stock}
-																				defaultValue={product.stock}
-																			/>
-																		</div>
-																	</form>
-																</div>
-																<div className="modal-footer ">
-																	<button
-																		type="button"
-																		className="btn btn-secondary "
-																		data-dismiss="modal"
-																	>
-																		Cancel
-																	</button>
-
-																	<button
-																		type="submit"
-																		form={`editForm-${product.code}`}
-																		className="btn btn-primary "
-																	>
-																		Save changes
-																	</button>
-																</div>
-															</div>
-														</div>
-													</div>
-													{/* begin delete moda/ */}
-													<div
-														className="modal fade"
-														id={`modaldelete-${product.code}`}
-														tabIndex="-1"
-														role="dialog"
-														aria-labelledby="exampleModalLabel"
-														aria-hidden="true"
-													>
-														<div className="modal-dialog" role="document">
-															<div className="modal-content">
-																<div className="modal-header">
-																	<h5
-																		className="modal-title"
-																		id="exampleModalLabel"
-																	>
-																		{`Are you sure you want to delete "${
-																			product.title
-																		}"?`}
-																	</h5>
-																	<button
-																		type="button"
-																		className="close"
-																		data-dismiss="modal"
-																		aria-label="Close"
-																	>
-																		<span aria-hidden="true">&times;</span>
-																	</button>
-																</div>
-																{/* <div className="modal-body">{`Are you sure you want to delete ${product.title}?`}</div> */}
-																<div className="modal-footer">
-																	<button
-																		type="button"
-																		className="btn btn-secondary"
-																		data-dismiss="modal"
-																	>
-																		Cancel
-																	</button>
-																	<button
-																		type="button"
-																		className="btn btn-danger "
-																		onClick={() => {
-																			deleteProduct(product._id);
-																			window.location.href = "/products";
-																			return false;
-																		}}
-																	>
-																		Delete
-																	</button>
-																</div>
-															</div>
-														</div>
-													</div>
-													{/* end delete moda/ */}
-													{/* modal end */}
 												</div>
 											</div>
 										</td>

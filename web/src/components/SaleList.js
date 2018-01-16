@@ -30,20 +30,53 @@ function SaleList({ sales }) {
 							return (
 								<Fragment key={sale._id}>
 									<tbody>
-										<tr
-											className="row-hover"
-											data-toggle="collapse"
-											data-target={`#${sale._id}`}
-											role="button"
-											aria-expanded="false"
-											aria-controls="collapseExample"
-										>
-											<td>{date}</td>
+										<tr className="row-hover">
+											<td
+												data-toggle="collapse"
+												data-target={`#${sale._id}`}
+												role="button"
+												aria-expanded="false"
+												aria-controls="collapseExample"
+											>
+												{date}
+											</td>
 
-											<td>$ {"products.price?"}</td>
-											<td>{sale.type}</td>
-											<td>{"inCharge.firstName"}</td>
-											<td>{"buyer's phone"}</td>
+											<td
+												data-toggle="collapse"
+												data-target={`#${sale._id}`}
+												role="button"
+												aria-expanded="false"
+												aria-controls="collapseExample"
+											>
+												$ {"products.price?"}
+											</td>
+											<td
+												data-toggle="collapse"
+												data-target={`#${sale._id}`}
+												role="button"
+												aria-expanded="false"
+												aria-controls="collapseExample"
+											>
+												{sale.type}
+											</td>
+											<td
+												data-toggle="collapse"
+												data-target={`#${sale._id}`}
+												role="button"
+												aria-expanded="false"
+												aria-controls="collapseExample"
+											>
+												{"inCharge.firstName"}
+											</td>
+											<td
+												data-toggle="collapse"
+												data-target={`#${sale._id}`}
+												role="button"
+												aria-expanded="false"
+												aria-controls="collapseExample"
+											>
+												{"buyer's phone"}
+											</td>
 
 											<td>
 												<a href={`/products/${sale._id}`}>

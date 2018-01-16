@@ -43,15 +43,14 @@ function CustomerList({
 								});
 							return (
 								<tbody key={Math.random()}>
-									<tr
-										className="row-hover"
-										data-toggle="collapse"
-										data-target={`#${customer._id}`}
-										role="button"
-										aria-expanded="false"
-										aria-controls="collapseExample"
-									>
-										<td>
+									<tr className="row-hover">
+										<td
+											data-toggle="collapse"
+											data-target={`#${customer._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
 											{customer.gender === "male" ? (
 												<i className="fa fa-male" />
 											) : (
@@ -61,9 +60,26 @@ function CustomerList({
 											{customer.lastName ? customer.lastName : ""}
 										</td>
 
-										<td>{customer.phone ? customer.phone : "(unknown)"}</td>
+										<td
+											data-toggle="collapse"
+											data-target={`#${customer._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											{customer.phone ? customer.phone : "(unknown)"}
+										</td>
 
-										<td className="w-50">{customer.note}</td>
+										<td
+											className="w-50"
+											data-toggle="collapse"
+											data-target={`#${customer._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											{customer.note}
+										</td>
 
 										<td>
 											<a href={`/products/${customer._id}`}>
@@ -125,7 +141,8 @@ function CustomerList({
 															{customer.purchasedHistory.map(sale => {
 																return (
 																	<div className="m-2">
-																		{dateFormatter(sale.date)} <small>[sale#: {sale._id}]</small>
+																		{dateFormatter(sale.date)}{" "}
+																		<small>[sale#: {sale._id}]</small>
 																		{sale.products.map(product => {
 																			return (
 																				<li className="" key={product._id}>
