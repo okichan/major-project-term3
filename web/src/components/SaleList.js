@@ -48,14 +48,13 @@ function SaleList({ sales }) {
 											<td>
 												<a href={`/products/${sale._id}`}>
 													<i
-														className="fa fa-pencil-square-o med"
+														className="fa fa-pencil-square-o med mx-1"
 														id="edit"
 														title="Edit"
 													/>
 												</a>
-												<span className="mr-2"> </span>
 												<i
-													className="fa fa-trash med"
+													className="fa fa-trash med mx-1"
 													id="trash"
 													style={{ cursor: "pointer" }}
 													onClick={() => {

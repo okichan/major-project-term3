@@ -10,7 +10,7 @@ function createNotificationsBody(type, data) {
 		//sharpening
 		return `More than 80 days have passed since ${
 			data.customer.firstName
-		} last purchased knife(s). Please send a sharpening reminder.`;
+		} (${data.customer.email ? data.customer.email : "email unknown" }) last purchased knife(s). Please send a sharpening reminder.`;
 	} else {
 		return "Error loading notification";
 	}

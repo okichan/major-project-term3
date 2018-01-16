@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { deleteCustomer } from "../api/customers";
 
 function CustomerList({
 	customers,
@@ -69,14 +68,13 @@ function CustomerList({
 										<td>
 											<a href={`/products/${customer._id}`}>
 												<i
-													className="fa fa-pencil-square-o med"
+													className="fa fa-pencil-square-o med mx-1"
 													id="edit"
 													title="Edit"
 												/>
 											</a>
-											<span className="mr-2"> </span>
 											<i
-												className="fa fa-trash med"
+												className="fa fa-trash mx-1 med"
 												id="trash"
 												style={{ cursor: "pointer" }}
 												onClick={() => {
