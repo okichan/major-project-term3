@@ -26,10 +26,25 @@ import DailyReport from "./components/DailyReport";
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
-import { listProducts, listFilteredProducts, createProduct, updateProduct, deleteProduct } from "./api/products";
-import { listCustomers, createCustomer, updateCustomer, deleteCustomer } from "./api/customers";
+import {
+	listProducts,
+	listFilteredProducts,
+	createProduct,
+	updateProduct,
+	deleteProduct
+} from "./api/products";
+import {
+	listCustomers,
+	createCustomer,
+	updateCustomer,
+	deleteCustomer
+} from "./api/customers";
 import { listSales, createSale, updateSale, dailySales } from "./api/sales";
-import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
+import {
+	listNotifications,
+	updateNotifications,
+	deleteNotifications
+} from "./api/notifications";
 import moment from "moment";
 
 // recharts
@@ -94,8 +109,8 @@ class App extends Component {
 		notifications: null,
 		date: moment(),
 		dailySales: null
-   };
-   
+	};
+
 	onSignIn = ({ email, password }) => {
 		signIn({ email, password })
 			.then(decodedToken => {
@@ -148,7 +163,6 @@ class App extends Component {
 	};
 
 	onCreateCustomer = customerData => {
-		console.log("i'm from parent", customerData);
 		createCustomer(customerData)
 			.then(newCustomer => {
 				this.setState(prevState => {
@@ -165,7 +179,6 @@ class App extends Component {
 	};
 
 	onDeleteCustomer = id => {
-		console.log(id);
 		deleteCustomer(id)
 			.then(customer => {
 				this.load();
@@ -175,13 +188,9 @@ class App extends Component {
 			});
 	};
 
-	onBeginEditingProduct = newID => {
-		this.setState({ editedProductID: newID });
-	};
-
-	onUpdateEditedProduct = productData => {
-		const { editedProductID } = this.state;
-		updateProduct(editedProductID, productData)
+	editProductHandler = data => {
+		console.log("id", data.id);
+		updateProduct(data.id, data)
 			.then(updatedProduct => {
 				this.setState(prevState => {
 					// Replace in existing products array
@@ -203,14 +212,16 @@ class App extends Component {
 			});
 	};
 
+
+
 	onProductFilter = query => {
-      listFilteredProducts(query)
-      .then(products => {
-         this.setState({ filteredProducts: products });
-      })
-      .catch(error => {
-         alert(`No product found in category "${query}"!`)
-      });
+		listFilteredProducts(query)
+			.then(products => {
+				this.setState({ filteredProducts: products });
+			})
+			.catch(error => {
+				alert(`No product found in category "${query}"!`);
+			});
 	};
 
 	// onChange function for saleForm.js select menu
@@ -252,14 +263,14 @@ class App extends Component {
 		dailySales(event.format("YYYY-MM-DD")).then(dailySales => {
 			this.setState({ dailySales });
 		});
-   };
+	};
 
 	render() {
 		const {
 			error,
 			decodedToken,
-         products,
-         filteredProducts,
+			products,
+			filteredProducts,
 			sales,
 			customers,
 			editedProductID,
@@ -372,16 +383,16 @@ class App extends Component {
 									/>
 
 									<Route
-                           onLeave={ this.showConfirm }
+										onLeave={this.showConfirm}
 										path="/products"
 										exact
 										render={requireAuth(() => (
 											<Fragment>
 												<LinkButton href="/admin/products" name="product" />
-												<ProductFilter prodCategory={this.onProductFilter}/>
+												<ProductFilter prodCategory={this.onProductFilter} />
 												<ProductList
-                                       filteredProducts={filteredProducts}
-													editedProductID={editedProductID}
+													filteredProducts={filteredProducts}
+													onEditedProductSubmit={this.editProductHandler}
 													onEditProduct={this.onBeginEditingProduct}
 													deleteProduct={this.onDeleteProduct}
 													renderEditForm={product => (
@@ -515,9 +526,9 @@ class App extends Component {
 											<Fragment>
 												<LinkButton href="/admin/customers" name="customer" />
 												<CustomerList
-                                       products={products}
+													products={products}
 													customers={customers}
-                                       deleteCustomer={this.onDeleteCustomer}
+													deleteCustomer={this.onDeleteCustomer}
 												/>
 											</Fragment>
 										))}
@@ -567,8 +578,8 @@ class App extends Component {
 			.then(products => {
 				this.setState({ products, filteredProducts: products });
 			})
-         .catch(saveError);
-         
+			.catch(saveError);
+
 		listCustomers()
 			.then(customers => {
 				this.setState({ customers });
@@ -614,7 +625,7 @@ class App extends Component {
 		// then the token will have changed
 		if (this.state.decodedToken !== prevState.decodedToken) {
 			this.load();
-      }
+		}
 	}
 }
 

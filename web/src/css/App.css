@@ -73,7 +73,7 @@ td a:hover {
 
 .row-hover:hover {
 	cursor: pointer;
-	background: rgb(228, 228, 228);
+	background: rgb(235, 237, 243);
 }
 
 #purchase-history {

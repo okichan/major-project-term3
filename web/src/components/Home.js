@@ -4,15 +4,15 @@ import Weather from "./Weather";
 import CustomerTrafficForm from "./CustomerTrafficForm";
 
 function Home({ signedIn }) {
-   return (
-      <div >
-         <CustomerTrafficForm />
-         <hr/>
-         <CurrencyConverter />
-         <hr/>
-         <Weather />
-      </div>
-   );
+	return (
+		<div>
+			<CustomerTrafficForm />
+			<hr />
+			<CurrencyConverter />
+			<hr />
+			<Weather />
+		</div>
+	);
 }
 
 export default Home;
