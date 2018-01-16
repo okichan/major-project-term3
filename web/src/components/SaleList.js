@@ -68,7 +68,7 @@ function SaleList({ sales }) {
 
 										{/* collapse begin */}
 										<tr>
-											<td colSpan="5" className="p-0">
+											<td colSpan="10" className="p-0">
 												<div className="collapse" id={sale._id}>
 													<div className="card card-body m-3">
 														<div className="row">

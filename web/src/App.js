@@ -515,6 +515,7 @@ class App extends Component {
 											<Fragment>
 												<LinkButton href="/admin/customers" name="customer" />
 												<CustomerList
+                                       products={products}
 													customers={customers}
                                        deleteCustomer={this.onDeleteCustomer}
 												/>

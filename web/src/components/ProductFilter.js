@@ -15,37 +15,36 @@ const ProductFilter = ({ prodCategory }) => {
 	return (
 		<Fragment>
 			<h2 className="text-center mb-4">Products</h2>
-			<section className="d-flex justify-content-between flex-wrap mb-4">
+         <small >Filter by category:</small><br />
+			<div className="btn-group btn-group-toggle flex-wrap mb-4" data-toggle="buttons">
 				{arr.map((pick, index) => {
 					return (
-						<div className="form-check form-check-inline " key={index}>
+						<label
+							className="btn btn-secondary btn-sm"
+							id={pick}
+							htmlFor="inlineRadio1"
+							key={pick}
+							onClick={e => {
+								const category = e.target.id;
+								if (category !== "All") {
+									prodCategory(category);
+								} else {
+									prodCategory("");
+								}
+							}}
+						>
 							<input
 								className="form-check-input "
 								type="radio"
 								name="category"
 								value={pick}
 								key={index}
-								onChange={e => {
-									const category = e.target.value;
-									if (category !== "All") {
-										prodCategory(e.target.value);
-									} else {
-										prodCategory("");
-									}
-								}}
 							/>
-							<label
-								className="form-check-label mr-4"
-								id={pick}
-								htmlFor="inlineRadio1"
-								key={pick}
-							>
-								{pick}
-							</label>
-						</div>
+							{pick}
+						</label>
 					);
 				})}
-			</section>
+			</div>
 		</Fragment>
 	);
 };

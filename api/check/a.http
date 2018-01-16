@@ -95,18 +95,18 @@ Authorization: Bearer {{ token }}
 
 
 ### Update customer
-PUT http://localhost:7000/customer/5a5cc8084935a62288120879
+PUT http://localhost:7000/customer/5a5560d7e51e644448cd7814
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-   "firstName": "Emma",
-   "lastName": "Watson",
+   # "firstName": "Emma",
+   # "lastName": "Watson",
    "gender": "female",
-   "purchasedHistory": [],
+   # "purchasedHistory": [],
    "isChef": false,
-   "workAt": "Maccas",
-   "origin": "SNS (Facebook, Twitter etc)",
+   # "workAt": "Maccas",
+   # "origin": "SNS (Facebook, Twitter etc)",
    "note": "Long text Long text Long text Long text Long text Long text Long text Long text "   
 }
 
