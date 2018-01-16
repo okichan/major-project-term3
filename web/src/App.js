@@ -38,6 +38,14 @@ import { getDecodedToken } from "./api/token";
 import { listProducts, createProduct, updateProduct } from "./api/products";
 import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
 import { dailySales, monthRangeSales } from "./api/sales";
+
+import {
+  dailyCustomerTraffics,
+  listCustomerTraffics,
+  createCustomerTraffics,
+  updateCustomerTraffic
+} from "./api/customerTraffics";
+
 import {
   listNotifications,
   updateNotifications,
@@ -58,7 +66,9 @@ class App extends Component {
     notifications: null,
     date: moment(),
     dailySales: null,
-    monthRangeSales: null
+    monthRangeSales: null,
+    dailyCustomerTraffics: null,
+    customerTraffics: null
   };
 
   onSignIn = ({ email, password }) => {
@@ -169,6 +179,11 @@ class App extends Component {
     dailySales(event.format("YYYY-MM-DD")).then(dailySales => {
       this.setState({ dailySales });
     });
+    dailyCustomerTraffics(event.format("YYYY-MM-DD")).then(
+      dailyCustomerTraffics => {
+        this.setState({ dailyCustomerTraffics });
+      }
+    );
   };
 
   render() {
@@ -184,7 +199,9 @@ class App extends Component {
       notifications,
       date,
       dailySales,
-      monthRangeSales
+      monthRangeSales,
+      dailyCustomerTraffics,
+      customerTraffics
     } = this.state;
     const signedIn = !!decodedToken;
 
@@ -406,6 +423,7 @@ class App extends Component {
                       <DailyReport
                         startDate={date}
                         dailySales={dailySales}
+                        dailyCustomerTraffics={dailyCustomerTraffics}
                         onClick={this.onDate}
                       />
                     </div>
@@ -417,7 +435,10 @@ class App extends Component {
                   exact
                   render={requireAuth(() => (
                     <div>
-                      <WeeklyReport monthRangeSales={monthRangeSales} />
+                      <WeeklyReport
+                        monthRangeSales={monthRangeSales}
+                        customerTraffics={customerTraffics}
+                      />
                     </div>
                   ))}
                 />
@@ -524,9 +545,21 @@ class App extends Component {
       })
       .catch(saveError);
 
+    dailyCustomerTraffics(this.state.date.format("YYYY-MM-DD"))
+      .then(dailyCustomerTraffics => {
+        this.setState({ dailyCustomerTraffics });
+      })
+      .catch(saveError);
+
     monthRangeSales(3)
       .then(monthRangeSales => {
         this.setState({ monthRangeSales });
+      })
+      .catch(saveError);
+
+    listCustomerTraffics()
+      .then(customerTraffics => {
+        this.setState({ customerTraffics });
       })
       .catch(saveError);
 
