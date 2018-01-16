@@ -157,8 +157,8 @@ class App extends Component {
 			.catch(error => {
 				this.setState({ error });
 			});
-   };
-   
+	};
+
 	onEditProduct = data => {
 		updateProduct(data.id, data)
 			.then(updatedProduct => {
@@ -172,16 +172,16 @@ class App extends Component {
 						}
 					});
 					return {
-                  products: updatedProducts
+						products: updatedProducts
 					};
 				});
 			})
 			.catch(error => {
 				this.setState({ error });
 			});
-   };
-   
-   onProductFilter = query => {
+	};
+
+	onProductFilter = query => {
 		listFilteredProducts(query)
 			.then(products => {
 				this.setState({ filteredProducts: products });
@@ -216,7 +216,6 @@ class App extends Component {
 				this.setState({ error });
 			});
 	};
-
 
 	// onChange function for saleForm.js select menu
 	onChangeTitle = title => {
@@ -314,14 +313,11 @@ class App extends Component {
 										render={requireAuth(() => (
 											<Fragment>
 												{signedIn && (
-													<div className="mb-3">
-														<h2>Notification list</h2>
-														<NotificationList
-															notifications={notifications}
-															onClickDelete={this.onClickDelete}
-															onClickToggle={this.onClickToggoleCheckedField}
-														/>
-													</div>
+													<NotificationList
+														notifications={notifications}
+														onClickDelete={this.onClickDelete}
+														onClickToggle={this.onClickToggoleCheckedField}
+													/>
 												)}
 											</Fragment>
 										))}
