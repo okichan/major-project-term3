@@ -3,8 +3,6 @@ import React, { Fragment } from "react";
 function ProductList({
 	filteredProducts,
 	onEditedProductSubmit,
-	onEditProduct,
-	renderEditForm,
 	deleteProduct
 }) {
 	return (

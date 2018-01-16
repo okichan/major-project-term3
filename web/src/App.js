@@ -11,13 +11,11 @@ import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
 import SaleList from "./components/SaleList";
 
-import EditProductForm from "./components/EditProductForm";
 import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
 import SideBar from "./components/SideBar";
 import LinkButton from "./components/LinkButton";
 import CustomerForm from "./components/CustomerForm";
-import EditCustomerForm from "./components/EditCustomerForm";
 import Home from "./components/Home";
 import CustomerTraffic from "./components/CustomerTraffic";
 import NotificationList from "./components/NotificationList";
@@ -104,7 +102,6 @@ class App extends Component {
 				weather: "sunny 27"
 			}
 		],
-		editedProductID: null,
 		productPrice: null,
 		notifications: null,
 		date: moment(),
@@ -160,6 +157,38 @@ class App extends Component {
 			.catch(error => {
 				this.setState({ error });
 			});
+   };
+   
+	onEditProduct = data => {
+		updateProduct(data.id, data)
+			.then(updatedProduct => {
+				this.setState(prevState => {
+					// Replace in existing products array
+					const updatedProducts = prevState.products.map(product => {
+						if (product._id === updatedProduct._id) {
+							return updatedProduct;
+						} else {
+							return product;
+						}
+					});
+					return {
+                  products: updatedProducts
+					};
+				});
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+   };
+   
+   onProductFilter = query => {
+		listFilteredProducts(query)
+			.then(products => {
+				this.setState({ filteredProducts: products });
+			})
+			.catch(error => {
+				alert(`No product found in category "${query}"!`);
+			});
 	};
 
 	onCreateCustomer = customerData => {
@@ -188,41 +217,6 @@ class App extends Component {
 			});
 	};
 
-	editProductHandler = data => {
-		console.log("id", data.id);
-		updateProduct(data.id, data)
-			.then(updatedProduct => {
-				this.setState(prevState => {
-					// Replace in existing products array
-					const updatedProducts = prevState.products.map(product => {
-						if (product._id === updatedProduct._id) {
-							return updatedProduct;
-						} else {
-							return product;
-						}
-					});
-					return {
-						products: updatedProducts,
-						editedProductID: null
-					};
-				});
-			})
-			.catch(error => {
-				this.setState({ error });
-			});
-	};
-
-
-
-	onProductFilter = query => {
-		listFilteredProducts(query)
-			.then(products => {
-				this.setState({ filteredProducts: products });
-			})
-			.catch(error => {
-				alert(`No product found in category "${query}"!`);
-			});
-	};
 
 	// onChange function for saleForm.js select menu
 	onChangeTitle = title => {
@@ -273,7 +267,6 @@ class App extends Component {
 			filteredProducts,
 			sales,
 			customers,
-			editedProductID,
 			traffics,
 			productPrice,
 			notifications,
@@ -392,18 +385,8 @@ class App extends Component {
 												<ProductFilter prodCategory={this.onProductFilter} />
 												<ProductList
 													filteredProducts={filteredProducts}
-													onEditedProductSubmit={this.editProductHandler}
-													onEditProduct={this.onBeginEditingProduct}
+													onEditedProductSubmit={this.onEditProduct}
 													deleteProduct={this.onDeleteProduct}
-													renderEditForm={product => (
-														<div className="ml-3">
-															<ProductForm
-																initialProduct={product}
-																submitTitle="Update Product"
-																onSubmit={this.onUpdateEditedProduct}
-															/>
-														</div>
-													)}
 												/>
 											</Fragment>
 										))}
@@ -424,12 +407,6 @@ class App extends Component {
 									/>
 
 									<Route
-										path="/edit-product"
-										exact
-										render={requireAuth(() => <EditProductForm />)}
-									/>
-
-									<Route
 										path="/new-sales"
 										exact
 										render={requireAuth(() => (
@@ -441,24 +418,6 @@ class App extends Component {
 											/>
 										))}
 									/>
-
-									{/* <Route
-                  path="/customer"
-                  exact
-                  render={requireAuth(() => (
-                    <Customer
-                      firstName={"John"}
-                      lastName={"Smith"}
-                      sex={"male"}
-                      email={"johnsmith@gmail.com"}
-                      phone={"000"}
-                      date={"01/01/2015"}
-                      chef={"yes"}
-                      customerOrigin={"McDonalds"}
-                      notes={"i hate this guy"}
-                    />
-                  ))}
-                /> */}
 
 									<Route
 										path="/customertraffic"
@@ -546,12 +505,6 @@ class App extends Component {
 												/>
 											</Fragment>
 										))}
-									/>
-
-									<Route
-										path="/edit-customer"
-										exact
-										render={requireAuth(() => <EditCustomerForm />)}
 									/>
 
 									<Route
