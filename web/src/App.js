@@ -68,7 +68,143 @@ class App extends Component {
     dailySales: null,
     monthRangeSales: null,
     dailyCustomerTraffics: null,
-    customerTraffics: null
+    customerTraffics: null,
+    pieChartChefData: null,
+    pieChartOriginData: null
+  };
+
+  getPieChartChefData = () => {
+    const chartData = this.getDataCustomerPieChart(this.state.customerTraffics);
+    this.setState({
+      pieChartChefData: {
+        labels: ["Chef", "Non Chef", "Unknown"],
+        datasets: [
+          {
+            backgroundColor: ["#2ecc71", "#e74c3c", "rgb(111, 107, 117)"],
+            data: chartData
+          }
+        ]
+      }
+    });
+  };
+
+  getPieChartOriginData = () => {
+    const chartData = this.getDataCustomerOriginPieChart(
+      this.state.customerTraffics
+    );
+    this.setState({
+      pieChartOriginData: {
+        labels: [
+          "Facebook",
+          "Online search",
+          "Referral",
+          "Newspaper",
+          "Walk in",
+          "QT Hotel Guest",
+          "Return",
+          "unknown"
+        ],
+        datasets: [
+          {
+            backgroundColor: [
+              "#2ecc71",
+              "#e74c3c",
+              "rgb(111, 107, 117)",
+              "rgb(23, 214, 240)",
+              "rgb(176, 210, 19)",
+              "rgb(209, 47, 215)",
+              "rgb(238, 69, 23)",
+              "rgb(70, 0, 249)"
+            ],
+            data: chartData
+          }
+        ]
+      }
+    });
+  };
+
+  // create array data for chef nonchef pie chart
+  getDataCustomerPieChart = customersData => {
+    let CustomerPieChart = []; //[chef,nonChef,unknown]
+
+    let total = customersData
+      .map(customerData => {
+        return customerData.number;
+      })
+      .reduce((a, b) => {
+        return a + b;
+      }, 0);
+
+    let chef = this.detectChef("true", customersData);
+
+    let nonChef = this.detectChef("false", customersData);
+
+    let unknown = total - chef - nonChef;
+
+    CustomerPieChart.push(chef, nonChef, unknown);
+    return CustomerPieChart;
+  };
+
+  detectChef = (type, data) => {
+    return data
+      .map(customerData => {
+        if (customerData.isChef === type) {
+          return customerData.number;
+        } else {
+          return 0;
+        }
+      })
+      .reduce((a, b) => {
+        return a + b;
+      }, 0);
+  };
+
+  detectOrigin = (type, data) => {
+    return data
+      .map(customerData => {
+        if (customerData.origin === type) {
+          return customerData.number;
+        } else {
+          return 0;
+        }
+      })
+      .reduce((a, b) => {
+        return a + b;
+      }, 0);
+  };
+
+  // create array data for chef origin pie chart
+  getDataCustomerOriginPieChart = customersData => {
+    let CustomerOriginPieChart = []; //[chef,nonChef,unknown]
+
+    let faceBook = this.detectOrigin("Facebook", customersData);
+
+    let onlineSearch = this.detectOrigin("OnlineSearch", customersData);
+
+    let referral = this.detectOrigin("Referral", customersData);
+
+    let newspaper = this.detectOrigin("Newspaper", customersData);
+
+    let walkIn = this.detectOrigin("WalkIn", customersData);
+
+    let hotelGuest = this.detectOrigin("HotelGuest", customersData);
+
+    let returnCustomer = this.detectOrigin("Return", customersData);
+
+    let unknown = this.detectOrigin("Unknown", customersData);
+
+    CustomerOriginPieChart.push(
+      faceBook,
+      onlineSearch,
+      referral,
+      newspaper,
+      walkIn,
+      hotelGuest,
+      returnCustomer,
+      unknown
+    );
+
+    return CustomerOriginPieChart;
   };
 
   onSignIn = ({ email, password }) => {
@@ -201,12 +337,15 @@ class App extends Component {
       dailySales,
       monthRangeSales,
       dailyCustomerTraffics,
-      customerTraffics
+      customerTraffics,
+      pieChartChefData,
+      pieChartOriginData
     } = this.state;
     const signedIn = !!decodedToken;
 
     const requireAuth = render => props =>
       !signedIn ? <Redirect to="/signin" /> : render(props);
+
     return (
       <Router>
         <div className="App">
@@ -438,6 +577,8 @@ class App extends Component {
                       <WeeklyReport
                         monthRangeSales={monthRangeSales}
                         customerTraffics={customerTraffics}
+                        pieChartChefData={pieChartChefData}
+                        pieChartOriginData={pieChartOriginData}
                       />
                     </div>
                   ))}
@@ -446,11 +587,7 @@ class App extends Component {
                 <Route
                   path="/report-monthly"
                   exact
-                  render={requireAuth(() => (
-                    <div>
-                      <h1>Monthly report</h1>
-                    </div>
-                  ))}
+                  render={requireAuth(() => <div />)}
                 />
 
                 <Route
@@ -560,6 +697,8 @@ class App extends Component {
     listCustomerTraffics()
       .then(customerTraffics => {
         this.setState({ customerTraffics });
+        this.getPieChartChefData();
+        this.getPieChartOriginData();
       })
       .catch(saveError);
 

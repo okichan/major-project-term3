@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import Chart from "chart.js";
-
+import { PieChartChef, PieChartOrigin } from "./PieChart";
 // recharts
 import {
   BarChart,
@@ -97,49 +97,7 @@ const sharpningCategory = [
   "Sharpening Damaged Tip"
 ];
 
-// create array data for chef nonchef pie chart
-function getDataCustomerPieChart(customersData) {
-  let CustomerPieChart = []; //[chef,nonChef,unknown]
-
-  let total = customersData
-    .map(customerData => {
-      return customerData.number;
-    })
-    .reduce((a, b) => {
-      return a + b;
-    }, 0);
-
-  let chef = customersData
-    .map(customerData => {
-      if (customerData.isChef === "true") {
-        return customerData.number;
-      } else {
-        return 0;
-      }
-    })
-    .reduce((a, b) => {
-      return a + b;
-    }, 0);
-
-  let nonChef = customersData
-    .map(customerData => {
-      if (customerData.isChef === "false") {
-        return customerData.number;
-      } else {
-        return 0;
-      }
-    })
-    .reduce((a, b) => {
-      return a + b;
-    }, 0);
-
-  let unknown = total - chef - nonChef;
-
-  CustomerPieChart.push(chef, nonChef, unknown);
-  return CustomerPieChart;
-}
-
-// get customer data for customer(chef and non chef)
+// get customer data for customer Graph(chef and non chef)
 function getDataCustomerGraph(weeklyCustomerData) {
   // for the customer trend graph(chef and non chef)
   let weeklyCustomerGraphArray = [];
@@ -318,11 +276,101 @@ function saleTrendForSharpening(weeklySales) {
   return weeklySalesTrendSharpArray;
 }
 
-function WeeklyReport({ monthRangeSales, customerTraffics }) {
-  const customerPieChart = customerTraffics
-    ? getDataCustomerPieChart(customerTraffics)
-    : null;
+function detectOrigin(type, data) {
+  return data
+    .map(weeklyCustomers => {
+      if (weeklyCustomers.origin === type) {
+        return weeklyCustomers.number;
+      } else {
+        return 0;
+      }
+    })
+    .reduce((a, b) => {
+      return a + b;
+    }, 0);
+}
 
+// get weekly customer origin bar chart
+function getWeeklyCustomerOriginData(weeklyCustomerData) {
+  // for the customer trend graph(chef and non chef)
+  let weeklyCustomerOriginArray = [];
+
+  // loope through the weeklyCustomer Data
+  Object.keys(weeklyCustomerData).forEach(customer => {
+    // sale trend content.  for each time it empty
+    let weeklyCustomerOrigin = {};
+    // week
+    weeklyCustomerOrigin["week"] = customer;
+
+    // totalCustomer(number)
+    weeklyCustomerOrigin["totalCustomer"] = weeklyCustomerData[customer]
+      .map(weeklyCustomers => {
+        return weeklyCustomers.number;
+      })
+      .reduce((a, b) => {
+        return a + b;
+      }, 0);
+
+    // number of Facebook
+    weeklyCustomerOrigin["Facebook"] = detectOrigin(
+      "Facebook",
+      weeklyCustomerData[customer]
+    );
+
+    // number of OnlineSearch
+    weeklyCustomerOrigin["OnlineSearch"] = detectOrigin(
+      "OnlineSearch",
+      weeklyCustomerData[customer]
+    );
+
+    // number of Referral
+    weeklyCustomerOrigin["Referral"] = detectOrigin(
+      "Referral",
+      weeklyCustomerData[customer]
+    );
+
+    // number of Newspaper
+    weeklyCustomerOrigin["Newspaper"] = detectOrigin(
+      "Newspaper",
+      weeklyCustomerData[customer]
+    );
+
+    // number of WalkIn
+    weeklyCustomerOrigin["WalkIn"] = detectOrigin(
+      "WalkIn",
+      weeklyCustomerData[customer]
+    );
+
+    // number of HotelGuest
+    weeklyCustomerOrigin["HotelGuest"] = detectOrigin(
+      "HotelGuest",
+      weeklyCustomerData[customer]
+    );
+
+    // number of Return
+    weeklyCustomerOrigin["Return"] = detectOrigin(
+      "Return",
+      weeklyCustomerData[customer]
+    );
+
+    // number of Unknown
+    weeklyCustomerOrigin["Unknown"] = detectOrigin(
+      "Unknown",
+      weeklyCustomerData[customer]
+    );
+
+    // push the object to array
+    weeklyCustomerOriginArray.push(weeklyCustomerOrigin);
+  });
+  return weeklyCustomerOriginArray;
+}
+
+function WeeklyReport({
+  monthRangeSales,
+  customerTraffics,
+  pieChartChefData,
+  pieChartOriginData
+}) {
   const customerGraph = customerTraffics
     ? getDataCustomerGraph(getWeeklyCustomerData(7, customerTraffics)).reverse()
     : null;
@@ -330,30 +378,18 @@ function WeeklyReport({ monthRangeSales, customerTraffics }) {
   const saleTrendKnife = monthRangeSales
     ? saleTrendForKnife(getWeeklySaleData(7, monthRangeSales)).reverse()
     : null;
+
   const saleTrendSharpening = monthRangeSales
     ? saleTrendForSharpening(getWeeklySaleData(7, monthRangeSales)).reverse()
     : null;
 
-  const chefPieChartElement = document.getElementById("chefPieChart");
-  const originPieChartElement = document.getElementById("originPieChart");
-  if (chefPieChartElement !== null) {
-    let ctx = chefPieChartElement.getContext("2d");
-    ctx.canvas.width = 50;
-    ctx.canvas.height = 50;
-    const chefPieChart = new Chart(ctx, {
-      type: "pie",
-      data: {
-        labels: ["Chef", "Non Chef", "Unknown"],
-        datasets: [
-          {
-            backgroundColor: ["#2ecc71", "#e74c3c", "rgb(111, 107, 117)"],
-            data: customerPieChart
-          }
-        ]
-      }
-    });
-  }
+  const customerOriginChart = customerTraffics
+    ? getWeeklyCustomerOriginData(
+        getWeeklySaleData(7, customerTraffics)
+      ).reverse()
+    : null;
 
+  const originPieChartElement = document.getElementById("originPieChart");
   if (originPieChartElement !== null) {
     let ctx = originPieChartElement.getContext("2d");
     ctx.canvas.width = 50;
@@ -421,6 +457,44 @@ function WeeklyReport({ monthRangeSales, customerTraffics }) {
           />
         </ComposedChart>
       )}
+
+      <h2>Customer origin with origin</h2>
+      {customerOriginChart && (
+        <ComposedChart width={600} height={300} data={customerOriginChart}>
+          <XAxis dataKey="week" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Bar
+            dataKey="totalCustomer"
+            name="Total customer"
+            barSize={20}
+            fill="#413ea0"
+          />
+          <Line type="monotone" dataKey="Facebook" stroke="#ff7300" />
+          <Line
+            type="monotone"
+            dataKey="OnlineSearch"
+            stroke="rgb(43, 251, 146)"
+          />
+          <Line type="monotone" dataKey="Referral" stroke="rgb(202, 210, 25)" />
+          <Line
+            type="monotone"
+            dataKey="Newspaper"
+            stroke="rgb(185, 45, 241)"
+          />
+          <Line type="monotone" dataKey="WalkIn" stroke="rgb(131, 87, 173)" />
+          <Line
+            type="monotone"
+            dataKey="HotelGuest"
+            stroke="rgb(138, 227, 19)"
+          />
+          <Line type="monotone" dataKey="Return" stroke="rgb(187, 113, 129)" />
+          <Line type="monotone" dataKey="Unknown" stroke="rgb(125, 122, 120)" />
+        </ComposedChart>
+      )}
+
       <h2>Sale Trend Knife and Stone</h2>
       {saleTrendKnife && (
         <BarChart
@@ -459,13 +533,11 @@ function WeeklyReport({ monthRangeSales, customerTraffics }) {
         </BarChart>
       )}
       <h2>Customer Chef Non Chef</h2>
-      <div style={{ width: "50%" }}>
-        <canvas id={"chefPieChart"} />
-      </div>
-      <h2>Customer Origin Chart</h2>
-      <div style={{ width: "50%" }}>
-        <canvas id={"originPieChart"} />
-      </div>
+      {pieChartChefData && <PieChartChef pieChartChefData={pieChartChefData} />}
+      <h2>Customer Origin</h2>
+      {pieChartOriginData && (
+        <PieChartOrigin pieChartOriginData={pieChartOriginData} />
+      )}
     </div>
   );
 }
