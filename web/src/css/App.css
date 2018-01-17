@@ -68,28 +68,28 @@ td a:hover {
 }
 
 .row-hover {
-	transition: 0.2s;
+  transition: 0.2s;
 }
 
 .row-hover:hover {
-	cursor: pointer;
-	background: rgb(235, 237, 243);
+  cursor: pointer;
+  background: rgb(235, 237, 243);
 }
 
 #purchase-history {
-   border: 1px dotted rgb(202, 202, 202);
-   background: rgb(245, 251, 255);
-   border-radius: .3em;
-   padding: 0.6em;
-	max-height: 25vh;
-	overflow-y: scroll;
+  border: 1px dotted rgb(202, 202, 202);
+  background: rgb(245, 251, 255);
+  border-radius: 0.3em;
+  padding: 0.6em;
+  max-height: 25vh;
+  overflow-y: scroll;
 }
 
 #notification-badge {
-	position: absolute;
-	font-size: 0.5em;
-	font-family: sans-serif;
-	/* right: 0; */
+  position: absolute;
+  font-size: 0.5em;
+  font-family: sans-serif;
+  /* right: 0; */
 }
 
 @media (min-width: 768px) {
