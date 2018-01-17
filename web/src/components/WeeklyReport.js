@@ -4,6 +4,7 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import Chart from "chart.js";
 import { PieChartChef, PieChartOrigin } from "./PieChart";
+import ReactLoading from "react-loading";
 // recharts
 import {
   BarChart,
@@ -429,168 +430,200 @@ function WeeklyReport({
 
   return (
     <div>
-      <div className="row">
-        <h2>Customer Traffic (Chef or NonChef)</h2>
-        <input
-          style={{ width: "70px" }}
-          className="form-control"
-          min="0"
-          max="26"
-          id="number"
-          type="number"
-          value={weekRangeChef}
-          onChange={e => {
-            onChageRange("Chef", e.target.value);
-          }}
-        />
-      </div>
-      {customerGraph && (
-        <ComposedChart width={800} height={300} data={customerGraph}>
-          <XAxis dataKey="week" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Bar
-            dataKey="totalCustomer"
-            name="Total customer"
-            barSize={20}
-            fill="#413ea0"
-          />
-          <Line type="monotone" dataKey="chef" name="Chef" stroke="#ff7300" />
-          <Line
-            type="monotone"
-            dataKey="nonChef"
-            name="NonChef"
-            stroke="rgb(13, 194, 255)"
-          />
-          <Line
-            type="monotone"
-            dataKey="unknown"
-            name="Unknown"
-            stroke="rgb(191, 30, 86)"
-          />
-        </ComposedChart>
+      {customerGraph ? (
+        <div>
+          <div className="row">
+            <h2>Customer Traffic (Chef or NonChef)</h2>
+            <input
+              style={{ width: "70px" }}
+              className="form-control"
+              min="0"
+              max="26"
+              id="number"
+              type="number"
+              value={weekRangeChef}
+              onChange={e => {
+                onChageRange("Chef", e.target.value);
+              }}
+            />
+          </div>
+          <ComposedChart width={800} height={300} data={customerGraph}>
+            <XAxis dataKey="week" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Bar
+              dataKey="totalCustomer"
+              name="Total customer"
+              barSize={20}
+              fill="#413ea0"
+            />
+            <Line type="monotone" dataKey="chef" name="Chef" stroke="#ff7300" />
+            <Line
+              type="monotone"
+              dataKey="nonChef"
+              name="NonChef"
+              stroke="rgb(13, 194, 255)"
+            />
+            <Line
+              type="monotone"
+              dataKey="unknown"
+              name="Unknown"
+              stroke="rgb(191, 30, 86)"
+            />
+          </ComposedChart>
+        </div>
+      ) : (
+        <ReactLoading type="bars" color="rgb(121, 3, 34)" />
       )}
-      <div className="row">
-        <h2>Customer with origin</h2>
-        <input
-          style={{ width: "70px" }}
-          className="form-control"
-          min="0"
-          max="26"
-          id="number"
-          type="number"
-          value={weekRangeOrigin}
-          onChange={e => {
-            onChageRange("Origin", e.target.value);
-          }}
-        />
-      </div>
+
       {customerOriginChart && (
-        <ComposedChart width={800} height={300} data={customerOriginChart}>
-          <XAxis dataKey="week" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Bar
-            dataKey="totalCustomer"
-            name="Total customer"
-            barSize={20}
-            fill="#413ea0"
-          />
-          <Line type="monotone" dataKey="Facebook" stroke="#ff7300" />
-          <Line
-            type="monotone"
-            dataKey="OnlineSearch"
-            stroke="rgb(43, 251, 146)"
-          />
-          <Line type="monotone" dataKey="Referral" stroke="rgb(202, 210, 25)" />
-          <Line
-            type="monotone"
-            dataKey="Newspaper"
-            stroke="rgb(185, 45, 241)"
-          />
-          <Line type="monotone" dataKey="WalkIn" stroke="rgb(131, 87, 173)" />
-          <Line
-            type="monotone"
-            dataKey="HotelGuest"
-            stroke="rgb(138, 227, 19)"
-          />
-          <Line type="monotone" dataKey="Return" stroke="rgb(187, 113, 129)" />
-          <Line type="monotone" dataKey="Unknown" stroke="rgb(125, 122, 120)" />
-        </ComposedChart>
+        <div>
+          <div className="row">
+            <h2>Customer with origin</h2>
+            <input
+              style={{ width: "70px" }}
+              className="form-control"
+              min="0"
+              max="26"
+              id="number"
+              type="number"
+              value={weekRangeOrigin}
+              onChange={e => {
+                onChageRange("Origin", e.target.value);
+              }}
+            />
+          </div>
+
+          <ComposedChart width={800} height={300} data={customerOriginChart}>
+            <XAxis dataKey="week" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Bar
+              dataKey="totalCustomer"
+              name="Total customer"
+              barSize={20}
+              fill="#413ea0"
+            />
+            <Line type="monotone" dataKey="Facebook" stroke="#ff7300" />
+            <Line
+              type="monotone"
+              dataKey="OnlineSearch"
+              stroke="rgb(43, 251, 146)"
+            />
+            <Line
+              type="monotone"
+              dataKey="Referral"
+              stroke="rgb(202, 210, 25)"
+            />
+            <Line
+              type="monotone"
+              dataKey="Newspaper"
+              stroke="rgb(185, 45, 241)"
+            />
+            <Line type="monotone" dataKey="WalkIn" stroke="rgb(131, 87, 173)" />
+            <Line
+              type="monotone"
+              dataKey="HotelGuest"
+              stroke="rgb(138, 227, 19)"
+            />
+            <Line
+              type="monotone"
+              dataKey="Return"
+              stroke="rgb(187, 113, 129)"
+            />
+            <Line
+              type="monotone"
+              dataKey="Unknown"
+              stroke="rgb(125, 122, 120)"
+            />
+          </ComposedChart>
+        </div>
       )}
-      <div className="row">
-        <h2>Sale Trend Knife and Stone</h2>
-        <input
-          style={{ width: "70px" }}
-          className="form-control"
-          min="0"
-          max="26"
-          id="number"
-          type="number"
-          value={weekRangeKnife}
-          onChange={e => {
-            onChageRange("Knife", e.target.value);
-          }}
-        />
-      </div>
       {saleTrendKnife && (
-        <BarChart
-          width={800}
-          height={300}
-          data={saleTrendKnife}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-        >
-          <XAxis dataKey="week" />
-          <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-          <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Bar yAxisId="left" dataKey="totalUnit" fill="#8884d8" />
-          <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
-        </BarChart>
+        <div>
+          <div className="row">
+            <h2>Sale Trend Knife and Stone</h2>
+            <input
+              style={{ width: "70px" }}
+              className="form-control"
+              min="0"
+              max="26"
+              id="number"
+              type="number"
+              value={weekRangeKnife}
+              onChange={e => {
+                onChageRange("Knife", e.target.value);
+              }}
+            />
+          </div>
+
+          <BarChart
+            width={800}
+            height={300}
+            data={saleTrendKnife}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          >
+            <XAxis dataKey="week" />
+            <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+            <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip />
+            <Legend />
+            <Bar yAxisId="left" dataKey="totalUnit" fill="#8884d8" />
+            <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
+          </BarChart>
+        </div>
       )}
-      <div className="row">
-        <h2>Sale Trend Sharpening</h2>
-        <input
-          style={{ width: "70px" }}
-          className="form-control"
-          min="0"
-          max="26"
-          id="number"
-          type="number"
-          value={weekRangeSharp}
-          onChange={e => {
-            onChageRange("Sharp", e.target.value);
-          }}
-        />
-      </div>
       {saleTrendSharpening && (
-        <BarChart
-          width={800}
-          height={300}
-          data={saleTrendSharpening}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-        >
-          <XAxis dataKey="week" />
-          <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-          <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Bar yAxisId="left" dataKey="totalUnit" fill="#8884d8" />
-          <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
-        </BarChart>
+        <div>
+          <div className="row">
+            <h2>Sale Trend Sharpening</h2>
+            <input
+              style={{ width: "70px" }}
+              className="form-control"
+              min="0"
+              max="26"
+              id="number"
+              type="number"
+              value={weekRangeSharp}
+              onChange={e => {
+                onChageRange("Sharp", e.target.value);
+              }}
+            />
+          </div>
+
+          <BarChart
+            width={800}
+            height={300}
+            data={saleTrendSharpening}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          >
+            <XAxis dataKey="week" />
+            <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+            <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip />
+            <Legend />
+            <Bar yAxisId="left" dataKey="totalUnit" fill="#8884d8" />
+            <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
+          </BarChart>
+        </div>
       )}
-      <h2>Customer Chef Non Chef</h2>
-      {pieChartChefData && <PieChartChef pieChartChefData={pieChartChefData} />}
-      <h2>Customer Origin</h2>
+      {pieChartChefData && (
+        <div>
+          <h2>Customer Chef Non Chef</h2>
+          <PieChartChef pieChartChefData={pieChartChefData} />
+        </div>
+      )}
       {pieChartOriginData && (
-        <PieChartOrigin pieChartOriginData={pieChartOriginData} />
+        <div>
+          <h2>Customer Origin</h2>
+          <PieChartOrigin pieChartOriginData={pieChartOriginData} />
+        </div>
       )}
     </div>
   );
