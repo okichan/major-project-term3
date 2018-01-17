@@ -182,7 +182,11 @@ function saleTrendForKnife(weeklySales) {
       return weeklySales.products
         .map(weekSale => {
           // check knife, stone or sharpening
-          if (!sharpningCategory.includes(weekSale.product.category)) {
+          if (
+            !sharpningCategory.includes(
+              weekSale.product ? weekSale.product.category : "null"
+            )
+          ) {
             // knife and stone only
             return weekSale.salePrice;
           } else {
@@ -204,7 +208,11 @@ function saleTrendForKnife(weeklySales) {
       return weeklySales.products
         .map(product => {
           // check knife, stone or sharpening
-          if (!sharpningCategory.includes(product.product.category)) {
+          if (
+            !sharpningCategory.includes(
+              product.product ? product.product.category : "null"
+            )
+          ) {
             // knife and stone only
             return product.unitAmount;
           } else {
@@ -243,7 +251,11 @@ function saleTrendForSharpening(weeklySales) {
       return weeklySales.products
         .map(weekSale => {
           // check knife, stone or sharpening
-          if (sharpningCategory.includes(weekSale.product.category)) {
+          if (
+            sharpningCategory.includes(
+              weekSale.product ? weekSale.product.category : "null"
+            )
+          ) {
             // sharpening only
             return weekSale.salePrice;
           } else {
@@ -265,7 +277,11 @@ function saleTrendForSharpening(weeklySales) {
       return weeklySales.products
         .map(product => {
           // check knife, stone or sharpening
-          if (sharpningCategory.includes(product.product.category)) {
+          if (
+            sharpningCategory.includes(
+              product.product ? product.product.category : "null"
+            )
+          ) {
             // sharpening only
             return product.unitAmount;
           } else {
