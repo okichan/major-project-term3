@@ -429,18 +429,21 @@ function WeeklyReport({
 
   return (
     <div>
-      <h2>Customer Traffic (Chef or NonChef)</h2>
-      <input
-        className="form-control"
-        min="0"
-        max="26"
-        id="number"
-        type="number"
-        value={weekRangeChef}
-        onChange={e => {
-          onChageRange("Chef", e.target.value);
-        }}
-      />
+      <div className="row">
+        <h2>Customer Traffic (Chef or NonChef)</h2>
+        <input
+          style={{ width: "70px" }}
+          className="form-control"
+          min="0"
+          max="26"
+          id="number"
+          type="number"
+          value={weekRangeChef}
+          onChange={e => {
+            onChageRange("Chef", e.target.value);
+          }}
+        />
+      </div>
       {customerGraph && (
         <ComposedChart width={800} height={300} data={customerGraph}>
           <XAxis dataKey="week" />
@@ -469,19 +472,21 @@ function WeeklyReport({
           />
         </ComposedChart>
       )}
-
-      <h2>Customer with origin</h2>
-      <input
-        className="form-control"
-        min="0"
-        max="26"
-        id="number"
-        type="number"
-        value={weekRangeOrigin}
-        onChange={e => {
-          onChageRange("Origin", e.target.value);
-        }}
-      />
+      <div className="row">
+        <h2>Customer with origin</h2>
+        <input
+          style={{ width: "70px" }}
+          className="form-control"
+          min="0"
+          max="26"
+          id="number"
+          type="number"
+          value={weekRangeOrigin}
+          onChange={e => {
+            onChageRange("Origin", e.target.value);
+          }}
+        />
+      </div>
       {customerOriginChart && (
         <ComposedChart width={800} height={300} data={customerOriginChart}>
           <XAxis dataKey="week" />
@@ -517,19 +522,21 @@ function WeeklyReport({
           <Line type="monotone" dataKey="Unknown" stroke="rgb(125, 122, 120)" />
         </ComposedChart>
       )}
-
-      <h2>Sale Trend Knife and Stone</h2>
-      <input
-        className="form-control"
-        min="0"
-        max="26"
-        id="number"
-        type="number"
-        value={weekRangeKnife}
-        onChange={e => {
-          onChageRange("Knife", e.target.value);
-        }}
-      />
+      <div className="row">
+        <h2>Sale Trend Knife and Stone</h2>
+        <input
+          style={{ width: "70px" }}
+          className="form-control"
+          min="0"
+          max="26"
+          id="number"
+          type="number"
+          value={weekRangeKnife}
+          onChange={e => {
+            onChageRange("Knife", e.target.value);
+          }}
+        />
+      </div>
       {saleTrendKnife && (
         <BarChart
           width={800}
@@ -547,19 +554,21 @@ function WeeklyReport({
           <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
         </BarChart>
       )}
-
-      <h2>Sale Trend Sharpening</h2>
-      <input
-        className="form-control"
-        min="0"
-        max="26"
-        id="number"
-        type="number"
-        value={weekRangeSharp}
-        onChange={e => {
-          onChageRange("Sharp", e.target.value);
-        }}
-      />
+      <div className="row">
+        <h2>Sale Trend Sharpening</h2>
+        <input
+          style={{ width: "70px" }}
+          className="form-control"
+          min="0"
+          max="26"
+          id="number"
+          type="number"
+          value={weekRangeSharp}
+          onChange={e => {
+            onChageRange("Sharp", e.target.value);
+          }}
+        />
+      </div>
       {saleTrendSharpening && (
         <BarChart
           width={800}
