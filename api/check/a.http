@@ -5,8 +5,8 @@ POST http://localhost:7000/auth
 Content-Type: application/json
 
 {
-  "email": "patrick.smith@coderacademy.edu.au",
-  "password": "password123"
+  "email": "chymeng24@gmail.com",
+  "password": "123456"
 }
 
 ### Get Products
@@ -38,8 +38,11 @@ Content-Type: application/json
   "code": "12313123123"
 }
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> upstream/master
 ### Create Sale
 POST http://localhost:7000/sales
 Authorization: Bearer {{ token }}
@@ -89,29 +92,29 @@ DELETE http://localhost:7000/product/5a54e6dce51e644448cd7811
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
-
 ### Read customer
 GET http://localhost:7000/customers
 Authorization: Bearer {{ token }}
 
 ### Add new customer
 POST http://localhost:7000/customers
-Authorization: Bearer {{ token }}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTYwNjcxMjUsImV4cCI6MTUxNjY3MTkyNSwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.T3_lw1Ku7DKc1HtUZp-kpOgd_BlroXXUDV0CVNHMCLc
+Content-Type: application/json
 
 {
-   "gender": "Male",
-   "phone": "0433001122",
-   "email": "patrick.smith@coderacademy.edu.au",
-   "firstName": "Emma",
-   "lastName": "Yamada",
-   "isChef": "1",
-   "workAt": "Maccas"
+  "firstName": "John",
+  "lastName": "Smith",
+  "phone": "0421201101",
+  "gender": "male",
+  "isChef": false,
+  "workAt": "Kmart",
+  "origin": "SNS (Facebook, Twitter etc)",
+  "note": "Long text Long text Long text Long text Long text Long text Long text Long text "
 }
 
-
 ### Update customer
-PUT http://localhost:7000/customer/5a5560d7e51e644448cd7814
-Authorization: Bearer {{ token }}
+PUT http://localhost:7000/customer/5a5b11bfbe0dfc060148a7c0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTYwNjcxMjUsImV4cCI6MTUxNjY3MTkyNSwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.T3_lw1Ku7DKc1HtUZp-kpOgd_BlroXXUDV0CVNHMCLc
 Content-Type: application/json
 
 {
@@ -125,15 +128,16 @@ Content-Type: application/json
    "note": "Long text Long text Long text Long text Long text Long text Long text Long text "   
 }
 
-
-
-### Create customer traffic
-POST http://localhost:7000/customerTraffics
-Authorization: Bearer {{ token }}
+### Delete customer
+DELETE http://localhost:7000/customer/5a5d5bb0bfb92d3f77e60c3c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTYwNjcxMjUsImV4cCI6MTUxNjY3MTkyNSwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.T3_lw1Ku7DKc1HtUZp-kpOgd_BlroXXUDV0CVNHMCLc
 Content-Type: application/json
 
-{
-  "number": "1",
-  "isChef": "false",
-  "origin": "Walk In"
-}
+### Create sale
+POST http://localhost:7000/sales
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU5OTUzMTYsImV4cCI6MTUxNjYwMDExNiwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.50e44cexRalx1F7Qm-4nCB5X-93Px3AY9sF8cb-N_LM
+Content-Type: application/json
+
+{"products":[{"product":"5a5bf31f5fdac41a583aedf3","salePrice":"150","unitAmount":"1"}, {"product":"","salePrice":"","unitAmount":""}],"customer":"5a5d5c9cbfb92d3f77e60c3d","date":"2018-01-15","totalPrice":"150"}
+
+
