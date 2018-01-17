@@ -18,13 +18,6 @@ import {
   ComposedChart
 } from "recharts";
 
-// extract number form string
-function ExtractNum(str) {
-  var num = new String(str).match(/\d/g);
-  num = num.join("");
-  return num;
-}
-
 // get weekly data(sales)
 function getWeeklySaleData(weekRange, salesData) {
   // detect today's weekNumber
@@ -391,21 +384,21 @@ function WeeklyReport({
 }) {
   const customerGraph = customerTraffics
     ? getDataCustomerGraph(
-        getWeeklyCustomerData(10, customerTraffics)
+        getWeeklyCustomerData(12, customerTraffics)
       ).reverse()
     : null;
 
   const saleTrendKnife = monthRangeSales
-    ? saleTrendForKnife(getWeeklySaleData(10, monthRangeSales)).reverse()
+    ? saleTrendForKnife(getWeeklySaleData(12, monthRangeSales)).reverse()
     : null;
 
   const saleTrendSharpening = monthRangeSales
-    ? saleTrendForSharpening(getWeeklySaleData(10, monthRangeSales)).reverse()
+    ? saleTrendForSharpening(getWeeklySaleData(12, monthRangeSales)).reverse()
     : null;
 
   const customerOriginChart = customerTraffics
     ? getWeeklyCustomerOriginData(
-        getWeeklySaleData(10, customerTraffics)
+        getWeeklySaleData(12, customerTraffics)
       ).reverse()
     : null;
 
@@ -441,7 +434,7 @@ function WeeklyReport({
         </ComposedChart>
       )}
 
-      <h2>Customer origin with origin</h2>
+      <h2>Customer with origin</h2>
       {customerOriginChart && (
         <ComposedChart width={800} height={300} data={customerOriginChart}>
           <XAxis dataKey="week" />
