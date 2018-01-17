@@ -2,17 +2,29 @@ import React, { Component } from "react";
 import CustomerFormNew from "./CustomerFormNew";
 import CustomerFormReturn from "./CustomerFormReturn";
 import { listProducts } from "../api/products";
-import { listSale, createSale, deleteSale } from "../api/sales";
+import { listCustomers, listFilteredCustomers } from "../api/customers";
+import { listSales, createSale, deleteSale } from "../api/sales";
+import { Link } from "react-router-dom";
 
 class SalesForm extends Component {
   state = {
     products: null,
-    saleItems: 1,
+    customers: null,
+    filteredCustomers: null,
+    customerone: null,
     value: [],
-    customer: true,
+    sales: null,
     productPrice1: null,
     productPrice2: null,
-    productPrice3: null
+    productPrice3: null,
+    productPrice4: null,
+    productPrice5: null,
+    productQuantity1: null,
+    productQuantity2: null,
+    productQuantity3: null,
+    productQuantity4: null,
+    productQuantity5: null,
+    textEntered: null
   };
 
   componentDidMount() {
@@ -24,33 +36,53 @@ class SalesForm extends Component {
         this.setState({ error: error });
         console.log("Error loading currency conversion", error);
       });
+
+    listCustomers()
+      .then(customers => {
+        this.setState({ customers: customers });
+      })
+      .catch(error => {
+        this.setState({ error: error });
+        console.log("Error loading currency conversion", error);
+      });
   }
 
-  addItem() {
-    this.setState({
-      saleItems: this.state.saleItems + 1
+  load() {
+    const saveError = error => {
+      this.setState({ error });
+    };
+
+    // Available to anyone
+    this.listSales().then(sales => {
+      this.setState({ sales: sales });
     });
   }
 
-  deleteItem() {
-    this.setState({
-      saleItems: this.state.saleItems - 1
-    });
+  showhide(id) {
+    var mydiv = document.getElementById(id);
+    if (mydiv.style.display === "" || mydiv.style.display === "block")
+      mydiv.style.display = "none";
+    else mydiv.style.display = "block";
   }
 
-  showhide(target) {}
+  onChangeNumber = number => {
+    const { customers } = this.state;
+    const chosenNumber = customers.filter(customer => {
+      return customer._id === number;
+    })[0];
+    this.setState({ customerone: chosenNumber.id });
+  };
 
-  onChangeTitle1 = (number, title) => {
+  onChangeTitle1 = (number, id) => {
     const { products } = this.state;
-    const key = `productPrice${number}`;
     const chosenProduct = products.filter(product => {
-      return product.title === title;
+      return product._id === id;
     })[0];
     this.setState({ productPrice1: chosenProduct.price });
   };
+
   onChangeTitle2 = (number, title) => {
     const { products } = this.state;
-    const key = `productPrice${number}`;
     const chosenProduct = products.filter(product => {
       return product.title === title;
     })[0];
@@ -58,7 +90,6 @@ class SalesForm extends Component {
   };
   onChangeTitle3 = (number, title) => {
     const { products } = this.state;
-    const key = `productPrice${number}`;
     const chosenProduct = products.filter(product => {
       return product.title === title;
     })[0];
@@ -66,7 +97,6 @@ class SalesForm extends Component {
   };
   onChangeTitle4 = (number, title) => {
     const { products } = this.state;
-    const key = `productPrice${number}`;
     const chosenProduct = products.filter(product => {
       return product.title === title;
     })[0];
@@ -74,7 +104,6 @@ class SalesForm extends Component {
   };
   onChangeTitle5 = (number, title) => {
     const { products } = this.state;
-    const key = `productPrice${number}`;
     const chosenProduct = products.filter(product => {
       return product.title === title;
     })[0];
@@ -100,47 +129,106 @@ class SalesForm extends Component {
     const value = e.target.value;
     this.setState({ productPrice5: value });
   };
+  onChangeQuantity1 = e => {
+    const value = e.target.value;
+    this.setState({ productQuantity1: value });
+  };
+  onChangeQuantity2 = e => {
+    const value = e.target.value;
+    this.setState({ productQuantity2: value });
+  };
+  onChangeQuantity3 = e => {
+    const value = e.target.value;
+    this.setState({ productQuantity3: value });
+  };
+  onChangeQuantity4 = e => {
+    const value = e.target.value;
+    this.setState({ productQuantity4: value });
+  };
+  onChangeQuantity5 = e => {
+    const value = e.target.value;
+    this.setState({ productQuantity5: value });
+  };
 
-  // displayItems() {
-  //   let forms = [];
-  //   for (let i = 0; i < this.state.saleItems; i++) {
-  //     forms.push(
-  //       <div key={i}>
-  //         <SalesItem
-  //           products={this.state.products}
-  //           productPrice={this.state.productPrice}
-  //           onChangeTitle={this.onChangeTitle}
-  //           onChangePrice={this.onChangePrice}
-  //           value={this.state.value[i] || ""}
-  //         />
-  //       </div>
-  //     );
-  //   }
-  //   return forms || null;
-  // }
-
-  customerType() {
-    this.setState({
-      customer: !this.state.customer
-    });
+  totalSales() {
+    const {
+      productPrice1,
+      productPrice2,
+      productPrice3,
+      productPrice4,
+      productPrice5,
+      productQuantity1,
+      productQuantity2,
+      productQuantity3,
+      productQuantity4,
+      productQuantity5
+    } = this.state;
+    return (
+      productPrice1 * productQuantity1 +
+      productPrice2 * productQuantity2 +
+      productPrice3 * productQuantity3 +
+      productPrice4 * productQuantity4 +
+      productPrice5 * productQuantity5
+    );
   }
 
   onCreateSale = saleData => {
-    createSale(saleData).then(newSale =>
-      this.setState(prevState => {
-        const updatedSales = prevState.products.concat(newSale);
-        sales: updatedSales;
+    createSale(saleData)
+      .then(newSale => {
+        this.setState(prevState => {
+          // Append to existing products array
+          const updatedSales = prevState.products.concat(newSale);
+          return {
+            sales: updatedSales
+          };
+        });
       })
-    );
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  filterCustomers = event => {
+    event.preventDefault(); // Prevent the form submission
+
+    const { textEntered } = this.state;
+
+    listFilteredCustomers(textEntered)
+      .then(customers => {
+        this.setState({ customers: customers });
+      })
+      .catch(error => {
+        alert(`"${textEntered}" phone number does not belong to a customer!`);
+      });
+  };
+
+  onChangeTextEntered = event => {
+    const input = event.target;
+    const value = input.value;
+    this.setState({
+      textEntered: value
+    });
   };
 
   render() {
     const {
       products,
+      customers,
       saleItems,
       customer,
+      customerone,
       productPrice1,
-      productPrice2
+      productPrice2,
+      productPrice3,
+      productPrice4,
+      productPrice5,
+      productQuantity1,
+      productQuantity2,
+      productQuantity3,
+      productQuantity4,
+      productQuantity5,
+      sales,
+      textEntered
     } = this.state;
 
     return (
@@ -150,17 +238,71 @@ class SalesForm extends Component {
           <form
             className=""
             onSubmit={event => {
-              // Prevent old-school form submission
               event.preventDefault();
+
+              var product = [];
+              var sale = {};
+              let product1 = {};
+              let product2 = {};
+              let product3 = {};
+              let product4 = {};
+              let product5 = {};
 
               const form = event.target;
               const elements = form.elements; // Allows looking up fields using their 'name' attributes
               // Get entered values from fields
-              const brandName = elements.brandName.value;
-              const name = elements.name.value;
 
-              // Pass this information along to the parent component
-              this.onCreateSale({ brandName, name });
+              const date = elements.date.value;
+              const customer = elements.customer.value;
+              const totalPrice = elements.totalPrice.value;
+              const type = elements.type.value;
+              const id1 = elements.id[0].value;
+              const salePrice1 = elements.salePrice[0].value;
+              const unitAmount1 = elements.unitAmount[0].value;
+              const id2 = elements.id[1].value;
+              const salePrice2 = elements.salePrice[1].value;
+              const unitAmount2 = elements.unitAmount[1].value;
+              const id3 = elements.id[2].value;
+              const salePrice3 = elements.salePrice[2].value;
+              const unitAmount3 = elements.unitAmount[2].value;
+              const id4 = elements.id[3].value;
+              const salePrice4 = elements.salePrice[3].value;
+              const unitAmount4 = elements.unitAmount[3].value;
+              const id5 = elements.id[4].value;
+              const salePrice5 = elements.salePrice[4].value;
+              const unitAmount5 = elements.unitAmount[4].value;
+
+              product1["product"] = id1;
+              product1["salePrice"] = salePrice1;
+              product1["unitAmount"] = unitAmount1;
+              product2["product"] = id2;
+              product2["salePrice"] = salePrice2;
+              product2["unitAmount"] = unitAmount2;
+              product3["product"] = id3;
+              product3["salePrice"] = salePrice3;
+              product3["unitAmount"] = unitAmount3;
+              product4["product"] = id4;
+              product4["salePrice"] = salePrice4;
+              product4["unitAmount"] = unitAmount4;
+              product5["product"] = id5;
+              product5["salePrice"] = salePrice5;
+              product5["unitAmount"] = unitAmount5;
+
+              product.push(product1, product2, product3, product4, product5);
+              const result = product.filter(pro => {
+                return pro.unitAmount !== "";
+              });
+
+              sale.products = result;
+              sale.date = date;
+              sale.customer = customer;
+              sale.totalPrice = totalPrice;
+              sale.type = type;
+
+              console.log(sale);
+              // this.onCreateSale(sale);
+              // window.location.href = "/sales";
+              // return false;
             }}
           >
             <fieldset>
@@ -168,35 +310,33 @@ class SalesForm extends Component {
                 <div className="col">
                   <label className="control-label mr-3">Date</label>
                   <i className="fa fa-calendar mr-1" />
-                  <input type="date" />
+                  <input type="date" name="date" />
                 </div>
               </div>
-              {/* {this.displayItems()} */}
               {/* First Sale Item */}
               <div className="col" id="saleitem1">
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Product</label>
                     <select
-                      name="brandName"
+                      name="id"
                       className="form-control"
                       onChange={e => {
                         this.onChangeTitle1(1, e.target.value);
                       }}
                     >
                       {products.map(m => (
-                        <option value={m.id}>{m.title}</option>
+                        <option value={m._id}>{m.title}</option>
                       ))}
                     </select>
                   </div>
                 </div>
-                {console.log(this.state)}
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Price</label>
                     <div className="input-group">
                       <input
-                        name="mobile"
+                        name="salePrice"
                         className="form-control"
                         value={
                           this.state.productPrice1
@@ -215,27 +355,38 @@ class SalesForm extends Component {
                   <div className="col">
                     <label className="control-label">Quantity</label>
                     <div className="input-group">
-                      <input type="number" className="form-control" min="1" />
+                      <input
+                        name="unitAmount"
+                        type="number"
+                        className="form-control"
+                        min="1"
+                        value={
+                          this.state.productQuantity1
+                            ? this.state.productQuantity1
+                            : ""
+                        }
+                        onChange={e => {
+                          this.onChangeQuantity1(e);
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
-                {/* <button
+                <button
+                  className="fa fa-plus-circle"
                   onClick={e => {
                     e.preventDefault();
-                    this.showhide("hide");
+                    this.showhide("secondSaleItem");
                   }}
-                >
-                  click
-                </button> */}
+                />
               </div>
-
               {/* Second Sale Item */}
-              <div className="col salesItem test hide">
+              <div className="col salesItem" id="secondSaleItem">
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Product</label>
                     <select
-                      name="brandName"
+                      name="id"
                       className="form-control"
                       onChange={e => {
                         this.onChangeTitle2(2, e.target.value);
@@ -252,7 +403,7 @@ class SalesForm extends Component {
                     <label className="control-label">Price</label>
                     <div className="input-group">
                       <input
-                        name="mobile"
+                        name="salePrice"
                         className="form-control"
                         type="number"
                         value={
@@ -268,19 +419,38 @@ class SalesForm extends Component {
                   <div className="col">
                     <label className="control-label">Quantity</label>
                     <div className="input-group">
-                      <input type="number" className="form-control" min="1" />
+                      <input
+                        name="unitAmount"
+                        type="number"
+                        className="form-control"
+                        min="1"
+                        value={
+                          this.state.productQuantity2
+                            ? this.state.productQuantity2
+                            : ""
+                        }
+                        onChange={e => {
+                          this.onChangeQuantity2(e);
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
+                <button
+                  className="fa fa-plus-circle"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.showhide("thirdSaleItem");
+                  }}
+                />
               </div>
-
               {/* Third Sale Item */}
-              <div className="col salesItem">
+              <div className="col salesItem" id="thirdSaleItem">
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Product</label>
                     <select
-                      name="brandName"
+                      name="id"
                       className="form-control"
                       onChange={e => {
                         this.onChangeTitle3(3, e.target.value);
@@ -292,13 +462,12 @@ class SalesForm extends Component {
                     </select>
                   </div>
                 </div>
-                {console.log(this.state)}
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Price</label>
                     <div className="input-group">
                       <input
-                        name="mobile"
+                        name="salePrice"
                         className="form-control"
                         value={
                           this.state.productPrice3
@@ -317,19 +486,38 @@ class SalesForm extends Component {
                   <div className="col">
                     <label className="control-label">Quantity</label>
                     <div className="input-group">
-                      <input type="number" className="form-control" min="1" />
+                      <input
+                        name="unitAmount"
+                        type="number"
+                        className="form-control"
+                        min="1"
+                        value={
+                          this.state.productQuantity3
+                            ? this.state.productQuantity3
+                            : ""
+                        }
+                        onChange={e => {
+                          this.onChangeQuantity3(e);
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
+                <button
+                  className="fa fa-plus-circle"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.showhide("forthSaleItem");
+                  }}
+                />
               </div>
-
               {/* Fourth Sale Item */}
-              <div className="col salesItem">
+              <div className="col salesItem" id="forthSaleItem">
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Product</label>
                     <select
-                      name="brandName"
+                      name="id"
                       className="form-control"
                       onChange={e => {
                         this.onChangeTitle4(4, e.target.value);
@@ -341,13 +529,12 @@ class SalesForm extends Component {
                     </select>
                   </div>
                 </div>
-                {console.log(this.state)}
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Price</label>
                     <div className="input-group">
                       <input
-                        name="mobile"
+                        name="salePrice"
                         className="form-control"
                         value={
                           this.state.productPrice4
@@ -366,19 +553,39 @@ class SalesForm extends Component {
                   <div className="col">
                     <label className="control-label">Quantity</label>
                     <div className="input-group">
-                      <input type="number" className="form-control" min="1" />
+                      <input
+                        name="unitAmount"
+                        type="number"
+                        className="form-control"
+                        min="1"
+                        value={
+                          this.state.productQuantity4
+                            ? this.state.productQuantity4
+                            : ""
+                        }
+                        onChange={e => {
+                          this.onChangeQuantity4(e);
+                        }}
+                      />
+                      />
                     </div>
                   </div>
                 </div>
+                <button
+                  className="fa fa-plus-circle"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.showhide("fifthSaleItem");
+                  }}
+                />
               </div>
-
               {/* Fifth Sale Item */}
-              <div className="col salesItem">
+              <div className="col salesItem" id="fifthSaleItem">
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Product</label>
                     <select
-                      name="brandName"
+                      name="id"
                       className="form-control"
                       onChange={e => {
                         this.onChangeTitle5(5, e.target.value);
@@ -390,13 +597,12 @@ class SalesForm extends Component {
                     </select>
                   </div>
                 </div>
-                {console.log(this.state)}
                 <div className="form-group">
                   <div className="col">
                     <label className="control-label">Price</label>
                     <div className="input-group">
                       <input
-                        name="mobile"
+                        name="salePrice"
                         className="form-control"
                         value={
                           this.state.productPrice5
@@ -415,91 +621,110 @@ class SalesForm extends Component {
                   <div className="col">
                     <label className="control-label">Quantity</label>
                     <div className="input-group">
-                      <input type="number" className="form-control" min="1" />
+                      <input
+                        name="unitAmount"
+                        type="number"
+                        className="form-control"
+                        min="1"
+                        value={
+                          this.state.productQuantity5
+                            ? this.state.productQuantity5
+                            : ""
+                        }
+                        onChange={e => {
+                          this.onChangeQuantity5(e);
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="saleButtons">
-                <button
-                  className="fa fa-minus-circle saleButtonDelete saleButton"
-                  type="button"
-                  onClick={this.deleteItem.bind(this)}
-                >
-                  {" "}
-                </button>
-                <button
-                  className="fa fa-plus-circle saleButtonAdd saleButton"
-                  type="button"
-                  onClick={this.addItem.bind(this)}
-                >
-                  {" "}
-                </button>
+              <div className="salePrice text-center">
+                <div className="salePriceHeading">
+                  <h2>Total Price:</h2>
+                </div>
+                <div className="salePricePrice">
+                  <h2>
+                    <input name="totalPrice" value={this.totalSales()} />
+                  </h2>
+                </div>
               </div>
-              <br />
-              <div className="col text-center">
+
+              <div className="col text-center typeOfPurchase">
+                <div className="text-center">
+                  <h2>Type of purchase{"  "}</h2>
+                </div>
                 <div class="form-check form-check-inline">
-                  Online purchase{"  "}
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="onlinePurchase"
+                    name="type"
                     id="onlinePurchaseYes"
-                    value="option1"
+                    value="store"
                   />
                   <label class="form-check-label" for="onlinePurchaseYes">
-                    Yes
+                    Store
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="onlinePurchase"
+                    name="type"
                     id="onlinePurchaseNo"
-                    value="option2"
+                    value="online"
                   />
                   <label class="form-check-label" for="onlinePurchaseNo">
-                    No
+                    Online
                   </label>
                 </div>
               </div>
 
-              <div className="salePrice">
-                <h2>Total:</h2>
-              </div>
-
-              <br />
-              <div className="salesCustomerInfo">
-                <div className="salesCustomerInfoBtnContainer">
-                  <div className="salesCustomerInfoBtn">
-                    <h2 className="text-center">Customer</h2>
+              {/* Customer Search */}
+              {!!customers ? (
+                <div className="customerSearchBar">
+                  <div className="text-center customerSearchBarHeading ">
+                    <h2>Customer</h2>
+                  </div>
+                  <div className="saleSearchBar">
                     <button
-                      className="text-center"
-                      type="button"
-                      onClick={this.customerType.bind(this)}
-                    >
-                      Returning?
-                    </button>
+                      className="fa fa-search saleSearchBarButton"
+                      onClick={this.filterCustomers}
+                    />
+                    <div className="col saleSearchInput">
+                      <div className="phoneSearchInput">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Phone number"
+                          value={this.textEntered}
+                          onChange={this.onChangeTextEntered}
+                        />
+                      </div>
+
+                      <select name="customer" className="form-control">
+                        {customers.map(c => (
+                          <option value={c._id}>{c.firstName}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
-                <br />
-                {customer ? <CustomerFormNew /> : <CustomerFormReturn />}
-              </div>
+              ) : (
+                <p>Loading</p>
+              )}
 
               <div className="salesSubmitButton">
-                <button
-                  type="button"
+                <Link
+                  to="/sales"
                   className="btn btn-default btn-lg btn-block info salesButton2"
+                  role="button"
                 >
                   Cancel
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-lg btn-block info salesButton2"
-                >
-                  Save
+                </Link>
+                <button className="btn btn-primary btn-lg btn-block info salesButton2">
+                  Create
                 </button>
               </div>
             </fieldset>

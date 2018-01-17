@@ -5,6 +5,7 @@ import "./css/DeleteCustomer.css";
 // import "./css/ProductForm.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
+import "./css/SalesForm.css";
 import {
   BrowserRouter as Router,
   Switch,

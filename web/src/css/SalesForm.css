@@ -1,44 +1,9 @@
-.salesFormHeading {
-  margin-top: 30px;
-}
-
 .salesForm {
-}
-
-.salesItem {
-  padding-top: 30px;
-  width: 70%;
-  margin: 0 auto;
-}
-
-.salesCustomerInfoBtnContainer {
-  display: flex;
-}
-
-.salesCustomerInfoBtn {
-  margin: 0 auto;
+  margin-top: 30px;
 }
 
 .salesCustomerInfoBtn button {
   text-align: center;
-  background-color: Transparent;
-  background-repeat: no-repeat;
-  border: none;
-  cursor: pointer;
-  overflow: hidden;
-  outline: none;
-}
-
-.saleButtons {
-  width: 15%;
-  margin: 0 auto;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.saleButton {
-  color: red;
-  font-size: 40px;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -58,4 +23,85 @@
 
 .salesButton2 {
   margin: 5px;
+}
+
+#secondSaleItem {
+  display: none;
+}
+
+#thirdSaleItem {
+  display: none;
+}
+
+#forthSaleItem {
+  display: none;
+}
+
+#fifthSaleItem {
+  display: none;
+}
+
+.salePrice {
+  width: 100%;
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.salePriceHeading {
+  padding-right: 10px;
+}
+
+.salePricePrice {
+}
+
+.salePricePrice input {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.saleSearchBar {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.typeOfPurchase {
+  margin-bottom: 30px;
+}
+
+.customerSearchBar {
+  margin-bottom: 20px;
+}
+
+.customerSearchBarHeading {
+  margin-bottom: 15px;
+}
+
+.saleSearchBarButton {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.saleSearchInput {
+  padding-left: none;
+}
+
+.phoneSearchInput {
+  padding-bottom: 10px;
+}
+
+.saleHideButton {
+  display: none;
+}
+
+.saleSearchSelect {
+  padding-left: none;
 }
