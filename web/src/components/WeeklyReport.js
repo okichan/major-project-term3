@@ -396,28 +396,46 @@ function WeeklyReport({
   monthRangeSales,
   customerTraffics,
   pieChartChefData,
-  pieChartOriginData
+  pieChartOriginData,
+  weekRange,
+  onChageRange
 }) {
   const customerGraph = customerTraffics
-    ? getDataCustomerGraph(getWeeklyCustomerData(2, customerTraffics)).reverse()
+    ? getDataCustomerGraph(
+        getWeeklyCustomerData(weekRange, customerTraffics)
+      ).reverse()
     : null;
 
   const saleTrendKnife = monthRangeSales
-    ? saleTrendForKnife(getWeeklySaleData(2, monthRangeSales)).reverse()
+    ? saleTrendForKnife(getWeeklySaleData(weekRange, monthRangeSales)).reverse()
     : null;
 
   const saleTrendSharpening = monthRangeSales
-    ? saleTrendForSharpening(getWeeklySaleData(2, monthRangeSales)).reverse()
+    ? saleTrendForSharpening(
+        getWeeklySaleData(weekRange, monthRangeSales)
+      ).reverse()
     : null;
 
   const customerOriginChart = customerTraffics
     ? getWeeklyCustomerOriginData(
-        getWeeklySaleData(2, customerTraffics)
+        getWeeklySaleData(weekRange, customerTraffics)
       ).reverse()
     : null;
 
   return (
     <div>
+      <h2>Change the week range for charts</h2>
+      <input
+        className="form-control"
+        min="0"
+        max="26"
+        id="number"
+        type="number"
+        value={weekRange}
+        onChange={e => {
+          onChageRange(e.target.value);
+        }}
+      />
       <h2>Customer Traffic (Chef or NonChef)</h2>
       {customerGraph && (
         <ComposedChart width={800} height={300} data={customerGraph}>
