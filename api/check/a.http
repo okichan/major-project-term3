@@ -37,16 +37,31 @@ Content-Type: application/json
   "category": "Wa-Bocho",
   "code": "12313123123"
 }
+
+
+
 ### Create Sale
 POST http://localhost:7000/sales
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "products": [{"product": "5a5ca4dc1716bb3acc7450cc", "salePrice": "20087", "unitAmount": "1"}],
-  "customer": "5a59d2ef795d2619d8fa5264",
-  "date": "2018-01-12"
+  "products": [{"product": "5a5a922155d7671ab84f1408", "salePrice": "99", "unitAmount": "1"}],
+  "customer": "5a5560d7e51e644448cd7814",
+  "date": "2017-11-01"
 }
+
+
+
+
+### Delete product
+DELETE http://localhost:7000/sale/5a5eb473e4b0351c94c5fea8
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+
+
+
 
 ### Edit Sale
 PUT http://localhost:7000/sale/5a5c03c94b6cfc2fd82e5a99
@@ -110,3 +125,15 @@ Content-Type: application/json
    "note": "Long text Long text Long text Long text Long text Long text Long text Long text "   
 }
 
+
+
+### Create customer traffic
+POST http://localhost:7000/customerTraffics
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+  "number": "1",
+  "isChef": "false",
+  "origin": "Walk In"
+}
