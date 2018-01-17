@@ -17,7 +17,6 @@ function CustomerList({
           productIds.push(id);
         });
       });
-      console.log(productIds);
     });
   }
 
