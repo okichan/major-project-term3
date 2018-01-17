@@ -299,10 +299,9 @@ class SalesForm extends Component {
               sale.totalPrice = totalPrice;
               sale.type = type;
 
-              console.log(sale);
-              // this.onCreateSale(sale);
-              // window.location.href = "/sales";
-              // return false;
+              this.onCreateSale(sale);
+              window.location.href = "/sales";
+              return false;
             }}
           >
             <fieldset>
