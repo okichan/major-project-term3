@@ -14,6 +14,14 @@
 	font-size: 1.3em;
 }
 
+.link-dark a {
+   color: rgb(124, 124, 124);   
+}
+
+.link-dark a:hover {
+   color: rgb(90, 90, 90);   
+}
+
 td a {
 	color: #222;
 }
