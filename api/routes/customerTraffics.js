@@ -1,18 +1,43 @@
 const express = require("express");
 const CustomerTraffic = require("../models/CustomerTraffic");
 const authMiddleware = require("../middleware/auth");
+const moment = require("moment");
 
 const router = new express.Router();
 
 // get list
 router.get("/customerTraffics", (req, res) => {
-  CustomerTraffic.find()
-    .then(customerTraffics => {
-      res.json(customerTraffics);
+  const { date } = req.query;
+  if (date) {
+    const day = moment
+      .utc(date)
+      .startOf("day")
+      .toDate();
+    const nextDay = moment
+      .utc(day)
+      .add(1, "days")
+      .toDate();
+    CustomerTraffic.find({
+      createdAt: {
+        $gte: day,
+        $lt: nextDay
+      }
     })
-    .catch(error => {
-      res.json({ error });
-    });
+      .then(customerTraffics => {
+        res.json(customerTraffics);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  } else {
+    CustomerTraffic.find()
+      .then(customerTraffics => {
+        res.json(customerTraffics);
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  }
 });
 
 // Create

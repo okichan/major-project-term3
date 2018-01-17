@@ -209,7 +209,10 @@ class SalesForm extends Component {
       textEntered: value
     });
   };
-
+  
+  goBack() {
+    window.history.back();
+}
   render() {
     const {
       products,
@@ -720,13 +723,15 @@ class SalesForm extends Component {
               )}
 
               <div className="salesSubmitButton">
-                <Link
-                  to="/sales"
+                <button
                   className="btn btn-default btn-lg btn-block info salesButton2"
-                  role="button"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.goBack();
+                  }}
                 >
                   Cancel
-                </Link>
+                </button>
                 <button className="btn btn-primary btn-lg btn-block info salesButton2">
                   Create
                 </button>

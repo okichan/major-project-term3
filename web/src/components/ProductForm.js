@@ -30,7 +30,7 @@ function ProductForm({ products, submitTitle, onSubmit }) {
 
             // Pass this information along to the parent component
             onSubmit({ category, code, title, price, stock, productImage });
-            clear();
+            // clear();
             window.location.href = "/products";
             return false;
           }}
@@ -89,7 +89,7 @@ function ProductForm({ products, submitTitle, onSubmit }) {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="productImage">Upload image</label>
+            <label htmlFor="productImage">Upload image (NOT WORKING)</label>
             <input type="file" className="form-control" name="productImage" />
           </div>
 

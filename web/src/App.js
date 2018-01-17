@@ -1,8 +1,5 @@
 import React, { Component, Fragment } from "react";
 import "./css/App.css";
-import "./css/Customer.css";
-import "./css/DeleteCustomer.css";
-// import "./css/ProductForm.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
 import "./css/SalesForm.css";
@@ -15,95 +12,212 @@ import {
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ProductList from "./components/ProductList";
+import ProductFilter from "./components/ProductFilter";
 import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
 import SaleList from "./components/SaleList";
 
-import EditProductForm from "./components/EditProductForm";
 import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
 import SideBar from "./components/SideBar";
 import LinkButton from "./components/LinkButton";
-import Customer from "./components/Customer";
 import CustomerForm from "./components/CustomerForm";
-import EditCustomerForm from "./components/EditCustomerForm";
-import DeleteCustomer from "./components/DeleteCustomer";
 import Home from "./components/Home";
 import CustomerTraffic from "./components/CustomerTraffic";
 import NotificationList from "./components/NotificationList";
+import DailyReport from "./components/DailyReport";
+import WeeklyReport from "./components/WeeklyReport";
+
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import {
+  listSales,
+  createSale,
+  updateSale,
+  dailySales,
+  monthRangeSales
+} from "./api/sales";
+
+import {
+  dailyCustomerTraffics,
+  listCustomerTraffics,
+  createCustomerTraffics,
+  updateCustomerTraffic
+} from "./api/customerTraffics";
+
+import {
   listProducts,
+  listFilteredProducts,
   createProduct,
   updateProduct,
   deleteProduct
 } from "./api/products";
-import { listCustomers, createCustomer, updateCustomer } from "./api/customers";
-import { listSales, createSale, updateSale } from "./api/sales";
+import {
+  listCustomers,
+  createCustomer,
+  updateCustomer,
+  deleteCustomer
+} from "./api/customers";
 import {
   listNotifications,
   updateNotifications,
   deleteNotifications
 } from "./api/notifications";
-
-listCustomers().then(res => {
-  console.log("Loaded Customers", res);
-});
+import moment from "moment";
 
 class App extends Component {
   state = {
     error: null,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     products: null,
+    filteredProducts: null,
     sales: null,
     customers: null,
-    traffics: [
-      {
-        date: "01-01-2018",
-        time: "10:55am",
-        count: 2,
-        isChef: "yes",
-        weather: "sunny 27"
-      },
-      {
-        date: "01-01-2018",
-        time: "10:55am",
-        count: 2,
-        isChef: "yes",
-        weather: "sunny 27"
-      },
-      {
-        date: "01-01-2018",
-        time: "10:55am",
-        count: 2,
-        isChef: "yes",
-        weather: "sunny 27"
-      },
-      {
-        date: "01-01-2018",
-        time: "10:55am",
-        count: 2,
-        isChef: "yes",
-        weather: "sunny 27"
-      },
-      {
-        date: "01-01-2018",
-        time: "10:55am",
-        count: 2,
-        isChef: "yes",
-        weather: "sunny 27"
-      }
-    ],
-    editedProductID: null,
     productPrice: null,
-    notifications: null
+    notifications: null,
+    date: moment(),
+    dailySales: null,
+    monthRangeSales: null,
+    dailyCustomerTraffics: null,
+    customerTraffics: null,
+    pieChartChefData: null,
+    pieChartOriginData: null
   };
 
-  componentDidMount() {
-    this.load();
-  }
+  getPieChartChefData = () => {
+    const chartData = this.getDataCustomerPieChart(this.state.customerTraffics);
+    this.setState({
+      pieChartChefData: {
+        labels: ["Chef", "Non Chef", "Unknown"],
+        datasets: [
+          {
+            backgroundColor: ["#2ecc71", "#e74c3c", "rgb(111, 107, 117)"],
+            data: chartData
+          }
+        ]
+      }
+    });
+  };
+
+  getPieChartOriginData = () => {
+    const chartData = this.getDataCustomerOriginPieChart(
+      this.state.customerTraffics
+    );
+    this.setState({
+      pieChartOriginData: {
+        labels: [
+          "Facebook",
+          "Online search",
+          "Referral",
+          "Newspaper",
+          "Walk in",
+          "QT Hotel Guest",
+          "Return",
+          "unknown"
+        ],
+        datasets: [
+          {
+            backgroundColor: [
+              "#2ecc71",
+              "#e74c3c",
+              "rgb(111, 107, 117)",
+              "rgb(23, 214, 240)",
+              "rgb(176, 210, 19)",
+              "rgb(209, 47, 215)",
+              "rgb(238, 69, 23)",
+              "rgb(70, 0, 249)"
+            ],
+            data: chartData
+          }
+        ]
+      }
+    });
+  };
+
+  // create array data for chef nonchef pie chart
+  getDataCustomerPieChart = customersData => {
+    let CustomerPieChart = []; //[chef,nonChef,unknown]
+
+    let total = customersData
+      .map(customerData => {
+        return customerData.number;
+      })
+      .reduce((a, b) => {
+        return a + b;
+      }, 0);
+
+    let chef = this.detectChef("true", customersData);
+
+    let nonChef = this.detectChef("false", customersData);
+
+    let unknown = total - chef - nonChef;
+
+    CustomerPieChart.push(chef, nonChef, unknown);
+    return CustomerPieChart;
+  };
+
+  detectChef = (type, data) => {
+    return data
+      .map(customerData => {
+        if (customerData.isChef === type) {
+          return customerData.number;
+        } else {
+          return 0;
+        }
+      })
+      .reduce((a, b) => {
+        return a + b;
+      }, 0);
+  };
+
+  detectOrigin = (type, data) => {
+    return data
+      .map(customerData => {
+        if (customerData.origin === type) {
+          return customerData.number;
+        } else {
+          return 0;
+        }
+      })
+      .reduce((a, b) => {
+        return a + b;
+      }, 0);
+  };
+
+  // create array data for chef origin pie chart
+  getDataCustomerOriginPieChart = customersData => {
+    let CustomerOriginPieChart = []; //[chef,nonChef,unknown]
+
+    let faceBook = this.detectOrigin("Facebook", customersData);
+
+    let onlineSearch = this.detectOrigin("OnlineSearch", customersData);
+
+    let referral = this.detectOrigin("Referral", customersData);
+
+    let newspaper = this.detectOrigin("Newspaper", customersData);
+
+    let walkIn = this.detectOrigin("WalkIn", customersData);
+
+    let hotelGuest = this.detectOrigin("HotelGuest", customersData);
+
+    let returnCustomer = this.detectOrigin("Return", customersData);
+
+    let unknown = this.detectOrigin("Unknown", customersData);
+
+    CustomerOriginPieChart.push(
+      faceBook,
+      onlineSearch,
+      referral,
+      newspaper,
+      walkIn,
+      hotelGuest,
+      returnCustomer,
+      unknown
+    );
+
+    return CustomerOriginPieChart;
+  };
 
   onSignIn = ({ email, password }) => {
     signIn({ email, password })
@@ -147,7 +261,6 @@ class App extends Component {
   };
 
   onDeleteProduct = id => {
-    console.log(id);
     deleteProduct(id)
       .then(product => {
         this.load();
@@ -157,13 +270,8 @@ class App extends Component {
       });
   };
 
-  onBeginEditingProduct = newID => {
-    this.setState({ editedProductID: newID });
-  };
-
-  onUpdateEditedProduct = productData => {
-    const { editedProductID } = this.state;
-    updateProduct(editedProductID, productData)
+  onEditProduct = data => {
+    updateProduct(data.id, data)
       .then(updatedProduct => {
         this.setState(prevState => {
           // Replace in existing products array
@@ -175,10 +283,45 @@ class App extends Component {
             }
           });
           return {
-            products: updatedProducts,
-            editedProductID: null
+            products: updatedProducts
           };
         });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  onProductFilter = query => {
+    listFilteredProducts(query)
+      .then(products => {
+        this.setState({ filteredProducts: products });
+      })
+      .catch(error => {
+        alert(`No product found in category "${query}"!`);
+      });
+  };
+
+  onCreateCustomer = customerData => {
+    createCustomer(customerData)
+      .then(newCustomer => {
+        this.setState(prevState => {
+          // Append to existing customers array
+          const updatedCustomers = prevState.customers.concat(newCustomer);
+          return {
+            customers: updatedCustomers
+          };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  onDeleteCustomer = id => {
+    deleteCustomer(id)
+      .then(customer => {
+        this.load();
       })
       .catch(error => {
         this.setState({ error });
@@ -218,18 +361,37 @@ class App extends Component {
         console.error(error.message);
       });
   };
+  //for date picker
+  onDate = event => {
+    this.setState({ date: event });
+    dailySales(event.format("YYYY-MM-DD")).then(dailySales => {
+      this.setState({ dailySales });
+    });
+    dailyCustomerTraffics(event.format("YYYY-MM-DD")).then(
+      dailyCustomerTraffics => {
+        this.setState({ dailyCustomerTraffics });
+      }
+    );
+  };
 
   render() {
     const {
       error,
       decodedToken,
       products,
+      filteredProducts,
       sales,
       customers,
-      editedProductID,
       traffics,
       productPrice,
-      notifications
+      notifications,
+      date,
+      dailySales,
+      monthRangeSales,
+      dailyCustomerTraffics,
+      customerTraffics,
+      pieChartChefData,
+      pieChartOriginData
     } = this.state;
     const signedIn = !!decodedToken;
 
@@ -272,14 +434,11 @@ class App extends Component {
                     render={requireAuth(() => (
                       <Fragment>
                         {signedIn && (
-                          <div className="mb-3">
-                            <h2>Notification list</h2>
-                            <NotificationList
-                              notifications={notifications}
-                              onClickDelete={this.onClickDelete}
-                              onClickToggle={this.onClickToggoleCheckedField}
-                            />
-                          </div>
+                          <NotificationList
+                            notifications={notifications}
+                            onClickDelete={this.onClickDelete}
+                            onClickToggle={this.onClickToggoleCheckedField}
+                          />
                         )}
                       </Fragment>
                     ))}
@@ -339,20 +498,11 @@ class App extends Component {
                     render={requireAuth(() => (
                       <Fragment>
                         <LinkButton href="/admin/products" name="product" />
+                        <ProductFilter prodCategory={this.onProductFilter} />
                         <ProductList
-                          products={products}
-                          editedProductID={editedProductID}
-                          onEditProduct={this.onBeginEditingProduct}
+                          filteredProducts={filteredProducts}
+                          onEditedProductSubmit={this.onEditProduct}
                           deleteProduct={this.onDeleteProduct}
-                          renderEditForm={product => (
-                            <div className="ml-3">
-                              <ProductForm
-                                initialProduct={product}
-                                submitTitle="Update Product"
-                                onSubmit={this.onUpdateEditedProduct}
-                              />
-                            </div>
-                          )}
                         />
                       </Fragment>
                     ))}
@@ -373,12 +523,6 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/edit-product"
-                    exact
-                    render={requireAuth(() => <EditProductForm />)}
-                  />
-
-                  <Route
                     path="/new-sales"
                     exact
                     render={requireAuth(() => (
@@ -388,44 +532,6 @@ class App extends Component {
                         onChangeTitle={this.onChangeTitle}
                         onChangePrice={this.onChangePrice}
                       />
-                    ))}
-                  />
-
-                  <Route
-                    path="/customer"
-                    exact
-                    render={requireAuth(() => (
-                      <Customer
-                        firstName={"John"}
-                        lastName={"Smith"}
-                        sex={"male"}
-                        email={"johnsmith@gmail.com"}
-                        phone={"000"}
-                        date={"01/01/2015"}
-                        chef={"yes"}
-                        customerOrigin={"McDonalds"}
-                        notes={"i hate this guy"}
-                      />
-                    ))}
-                  />
-
-                  <Route
-                    path="/new-customer"
-                    exact
-                    render={requireAuth(() => <CustomerForm />)}
-                  />
-
-                  <Route
-                    path="/edit-customer"
-                    exact
-                    render={requireAuth(() => <EditCustomerForm />)}
-                  />
-
-                  <Route
-                    path="/delete-customer"
-                    exact
-                    render={requireAuth(() => (
-                      <DeleteCustomer firstName={"John"} lastName={"Smith"} />
                     ))}
                   />
 
@@ -448,7 +554,12 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <div>
-                        <h1>Daily report</h1>
+                        <DailyReport
+                          startDate={date}
+                          dailySales={dailySales}
+                          dailyCustomerTraffics={dailyCustomerTraffics}
+                          onClick={this.onDate}
+                        />
                       </div>
                     ))}
                   />
@@ -458,7 +569,12 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <div>
-                        <h1>Weekly report</h1>
+                        <WeeklyReport
+                          monthRangeSales={monthRangeSales}
+                          customerTraffics={customerTraffics}
+                          pieChartChefData={pieChartChefData}
+                          pieChartOriginData={pieChartOriginData}
+                        />
                       </div>
                     ))}
                   />
@@ -466,11 +582,7 @@ class App extends Component {
                   <Route
                     path="/report-monthly"
                     exact
-                    render={requireAuth(() => (
-                      <div>
-                        <h1>Monthly report</h1>
-                      </div>
-                    ))}
+                    render={requireAuth(() => <div />)}
                   />
 
                   <Route
@@ -490,10 +602,11 @@ class App extends Component {
                     render={requireAuth(() => (
                       <Fragment>
                         <LinkButton href="/admin/customers" name="customer" />
-                        {customers && (
-                          <CustomerList customers={customers} />
-                          // <div>yay</div>
-                        )}
+                        <CustomerList
+                          products={products}
+                          customers={customers}
+                          deleteCustomer={this.onDeleteCustomer}
+                        />
                       </Fragment>
                     ))}
                   />
@@ -503,15 +616,11 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        {signedIn && (
-                          <div className="mb-3">
-                            <h2>Create Customer</h2>
-                            <ProductForm
-                              submitTitle="Create Customer"
-                              onSubmit={this.onCreateProduct}
-                            />
-                          </div>
-                        )}
+                        <CustomerForm
+                          customers={customers}
+                          submitTitle="Create Customer"
+                          onSubmit={this.onCreateProduct}
+                        />
                       </Fragment>
                     ))}
                   />
@@ -538,7 +647,7 @@ class App extends Component {
     // Load for everyone
     listProducts()
       .then(products => {
-        this.setState({ products });
+        this.setState({ products, filteredProducts: products });
       })
       .catch(saveError);
 
@@ -560,6 +669,32 @@ class App extends Component {
       })
       .catch(saveError);
 
+    dailySales(this.state.date.format("YYYY-MM-DD"))
+      .then(dailySales => {
+        this.setState({ dailySales });
+      })
+      .catch(saveError);
+
+    dailyCustomerTraffics(this.state.date.format("YYYY-MM-DD"))
+      .then(dailyCustomerTraffics => {
+        this.setState({ dailyCustomerTraffics });
+      })
+      .catch(saveError);
+
+    monthRangeSales(3)
+      .then(monthRangeSales => {
+        this.setState({ monthRangeSales });
+      })
+      .catch(saveError);
+
+    listCustomerTraffics()
+      .then(customerTraffics => {
+        this.setState({ customerTraffics });
+        this.getPieChartChefData();
+        this.getPieChartOriginData();
+      })
+      .catch(saveError);
+
     const { decodedToken } = this.state;
     const signedIn = !!decodedToken;
 
@@ -568,6 +703,11 @@ class App extends Component {
     } else {
       // Clear sign-in-only data
     }
+  }
+
+  // When this App first appears on screen
+  componentDidMount() {
+    this.load();
   }
 
   // When state changes

@@ -1,67 +1,107 @@
 import React, { Fragment } from "react";
-import LinkButton from "./LinkButton";
-import { Link } from "react-router-dom";
 
 function CustomerList({
   customers,
+  products,
   editedCustomerID,
   onEditCustomer,
-  renderEditForm
+  renderEditForm,
+  deleteCustomer
 }) {
+  if (customers && products) {
+    let productIds = [];
+    customers.map(customer => {
+      customer.purchasedHistory.map(sale => {
+        sale.products.map(product => {
+          const id = product.product;
+          productIds.push(id);
+        });
+      });
+      console.log(productIds);
+    });
+  }
+
   return (
     <Fragment>
       <h2 className="text-center mb-4">Customers</h2>
       {customers && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Note</th>
-              <th scope="col" />
-            </tr>
-          </thead>
+        <section className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Note</th>
+                <th scope="col" />
+              </tr>
+            </thead>
 
-          {customers.map(customer => {
-            const date = new Date(customer.registerDate).toLocaleDateString(
-              "ja-JP",
-              { timeZone: "Australia/Melbourne" }
-            );
-            return (
-              <Fragment key={customer._id}>
-                <tbody>
-                  <tr
-                    className="row-hover"
-                    data-toggle="collapse"
-                    data-target={`#${customer._id}`}
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
-                  >
-                    <td>
+            {customers.map(customer => {
+              const dateFormatter = date =>
+                new Date(date).toLocaleDateString("ja-JP", {
+                  timeZone: "Australia/Melbourne"
+                });
+              return (
+                <tbody key={Math.random()}>
+                  <tr className="row-hover">
+                    <td
+                      data-toggle="collapse"
+                      data-target={`#${customer._id}`}
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      {customer.gender === "male" ? (
+                        <i className="fa fa-male" />
+                      ) : (
+                        <i className="fa fa-female" />
+                      )}{" "}
                       {customer.firstName ? customer.firstName : "(unknown)"}{" "}
                       {customer.lastName ? customer.lastName : ""}
                     </td>
 
-                    <td>{customer.phone ? customer.phone : "(unknown)"}</td>
+                    <td
+                      data-toggle="collapse"
+                      data-target={`#${customer._id}`}
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      {customer.phone ? customer.phone : "(unknown)"}
+                    </td>
 
-                    <td className="w-50">{customer.note}</td>
+                    <td
+                      className="w-50"
+                      data-toggle="collapse"
+                      data-target={`#${customer._id}`}
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      {customer.note}
+                    </td>
 
                     <td>
                       <a href={`/products/${customer._id}`}>
                         <i
-                          className="fa fa-pencil-square-o med"
+                          className="fa fa-pencil-square-o med mx-1"
                           id="edit"
                           title="Edit"
                         />
                       </a>
-                      <span className="mr-2"> </span>
                       <i
-                        className="fa fa-trash med"
+                        className="fa fa-trash mx-1 med"
                         id="trash"
                         style={{ cursor: "pointer" }}
                         onClick={() => {
-                          alert("delete function here");
+                          const confirm = window.confirm(
+                            `Do you really want to delete "${
+                              customer.firstName
+                            }"?`
+                          );
+                          if (confirm) {
+                            deleteCustomer(customer._id);
+                          }
                         }}
                         title="Delete"
                       />
@@ -70,13 +110,16 @@ function CustomerList({
 
                   {/* collapse begin */}
                   <tr>
-                    <td colSpan="5" className="p-0">
+                    <td colSpan="10" className="p-0">
                       <div className="collapse" id={customer._id}>
                         <div className="card card-body m-3">
                           <div className="row">
                             <div className="col-md-6 ">
-                              <p>Registered: {date}</p>
-                              <p>{customer.gender}</p>
+                              <p>
+                                Registered:{" "}
+                                {dateFormatter(customer.registerDate)}
+                              </p>
+                              <p>customer id (TEST): {customer._id}</p>
                               <p>
                                 Email:
                                 {customer.email ? customer.email : " (unknown)"}
@@ -89,19 +132,26 @@ function CustomerList({
                           </div>
                           <hr />
                           <div className="row">
-                            <p className="col-12 ">Purchase History:</p>
+                            <h5 className="col-12">Purchase History:</h5>
                           </div>
                           <div id="purchase-history">
-                            <ul>
-                              {/* {customer.purchasedHistory.map(m => {
-															<li>{m.sale._id}</li>
-														})} */}
-                              <li>test</li>
-                              <li>test</li>
-                              <li>test</li>
-                              <li>test</li>
-                              <li>test</li>
-                            </ul>
+                            <div className="d-flex flex-column-reverse">
+                              {customer.purchasedHistory.map(sale => {
+                                return (
+                                  <div className="m-2">
+                                    {dateFormatter(sale.date)}{" "}
+                                    <small>[sale#: {sale._id}]</small>
+                                    {sale.products.map(product => {
+                                      return (
+                                        <li className="" key={product._id}>
+                                          product: {product.product}
+                                        </li>
+                                      );
+                                    })}
+                                  </div>
+                                );
+                              })}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -109,10 +159,10 @@ function CustomerList({
                   </tr>
                   {/* collapse end */}
                 </tbody>
-              </Fragment>
-            );
-          })}
-        </table>
+              );
+            })}
+          </table>
+        </section>
       )}
     </Fragment>
   );

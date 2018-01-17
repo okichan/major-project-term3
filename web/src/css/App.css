@@ -48,36 +48,31 @@ td a:hover {
 
 .logo {
   width: 80px;
-  /* height: 30%; */
-}
-
-.show {
-  display: block;
-}
-
-.hide {
-  display: none;
 }
 
 .row-hover {
-   /* background: rgb(228, 228, 228); */
-   transition: .2s;
+  transition: 0.2s;
 }
 
 .row-hover:hover {
-   cursor: pointer;
-   background: rgb(228, 228, 228);
+  cursor: pointer;
+  background: rgb(235, 237, 243);
 }
 
 #purchase-history {
-   max-height: 25vh;
-   overflow-y: scroll;
+  border: 1px dotted rgb(202, 202, 202);
+  background: rgb(245, 251, 255);
+  border-radius: 0.3em;
+  padding: 0.6em;
+  max-height: 25vh;
+  overflow-y: scroll;
 }
 
 #notification-badge {
-   font-size: 0.4em;
-   position: absolute;
-   font-family: sans-serif;
+  position: absolute;
+  font-size: 0.5em;
+  font-family: sans-serif;
+  /* right: 0; */
 }
 
 @media (min-width: 768px) {
@@ -95,5 +90,11 @@ td a:hover {
     width: auto;
     padding: 3em 4em;
     box-shadow: 7px 7px 12px 0px rgba(153, 153, 153, 1);
+  }
+
+  #sidebar {
+    max-width: 160px;
+    border-right: 1px solid lightgray;
+    border-bottom: 0;
   }
 }

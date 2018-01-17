@@ -38,23 +38,43 @@ Content-Type: application/json
   "code": "12313123123"
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> upstream/master
 ### Create Sale
 POST http://localhost:7000/sales
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "products": [""]
+  "products": [{"product": "5a5a922155d7671ab84f1408", "salePrice": "99", "unitAmount": "1"}],
+  "customer": "5a5560d7e51e644448cd7814",
+  "date": "2017-11-01"
 }
 
+
+
+
+### Delete product
+DELETE http://localhost:7000/sale/5a5eb473e4b0351c94c5fea8
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+
+
+
+
 ### Edit Sale
-PUT http://localhost:7000/sale/5a5a08e62a428f2e2449b9eb
+PUT http://localhost:7000/sale/5a5c03c94b6cfc2fd82e5a99
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
    "products": [
-        "5a54af5f8edb60461c4f45e4"
+        {"product": "5a54af5f8edb60461c4f45e4", "salePrice": "199", "unitAmount": "1"},
+        {"product": "5a5a922155d7671ab84f1408", "salePrice": "85", "unitAmount": "1"}
     ]
 }
 
@@ -76,7 +96,7 @@ Content-Type: application/json
 GET http://localhost:7000/customers
 Authorization: Bearer {{ token }}
 
-### Add to customer
+### Add new customer
 POST http://localhost:7000/customers
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTYwNjcxMjUsImV4cCI6MTUxNjY3MTkyNSwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.T3_lw1Ku7DKc1HtUZp-kpOgd_BlroXXUDV0CVNHMCLc
 Content-Type: application/json
@@ -98,13 +118,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lb
 Content-Type: application/json
 
 {
-   "firstName": "Emma",
-   "lastName": "",
+   # "firstName": "Emma",
+   # "lastName": "Watson",
    "gender": "female",
-   "purchasedHistory": [],
+   # "purchasedHistory": [],
    "isChef": false,
-   "workAt": "Kmart",
-   "origin": "SNS (Facebook, Twitter etc)",
+   # "workAt": "Maccas",
+   # "origin": "SNS (Facebook, Twitter etc)",
    "note": "Long text Long text Long text Long text Long text Long text Long text Long text "   
 }
 

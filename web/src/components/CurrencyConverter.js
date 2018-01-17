@@ -15,7 +15,6 @@ class CurrencyConverter extends Component {
 			})
 			.catch(error => {
 				this.setState({ error: error });
-				console.log("Error loading currency conversion", error);
 			});
 	}
 

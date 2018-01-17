@@ -3,50 +3,58 @@ import React, { Fragment } from "react";
 
 // create notification body
 function createNotificationsBody(type, data) {
-  if (type === "stock") {
-    //stock body
-    return `${data.title}'s stock is ${data.stock} now. Please order.`;
-  } else {
-    //sharpening
-    return `It has been 80days since this sale happend with ${
-      data.customer.firstName
-    }. Please send a sharpening reminder`;
-  }
+	if (type === "stock" && data) {
+		//stock body
+		return `${data.title}'s stock is ${data.stock} now. Please consider re-ordering.`;
+	} else if (data) {
+		//sharpening
+		return `More than 80 days have passed since ${
+			data.customer.firstName
+		} (${data.customer.email ? data.customer.email : "email unknown" }) last purchased knife(s). Please send a sharpening reminder.`;
+	} else {
+		return "Error loading notification";
+	}
 }
 
 function NotificationList({ notifications, onClickDelete, onClickToggle }) {
-  return (
-    notifications && (
-      <div className="container">
-        <input
-          type="button"
-          value="Delete done notificaions"
-          onClick={() => {
-            onClickDelete();
-          }}
-        />
-        {notifications.map(notification => {
-          const chosenData =
-            notification.type === "stock"
-              ? notification.product
-              : notification.sale;
-          return (
-            <div className="row">
-              <p>{createNotificationsBody(notification.type, chosenData)}</p>
-              <input
-                type="button"
-                value={notification.checked ? "✅" : "🔲"}
-                onClick={e => {
-                  const judge = e.target.value === "🔲" ? true : false;
-                  onClickToggle(notification._id, { checked: judge });
-                }}
-              />
-            </div>
-          );
-        })}
-      </div>
-    )
-  );
+	return (
+		notifications && (
+			<Fragment>
+				<h2 className="text-center m-3">Notification list</h2>
+				<div className="col-md-10 mx-auto ">
+					<input
+						className="mb-2 btn btn-warning btn-sm"
+						type="button"
+						value="Delete ticked notificaions"
+						onClick={() => {
+							onClickDelete();
+						}}
+					/>
+
+					{notifications.map(notification => {
+						const chosenData =
+							notification.type === "stock" ? notification.product : notification.sale;
+						return (
+							<div class="custom-control custom-checkbox my-2">
+								<input
+                           className="custom-control-input"
+									type="checkbox"
+									id={`check${notification._id}`}
+									onClick={e => {
+										const judge = e.target.checked;
+										onClickToggle(notification._id, { checked: judge });
+									}}
+								/>
+								<label className="custom-control-label" htmlFor={`check${notification._id}`}>
+									{createNotificationsBody(notification.type, chosenData)}
+								</label>
+							</div>
+						);
+					})}
+				</div>
+			</Fragment>
+		)
+	);
 }
 
 export default NotificationList;
