@@ -51,7 +51,7 @@ function getWeeklySaleData(weekRange, salesData) {
 
   // put the sales data in the container created above
   for (var i = 0; i < salesData.length; i++) {
-    if (moment(salesData[i].date).week() > WeekEnd) break;
+    if (!weekNumberArr.includes(moment(salesData[i].date).week())) break;
     let key = `${moment(salesData[i].date)
       .startOf("week")
       .format("YYYY MMM DD")}`;
@@ -92,7 +92,8 @@ function getWeeklyCustomerData(weekRange, customerData) {
 
   // put the customer data in the container created above
   for (var i = 0; i < customerData.length; i++) {
-    if (moment(customerData[i].createdAt).week() > WeekEnd) break;
+    if (!weekNumberArr.includes(moment(customerData[i].createdAt).week()))
+      break;
     let key = `${moment(customerData[i].date)
       .startOf("week")
       .format("YYYY MMM DD")}`;
@@ -128,7 +129,6 @@ function getDataCustomerGraph(weeklyCustomerData) {
       .reduce((a, b) => {
         return a + b;
       }, 0);
-
     // number of chef
     weeklyCustomerGraph["chef"] = weeklyCustomerData[customer]
       .map(weeklyCustomers => {
