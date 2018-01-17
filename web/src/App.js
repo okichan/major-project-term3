@@ -62,43 +62,6 @@ class App extends Component {
 		filteredProducts: null,
 		sales: null,
 		customers: null,
-		traffics: [
-			{
-				date: "01-01-2018",
-				time: "10:55am",
-				count: 2,
-				isChef: "yes",
-				weather: "sunny 27"
-			},
-			{
-				date: "01-01-2018",
-				time: "10:55am",
-				count: 2,
-				isChef: "yes",
-				weather: "sunny 27"
-			},
-			{
-				date: "01-01-2018",
-				time: "10:55am",
-				count: 2,
-				isChef: "yes",
-				weather: "sunny 27"
-			},
-			{
-				date: "01-01-2018",
-				time: "10:55am",
-				count: 2,
-				isChef: "yes",
-				weather: "sunny 27"
-			},
-			{
-				date: "01-01-2018",
-				time: "10:55am",
-				count: 2,
-				isChef: "yes",
-				weather: "sunny 27"
-			}
-		],
 		productPrice: null,
 		notifications: null,
 		date: moment(),
