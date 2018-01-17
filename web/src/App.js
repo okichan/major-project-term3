@@ -82,7 +82,11 @@ class App extends Component {
     dailyCustomerTraffics: null,
     customerTraffics: null,
     pieChartChefData: null,
-    pieChartOriginData: null
+    pieChartOriginData: null,
+    weekRangeChef: 10,
+    weekRangeOrigin: 10,
+    weekRangeKnife: 10,
+    weekRangeSharp: 10
   };
 
   getPieChartChefData = () => {
@@ -374,6 +378,10 @@ class App extends Component {
     );
   };
 
+  onChageRange = (type, range) => {
+    this.setState({ ["weekRange" + type]: range });
+  };
+
   render() {
     const {
       error,
@@ -391,7 +399,11 @@ class App extends Component {
       dailyCustomerTraffics,
       customerTraffics,
       pieChartChefData,
-      pieChartOriginData
+      pieChartOriginData,
+      weekRangeChef,
+      weekRangeOrigin,
+      weekRangeKnife,
+      weekRangeSharp
     } = this.state;
     const signedIn = !!decodedToken;
 
@@ -574,6 +586,11 @@ class App extends Component {
                           customerTraffics={customerTraffics}
                           pieChartChefData={pieChartChefData}
                           pieChartOriginData={pieChartOriginData}
+                          weekRangeChef={weekRangeChef}
+                          weekRangeOrigin={weekRangeOrigin}
+                          weekRangeKnife={weekRangeKnife}
+                          weekRangeSharp={weekRangeSharp}
+                          onChageRange={this.onChageRange}
                         />
                       </div>
                     ))}
