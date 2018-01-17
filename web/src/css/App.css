@@ -84,6 +84,10 @@ td a:hover {
   background: rgb(235, 237, 243);
 }
 
+.pointer {
+   cursor: pointer;
+}
+
 #purchase-history {
   border: 1px dotted rgb(202, 202, 202);
   background: rgb(245, 251, 255);

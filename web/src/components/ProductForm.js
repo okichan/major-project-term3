@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Dropzone from "react-dropzone";
+const dropzoneStyle = {
+  width: "60%",
+  height: "20%",
+  border: "1px solid black",
+  position: "relative"
+};
 
-function ProductForm({ products, submitTitle, onSubmit }) {
+function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
   const clear = () => {
     document.getElementById("create-product").reset();
   };
@@ -26,10 +33,10 @@ function ProductForm({ products, submitTitle, onSubmit }) {
             const title = elements.title.value;
             const price = elements.price.value;
             const stock = elements.stock.value;
-            const productImage = elements.productImage.value;
+            const image = chosenImage;
 
             // Pass this information along to the parent component
-            onSubmit({ category, code, title, price, stock, productImage });
+            onSubmit({ category, code, title, price, stock, image });
             // clear();
             window.location.href = "/products";
             return false;
@@ -88,10 +95,26 @@ function ProductForm({ products, submitTitle, onSubmit }) {
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="productImage">Upload image (NOT WORKING)</label>
-            <input type="file" className="form-control" name="productImage" />
-          </div>
+          <label htmlFor="image">Image</label>
+          <Dropzone
+            onDrop={onDrop}
+            multiple={false}
+            accept="image/*"
+            style={dropzoneStyle}
+          >
+            {chosenImage ? (
+              <div>
+                <img
+                  src={chosenImage}
+                  height="125"
+                  width="100%"
+                  style={{ opacity: "0.6" }}
+                />
+              </div>
+            ) : (
+              <p>Drop your file or click here to upload</p>
+            )}
+          </Dropzone>
 
           <button className="btn btn-primary btn-lg float-right">
             {submitTitle}
