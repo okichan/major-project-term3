@@ -299,9 +299,10 @@ class SalesForm extends Component {
               sale.totalPrice = totalPrice;
               sale.type = type;
 
-              this.onCreateSale(sale);
-              window.location.href = "/sales";
-              return false;
+              console.log(sale);
+              // this.onCreateSale(sale);
+              // window.location.href = "/sales";
+              // return false;
             }}
           >
             <fieldset>
@@ -324,6 +325,9 @@ class SalesForm extends Component {
                         this.onChangeTitle1(1, e.target.value);
                       }}
                     >
+                      <option disabled selected value>
+                        Please select product
+                      </option>
                       {products.map(m => (
                         <option value={m._id}>{m.title}</option>
                       ))}
@@ -703,6 +707,7 @@ class SalesForm extends Component {
                       </div>
 
                       <select name="customer" className="form-control">
+                        <option value="">Please select customer</option>
                         {customers.map(c => (
                           <option value={c._id}>{c.firstName}</option>
                         ))}
