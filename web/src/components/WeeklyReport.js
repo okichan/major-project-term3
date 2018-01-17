@@ -397,46 +397,50 @@ function WeeklyReport({
   customerTraffics,
   pieChartChefData,
   pieChartOriginData,
-  weekRange,
+  weekRangeChef,
+  weekRangeKnife,
+  weekRangeSharp,
+  weekRangeOrigin,
   onChageRange
 }) {
   const customerGraph = customerTraffics
     ? getDataCustomerGraph(
-        getWeeklyCustomerData(weekRange, customerTraffics)
+        getWeeklyCustomerData(weekRangeChef, customerTraffics)
       ).reverse()
     : null;
 
   const saleTrendKnife = monthRangeSales
-    ? saleTrendForKnife(getWeeklySaleData(weekRange, monthRangeSales)).reverse()
+    ? saleTrendForKnife(
+        getWeeklySaleData(weekRangeKnife, monthRangeSales)
+      ).reverse()
     : null;
 
   const saleTrendSharpening = monthRangeSales
     ? saleTrendForSharpening(
-        getWeeklySaleData(weekRange, monthRangeSales)
+        getWeeklySaleData(weekRangeSharp, monthRangeSales)
       ).reverse()
     : null;
 
   const customerOriginChart = customerTraffics
     ? getWeeklyCustomerOriginData(
-        getWeeklySaleData(weekRange, customerTraffics)
+        getWeeklySaleData(weekRangeOrigin, customerTraffics)
       ).reverse()
     : null;
 
   return (
     <div>
-      <h2>Change the week range for charts</h2>
+      <h2>Customer Traffic (Chef or NonChef)</h2>
       <input
         className="form-control"
         min="0"
         max="26"
         id="number"
         type="number"
-        value={weekRange}
+        value={weekRangeChef}
         onChange={e => {
-          onChageRange(e.target.value);
+          onChageRange("Chef", e.target.value);
         }}
       />
-      <h2>Customer Traffic (Chef or NonChef)</h2>
       {customerGraph && (
         <ComposedChart width={800} height={300} data={customerGraph}>
           <XAxis dataKey="week" />
@@ -467,6 +471,17 @@ function WeeklyReport({
       )}
 
       <h2>Customer with origin</h2>
+      <input
+        className="form-control"
+        min="0"
+        max="26"
+        id="number"
+        type="number"
+        value={weekRangeOrigin}
+        onChange={e => {
+          onChageRange("Origin", e.target.value);
+        }}
+      />
       {customerOriginChart && (
         <ComposedChart width={800} height={300} data={customerOriginChart}>
           <XAxis dataKey="week" />
@@ -504,6 +519,17 @@ function WeeklyReport({
       )}
 
       <h2>Sale Trend Knife and Stone</h2>
+      <input
+        className="form-control"
+        min="0"
+        max="26"
+        id="number"
+        type="number"
+        value={weekRangeKnife}
+        onChange={e => {
+          onChageRange("Knife", e.target.value);
+        }}
+      />
       {saleTrendKnife && (
         <BarChart
           width={800}
@@ -523,6 +549,17 @@ function WeeklyReport({
       )}
 
       <h2>Sale Trend Sharpening</h2>
+      <input
+        className="form-control"
+        min="0"
+        max="26"
+        id="number"
+        type="number"
+        value={weekRangeSharp}
+        onChange={e => {
+          onChageRange("Sharp", e.target.value);
+        }}
+      />
       {saleTrendSharpening && (
         <BarChart
           width={800}
