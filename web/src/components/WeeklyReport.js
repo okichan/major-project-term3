@@ -51,7 +51,7 @@ function getWeeklySaleData(weekRange, salesData) {
 
   // put the sales data in the container created above
   for (var i = 0; i < salesData.length; i++) {
-    if (moment(salesData[i].date).week() == WeekEnd) break;
+    if (moment(salesData[i].date).week() > WeekEnd) break;
     let key = `${moment(salesData[i].date)
       .startOf("week")
       .format("YYYY MMM DD")}`;
@@ -92,7 +92,7 @@ function getWeeklyCustomerData(weekRange, customerData) {
 
   // put the customer data in the container created above
   for (var i = 0; i < customerData.length; i++) {
-    if (moment(customerData[i].createdAt).week() == WeekEnd) break;
+    if (moment(customerData[i].createdAt).week() > WeekEnd) break;
     let key = `${moment(customerData[i].date)
       .startOf("week")
       .format("YYYY MMM DD")}`;
@@ -399,22 +399,20 @@ function WeeklyReport({
   pieChartOriginData
 }) {
   const customerGraph = customerTraffics
-    ? getDataCustomerGraph(
-        getWeeklyCustomerData(12, customerTraffics)
-      ).reverse()
+    ? getDataCustomerGraph(getWeeklyCustomerData(2, customerTraffics)).reverse()
     : null;
 
   const saleTrendKnife = monthRangeSales
-    ? saleTrendForKnife(getWeeklySaleData(12, monthRangeSales)).reverse()
+    ? saleTrendForKnife(getWeeklySaleData(2, monthRangeSales)).reverse()
     : null;
 
   const saleTrendSharpening = monthRangeSales
-    ? saleTrendForSharpening(getWeeklySaleData(12, monthRangeSales)).reverse()
+    ? saleTrendForSharpening(getWeeklySaleData(2, monthRangeSales)).reverse()
     : null;
 
   const customerOriginChart = customerTraffics
     ? getWeeklyCustomerOriginData(
-        getWeeklySaleData(12, customerTraffics)
+        getWeeklySaleData(2, customerTraffics)
       ).reverse()
     : null;
 
