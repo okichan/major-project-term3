@@ -41,19 +41,24 @@ function getWeeklySaleData(weekRange, salesData) {
   // create Data array(container) for sorted sales data
   let weeklySalesObject = {};
   for (var n = 0; n < weekRange; n++) {
-    const key = `week${weekNumberArr[n]}`;
+    const weekDate = moment()
+      .subtract(n, "week")
+      .startOf("week")
+      .format("YYYY MMM DD");
+    const key = `${weekDate}`;
     weeklySalesObject[key] = [];
   }
 
   // put the sales data in the container created above
   for (var i = 0; i < salesData.length; i++) {
     if (moment(salesData[i].date).week() == WeekEnd) break;
-    let key = `week${moment(salesData[i].date).week()}`;
+    let key = `${moment(salesData[i].date)
+      .startOf("week")
+      .format("YYYY MMM DD")}`;
     weeklySalesObject[key].push(salesData[i]);
   }
   return weeklySalesObject;
 }
-
 // get weekly data(customer)
 function getWeeklyCustomerData(weekRange, customerData) {
   // detect today's weekNumber
@@ -77,14 +82,20 @@ function getWeeklyCustomerData(weekRange, customerData) {
   // create Data array(container)
   let weeklyCustomerObject = {};
   for (var n = 0; n < weekRange; n++) {
-    const key = `week${weekNumberArr[n]}`;
+    const weekDate = moment()
+      .subtract(n, "week")
+      .startOf("week")
+      .format("YYYY MMM DD");
+    const key = `${weekDate}`;
     weeklyCustomerObject[key] = [];
   }
 
   // put the customer data in the container created above
   for (var i = 0; i < customerData.length; i++) {
     if (moment(customerData[i].createdAt).week() == WeekEnd) break;
-    let key = `week${moment(customerData[i].createdAt).week()}`;
+    let key = `${moment(customerData[i].date)
+      .startOf("week")
+      .format("YYYY MMM DD")}`;
     weeklyCustomerObject[key].push(customerData[i]);
   }
   return weeklyCustomerObject;
@@ -372,65 +383,30 @@ function WeeklyReport({
   pieChartOriginData
 }) {
   const customerGraph = customerTraffics
-    ? getDataCustomerGraph(getWeeklyCustomerData(7, customerTraffics)).reverse()
+    ? getDataCustomerGraph(
+        getWeeklyCustomerData(12, customerTraffics)
+      ).reverse()
     : null;
 
   const saleTrendKnife = monthRangeSales
-    ? saleTrendForKnife(getWeeklySaleData(7, monthRangeSales)).reverse()
+    ? saleTrendForKnife(getWeeklySaleData(12, monthRangeSales)).reverse()
     : null;
 
   const saleTrendSharpening = monthRangeSales
-    ? saleTrendForSharpening(getWeeklySaleData(7, monthRangeSales)).reverse()
+    ? saleTrendForSharpening(getWeeklySaleData(12, monthRangeSales)).reverse()
     : null;
 
   const customerOriginChart = customerTraffics
     ? getWeeklyCustomerOriginData(
-        getWeeklySaleData(7, customerTraffics)
+        getWeeklySaleData(12, customerTraffics)
       ).reverse()
     : null;
-
-  const originPieChartElement = document.getElementById("originPieChart");
-  if (originPieChartElement !== null) {
-    let ctx = originPieChartElement.getContext("2d");
-    ctx.canvas.width = 50;
-    ctx.canvas.height = 50;
-    const originPieChart = new Chart(ctx, {
-      type: "pie",
-      data: {
-        labels: [
-          "Facebook",
-          "Online search",
-          "Newspaper",
-          "QT Hotel Guest",
-          "Referral",
-          "Walk in",
-          "Return",
-          "unknown"
-        ],
-        datasets: [
-          {
-            backgroundColor: [
-              "#2ecc71",
-              "#e74c3c",
-              "rgb(111, 107, 117)",
-              "rgb(23, 214, 240)",
-              "rgb(176, 210, 19)",
-              "rgb(209, 47, 215)",
-              "rgb(238, 69, 23)",
-              "rgb(70, 0, 249)"
-            ],
-            data: [5, 3, 2, 9, 1, 8, 5, 1]
-          }
-        ]
-      }
-    });
-  }
 
   return (
     <div>
       <h2>Customer Traffic (Chef or NonChef)</h2>
       {customerGraph && (
-        <ComposedChart width={600} height={300} data={customerGraph}>
+        <ComposedChart width={800} height={300} data={customerGraph}>
           <XAxis dataKey="week" />
           <YAxis />
           <Tooltip />
@@ -458,9 +434,9 @@ function WeeklyReport({
         </ComposedChart>
       )}
 
-      <h2>Customer origin with origin</h2>
+      <h2>Customer with origin</h2>
       {customerOriginChart && (
-        <ComposedChart width={600} height={300} data={customerOriginChart}>
+        <ComposedChart width={800} height={300} data={customerOriginChart}>
           <XAxis dataKey="week" />
           <YAxis />
           <Tooltip />
@@ -498,7 +474,7 @@ function WeeklyReport({
       <h2>Sale Trend Knife and Stone</h2>
       {saleTrendKnife && (
         <BarChart
-          width={600}
+          width={800}
           height={300}
           data={saleTrendKnife}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -517,7 +493,7 @@ function WeeklyReport({
       <h2>Sale Trend Sharpening</h2>
       {saleTrendSharpening && (
         <BarChart
-          width={600}
+          width={800}
           height={300}
           data={saleTrendSharpening}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
