@@ -32,7 +32,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
                         Products
                      </Link>
                   </li> */}
-						{signedIn ? (
+         	{signedIn ? (
 							<Fragment>
 								<li className="nav-item">
 									<Link to="/notifications" className="nav-link " title="Notification">
@@ -51,15 +51,16 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
 										<i className="fa fa-user big mr-3" />
 									</Link>
 								</li>
-								<li className="nav-item">
-									<Link
-										to="/account"
-										className="nav-link"
-										title="Logout"
-										onClick={signOut}
-									>
-										<i className="fa fa-sign-out big" />
-									</Link>
+
+                <li className="nav-item">
+                  <Link
+                    to="/account"
+                    className="nav-link"
+                    title="Logout"
+                    onClick={signOut}
+                  >
+                    <i className="fa fa-sign-out big" />
+                  </Link>
 
 									{/* <button >
                            <i className="fa fa-sign-out big" ></i>

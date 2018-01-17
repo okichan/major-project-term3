@@ -38,7 +38,12 @@ function getSoldProductList(dailySalesDatas) {
   }
 }
 
-function DailyReport({ startDate, onClick, dailySales }) {
+function DailyReport({
+  startDate,
+  onClick,
+  dailySales,
+  dailyCustomerTraffics
+}) {
   return (
     <div>
       <h1>{startDate.format("Do MMM YYYY")}</h1>

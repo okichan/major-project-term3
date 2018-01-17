@@ -6,6 +6,7 @@ const customerTrafficSchema = new mongoose.Schema({
     type: Number,
     min: 0
   },
+  origin: String,
   isChef: String
 });
 
