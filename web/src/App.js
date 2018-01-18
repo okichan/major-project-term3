@@ -98,7 +98,9 @@ class App extends Component {
 		// Once all the files are uploaded
 		axios.all(uploaders).then(() => {
 			// ... perform after upload is successful operation
-		});
+		}).catch((error)=>{
+			alert("Network error")
+		})
 	};
 
 	getPieChartChefData = () => {
