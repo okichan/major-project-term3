@@ -319,8 +319,10 @@ class App extends Component {
 	};
 
 	onCreateCustomer = customerData => {
+      console.log(customerData)
 		createCustomer(customerData)
 			.then(newCustomer => {
+				window.location.href = "/customers";
 				this.setState(prevState => {
 					// Append to existing customers array
 					const updatedCustomers = prevState.customers.concat(newCustomer);
@@ -642,7 +644,7 @@ class App extends Component {
 												<CustomerForm
 													customers={customers}
 													submitTitle="Create Customer"
-													onSubmit={this.onCreateProduct}
+													onSubmit={this.onCreateCustomer}
 												/>
 											</Fragment>
 										))}
