@@ -456,8 +456,7 @@ class App extends Component {
               <PrimaryNav
                 signedIn={signedIn}
                 signOut={this.onSignOut}
-                notificationCount={notifications ? notifications.length : "0"}
-              />
+                notificationCount={notifications ? notifications.length : "0"}/>
             </header>
           )}
 
@@ -474,8 +473,7 @@ class App extends Component {
                       <Fragment>
                         <Home />
                       </Fragment>
-                    ))}
-                  />
+                    ))}/>
 
                   <Route
                     path="/notifications"
@@ -490,8 +488,7 @@ class App extends Component {
                           />
                         )}
                       </Fragment>
-                    ))}
-                  />
+                    ))}/>
 
                   <Route
                     path="/signin"
@@ -504,8 +501,7 @@ class App extends Component {
                           <SignInForm onSignIn={this.onSignIn} />
                         </Fragment>
                       )
-                    }
-                  />
+                    }/>
 
                   <Route
                     path="/signup"
@@ -518,8 +514,7 @@ class App extends Component {
                           <SignUpForm onSignUp={this.onSignUp} />
                         </Fragment>
                       )
-                    }
-                  />
+                    } />
 
                   <Route
                     path="/account"
@@ -538,8 +533,7 @@ class App extends Component {
                           </p>
                         </div>
                       </Fragment>
-                    ))}
-                  />
+                    ))}/>
 
                   <Route
                     path="/products"
@@ -551,11 +545,9 @@ class App extends Component {
                         <ProductList
                           filteredProducts={filteredProducts}
                           onEditedProductSubmit={this.onEditProduct}
-                          deleteProduct={this.onDeleteProduct}
-                        />
+                          deleteProduct={this.onDeleteProduct}/>
                       </Fragment>
-                    ))}
-                  />
+                    ))}/>
 
                   <Route
                     path="/admin/products"
@@ -567,11 +559,9 @@ class App extends Component {
                           submitTitle="Create Product"
                           onSubmit={this.onCreateProduct}
                           chosenImage={chosenImage}
-                          onDrop={this.handleDrop}
-                        />
+                          onDrop={this.handleDrop}/>
                       </Fragment>
-                    ))}
-                  />
+                    ))}/>
 
                   <Route
                     path="/new-sales"
@@ -581,10 +571,8 @@ class App extends Component {
                         products={products}
                         productPrice={productPrice}
                         onChangeTitle={this.onChangeTitle}
-                        onChangePrice={this.onChangePrice}
-                      />
-                    ))}
-                  />
+                        onChangePrice={this.onChangePrice}/>
+                    ))}/>
 
                   <Route
                     path="/customertraffic"
@@ -597,8 +585,7 @@ class App extends Component {
                           <p>Loading</p>
                         )}
                       </Fragment>
-                    ))}
-                  />
+                    ))}/>
 
                   <Route
                     path="/report-daily"
@@ -609,11 +596,9 @@ class App extends Component {
                           startDate={date}
                           dailySales={dailySales}
                           dailyCustomerTraffics={dailyCustomerTraffics}
-                          onClick={this.onDate}
-                        />
+                          onClick={this.onDate}/>
                       </div>
-                    ))}
-                  />
+                    ))}/>
 
                   <Route
                     path="/report-weekly"
@@ -629,17 +614,14 @@ class App extends Component {
                           weekRangeOrigin={weekRangeOrigin}
                           weekRangeKnife={weekRangeKnife}
                           weekRangeSharp={weekRangeSharp}
-                          onChageRange={this.onChageRange}
-                        />
+                          onChageRange={this.onChageRange} />
                       </div>
-                    ))}
-                  />
+                    ))} />
 
                   <Route
                     path="/report-monthly"
                     exact
-                    render={requireAuth(() => <div />)}
-                  />
+                    render={requireAuth(() => <div />)}/>
 
                   <Route
                     path="/sales"
@@ -649,8 +631,7 @@ class App extends Component {
                         <LinkButton href="/new-sales" name="sale" />
                         <SaleList sales={sales} />
                       </Fragment>
-                    ))}
-                  />
+                    ))}  />
 
                   <Route
                     path="/customers"
@@ -661,11 +642,9 @@ class App extends Component {
                         <CustomerList
                           products={products}
                           customers={customers}
-                          deleteCustomer={this.onDeleteCustomer}
-                        />
+                          deleteCustomer={this.onDeleteCustomer}/>
                       </Fragment>
-                    ))}
-                  />
+                    ))}/>
 
                   <Route
                     path="/admin/customers"
@@ -675,17 +654,14 @@ class App extends Component {
                         <CustomerForm
                           customers={customers}
                           submitTitle="Create Customer"
-                          onSubmit={this.onCreateProduct}
-                        />
+                          onSubmit={this.onCreateProduct}/>
                       </Fragment>
-                    ))}
-                  />
+                    ))}  />
 
                   <Route
                     render={({ location }) => (
                       <h2>Page not found: {location.pathname}</h2>
-                    )}
-                  />
+                    )} />
                 </Switch>
               </div>
             </div>
