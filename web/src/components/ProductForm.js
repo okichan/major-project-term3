@@ -37,9 +37,6 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 
             // Pass this information along to the parent component
             onSubmit({ category, code, title, price, stock, image });
-            // clear();
-            window.location.href = "/products";
-            return false;
           }}
         >
           <div className="form-group">

@@ -287,6 +287,7 @@ class App extends Component {
   onCreateProduct = productData => {
     createProduct(productData)
       .then(newProduct => {
+         window.location.href = "/products";
         this.setState(prevState => {
           // Append to existing products array
           const updatedProducts = prevState.products.concat(newProduct);
