@@ -15,7 +15,7 @@ const weatherApi = axios.create({
 getWeatherByDate = date => {
   return weatherApi
     .get(
-      `/history.json?key=04042066cca345ad89331024170512&q=Melbourne&dt=${date}`
+      `/history.json?key=${process.env.WEATHER_API}&q=Melbourne&dt=${date}`
     )
     .then(weather => {
       return weather.data.forecast.forecastday[0];
