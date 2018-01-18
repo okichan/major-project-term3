@@ -1,0 +1,15 @@
+.customerListHeader {
+  display: flex;
+}
+
+.customerListHeading {
+  margin: 0 auto;
+}
+
+.customerListHeading h2 {
+  text-align: center;
+}
+
+.customerListHeadingButton {
+  float: right;
+}

@@ -82,8 +82,6 @@ function ProductList({
                                     price,
                                     stock
                                   });
-                                  window.location.href = "/products";
-                                  return false;
                                 }}
                               >
                                 <div className="form-group">
@@ -197,7 +195,6 @@ function ProductList({
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            {/* <div className="modal-body">{`Are you sure you want to delete ${product.title}?`}</div> */}
                             <div className="modal-footer">
                               <button
                                 type="button"
@@ -261,6 +258,9 @@ function ProductList({
                         data-target={`#modal-${product.code}`}
                         title="Edit"
                       />
+
+                      {/* Delete button should only show if total sales is 0 */}
+                      {product.totalSales === 0 ? 
                       <i
                         className="fa fa-trash med mx-1"
                         id="trash"
@@ -268,7 +268,8 @@ function ProductList({
                         data-target={`#modaldelete-${product.code}`}
                         style={{ cursor: "pointer" }}
                         title="Delete"
-                      />
+                      /> : ""
+                      }
                     </td>
                   </tr>
                   {/* collapse begin */}
@@ -295,8 +296,9 @@ function ProductList({
                           ) : (
                             <img
                               src={noImage}
-                              height={250}
-                              style={{ width: "100%" }}
+                              width={200}
+                              height={150}
+                              className="mx-auto"
                             />
                           )}
                         </div>

@@ -21,21 +21,15 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
 
 			<div className="collapse navbar-collapse" id="collapsibleNavbar">
 				<div className="ml-auto">
-					<ul className="nav navbar-nav">
-						{/* <li className="nav-item">
-                     <Link to="/" className="nav-link">
-                        My Account
-                     </Link>
-                  </li> */}
-						{/* <li className="nav-item">
-                     <Link to="/products" className="nav-link">
-                        Products
-                     </Link>
-                  </li> */}
-         	{signedIn ? (
+					<ul className="nav nav-justified ">
+						{signedIn ? (
 							<Fragment>
-								<li className="nav-item">
-									<Link to="/notifications" className="nav-link " title="Notification">
+								<li className="nav-item link-dark">
+									<Link
+										to="/notifications"
+										className="nav-link "
+										title="Notification"
+									>
 										<i className="fa fa-bell big mr-3 ">
 											<span
 												className="badge badge-pill badge-danger "
@@ -46,21 +40,21 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
 										</i>
 									</Link>
 								</li>
-								<li className="nav-item">
+								<li className="nav-item  link-dark">
 									<Link to="/account" className="nav-link" title="Account">
 										<i className="fa fa-user big mr-3" />
 									</Link>
 								</li>
 
-                <li className="nav-item">
-                  <Link
-                    to="/account"
-                    className="nav-link"
-                    title="Logout"
-                    onClick={signOut}
-                  >
-                    <i className="fa fa-sign-out big" />
-                  </Link>
+								<li className="nav-item  link-dark">
+									<Link
+										to="/account"
+										className="nav-link"
+										title="Logout"
+										onClick={signOut}
+									>
+										<i className="fa fa-sign-out big" />
+									</Link>
 
 									{/* <button >
                            <i className="fa fa-sign-out big" ></i>
