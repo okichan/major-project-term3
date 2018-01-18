@@ -1,4 +1,6 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE1MTYyNTYxMDMsImV4cCI6MTUxNjg2MDkwMywic3ViIjoiNWE2MDFlOGEyMTAxYWYwMDc4ZDc5M2ZkIn0.7VwReJeNxt9aAhdzIeXBSBtJ1MbDKsrtv683Hvwy5Vg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTg1MDI1MywiZXhwIjoxNTE2NDU1MDUzLCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.9vAto6y4DTXMtTvPfqPbnXPr02wbBiBZ3Bn7t7CLrFs
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE1MTYyNTYxMDMsImV4cCI6MTUxNjg2MDkwMywic3ViIjoiNWE2MDFlOGEyMTAxYWYwMDc4ZDc5M2ZkIn0.7VwReJeNxt9aAhdzIeXBSBtJ1MbDKsrtv683Hvwy5Vg
 
 ### Sign in
 POST https://tanto-api.now.sh/auth
@@ -7,6 +9,14 @@ Content-Type: application/json
 {
   "email": "test@test.com",
   "password": "12345"
+}
+### Sign in
+POST https://localhost:7000/auth
+Content-Type: application/json
+
+{
+  "email": "oki4@oki.com",
+  "password": "123123"
 }
 
 ### Get Products
@@ -107,7 +117,7 @@ Content-Type: application/json
 }
 
 ### Update customer
-PUT http://localhost:7000/customer/5a5b11bfbe0dfc060148a7c0
+PUT http://localhost:7000/customer/5a5560d7e51e644448cd7814
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTYwNjcxMjUsImV4cCI6MTUxNjY3MTkyNSwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.T3_lw1Ku7DKc1HtUZp-kpOgd_BlroXXUDV0CVNHMCLc
 Content-Type: application/json
 
@@ -116,7 +126,7 @@ Content-Type: application/json
    # "lastName": "Watson",
    "gender": "female",
    # "purchasedHistory": [],
-   "isChef": false,
+   "isChef": true,
    # "workAt": "Maccas",
    # "origin": "SNS (Facebook, Twitter etc)",
    "note": "Long text Long text Long text Long text Long text Long text Long text Long text "   

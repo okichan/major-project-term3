@@ -97,7 +97,8 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
             onDrop={onDrop}
             multiple={false}
             accept="image/*"
-            style={dropzoneStyle}
+            // style={dropzoneStyle}
+            className="form-control w-50 pointer pt-3 "
           >
             {chosenImage ? (
               <div>
@@ -109,16 +110,16 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
                 />
               </div>
             ) : (
-              <p>Drop your file or click here to upload</p>
+              <p className="text-muted text-center">Drop your file or click here to upload</p>
             )}
           </Dropzone>
 
-          <button className="btn btn-primary btn-lg float-right">
+          <button className="btn btn-primary btn-lg float-right  my-3">
             {submitTitle}
           </button>
           <Link
             to="/products"
-            className="btn btn-light btn-lg mr-2 float-right"
+            className="btn btn-light btn-lg mr-2 float-right  my-3"
             role="button"
           >
             Cancel
