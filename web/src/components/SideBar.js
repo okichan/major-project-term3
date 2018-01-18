@@ -31,11 +31,11 @@ function SideBar({ signedIn }) {
                 Weekly
               </Link>
             </li>
-            <li className="nav-item">
+            {/*<li className="nav-item">
               <Link to="/report-monthly" className="nav-link ml-3">
                 Monthly
               </Link>
-            </li>
+            </li>*/}
           </ul>
         </li>
         <li className="nav-item">
