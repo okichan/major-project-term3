@@ -620,7 +620,7 @@ class App extends Component {
 										))}
 									/>
 
-									<Route path="/report-monthly" exact render={requireAuth(() => <div />)} />
+									{/* <Route path="/report-monthly" exact render={requireAuth(() => <div />)} /> */}
 
 									<Route
 										path="/sales"

@@ -547,7 +547,7 @@ function WeeklyReport({
                 onChageRange("Knife", e.target.value);
               }}/>
 
-<ResponsiveContainer width="85%" height={300}>
+<ResponsiveContainer width="90%" height={300}>
           <BarChart
             width={800}
             height={300}
@@ -578,7 +578,7 @@ function WeeklyReport({
               onChange={e => {
                 onChageRange("Sharp", e.target.value);
               }}/>
-<ResponsiveContainer width="85%" height={300}>
+<ResponsiveContainer width="90%" height={300}>
           <BarChart
             width={800}
             height={300}
@@ -597,6 +597,7 @@ function WeeklyReport({
         </ResponsiveContainer>
         </div>
       )}
+      
       {pieChartChefData && (
         <div style={{marginBottom:"30px"}}>
           <h2>Customer Chef Non Chef</h2>
