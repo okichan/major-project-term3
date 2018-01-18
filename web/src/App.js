@@ -309,13 +309,25 @@ class App extends Component {
 	};
 
 	onProductFilter = query => {
-		listFilteredProducts(query)
-			.then(products => {
-				this.setState({ filteredProducts: products });
-			})
-			.catch(error => {
-				alert(`No product found in category "${query}"!`);
-			});
+		   //  BackEnd sorting
+		// listFilteredProducts(query)
+		// 	.then(products => {
+		// 		this.setState({ filteredProducts: products });
+		// 	})
+		// 	.catch(error => {
+		// 		alert(`No product found in category "${query}"!`);
+		// 	});
+
+		//   FrontEnd sorting
+		const matchProducts = this.state.products.filter((product)=>{
+			return product.category === query
+		})
+		if(matchProducts.length===0 && query !== ''){alert(`No product found in category ${query}!`)}else{
+		if(query!==''){
+			 this.setState({ filteredProducts: matchProducts })
+		 }else{
+			  this.setState({ filteredProducts: this.state.products })
+		 }}
 	};
 
 	onCreateCustomer = customerData => {
