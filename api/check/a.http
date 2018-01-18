@@ -1,7 +1,7 @@
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTg1MDI1MywiZXhwIjoxNTE2NDU1MDUzLCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.9vAto6y4DTXMtTvPfqPbnXPr02wbBiBZ3Bn7t7CLrFs
 
 ### Sign in
-POST http://localhost:7000/auth
+POST https://tanto-api.now.sh/auth
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ GET http://localhost:7000/sales
 Authorization: Bearer {{ token }}
 
 ### Register
-POST http://localhost:7000/auth/register
+POST https://tanto-api.now.sh/register
 Content-Type: application/json
 
 {
@@ -38,11 +38,6 @@ Content-Type: application/json
   "code": "12313123123"
 }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> upstream/master
 ### Create Sale
 POST http://localhost:7000/sales
 Authorization: Bearer {{ token }}
