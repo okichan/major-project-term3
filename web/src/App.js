@@ -286,7 +286,7 @@ class App extends Component {
   };
 
   onEditProduct = data => {
-    updateProduct(data.id, data)
+    updateProduct(data._id, data)
       .then(updatedProduct => {
         window.location.href = "/products";
         this.setState(prevState => {
@@ -346,6 +346,30 @@ class App extends Component {
         this.setState({ error });
       });
   };
+
+  onEditCustomer = data => {
+     debugger
+   updateCustomer(data._id, data)
+     .then(updatedCustomer => {
+       window.location.href = "/customers";
+       this.setState(prevState => {
+         // Replace in existing customers array
+         const updatedCustomer = prevState.customers.map(customer => {
+           if (customer._id === updatedCustomer._id) {
+             return updatedCustomer;
+           } else {
+             return customer;
+           }
+         });
+         return {
+           customers: updatedCustomer
+         };
+       });
+     })
+     .catch(error => {
+       this.setState({ error });
+     });
+ };
 
   // onChange function for saleForm.js select menu
   onChangeTitle = title => {
@@ -624,6 +648,7 @@ class App extends Component {
                           products={products}
                           customers={customers}
                           deleteCustomer={this.onDeleteCustomer}
+                          editCustomer={this.onEditCustomer}
                         />
                       </Fragment>
                     ))}

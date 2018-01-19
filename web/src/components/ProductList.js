@@ -29,7 +29,7 @@ function ProductList({
                     <td>
                       {product.code}
 
-                      {/* modal begin */}
+                      {/* modal edit begin */}
                       <div
                         className="modal fade"
                         id={`modal-${product.code}`}
@@ -67,7 +67,7 @@ function ProductList({
                                   const elements = form.elements; // Allows looking up fields using their 'name' attributes
 
                                   // Get entered values from fields
-                                  const id = elements.id.value;
+                                  const _id = elements._id.value;
                                   const category = elements.category.value;
                                   const code = elements.code.value;
                                   const title = elements.title.value;
@@ -75,7 +75,7 @@ function ProductList({
                                   const stock = elements.stock.value;
 
                                   onEditedProductSubmit({
-                                    id,
+                                    _id,
                                     code,
                                     category,
                                     title,
@@ -88,7 +88,7 @@ function ProductList({
                                   <input
                                     type="hidden"
                                     className="form-control w-25"
-                                    id="id"
+                                    id="_id"
                                     name={product._id}
                                     disabled
                                     defaultValue={product._id}
@@ -166,7 +166,8 @@ function ProductList({
                           </div>
                         </div>
                       </div>
-                      {/* begin delete moda/ */}
+                      {/* end modal edit / */}
+                      {/* begin delete modal/ */}
                       <div
                         className="modal fade"
                         id={`modaldelete-${product.code}`}
@@ -218,8 +219,7 @@ function ProductList({
                           </div>
                         </div>
                       </div>
-                      {/* end delete moda/ */}
-                      {/* modal end */}
+                      {/* end delete modal/ */}
                     </td>
                     <td
                       data-toggle="collapse"
