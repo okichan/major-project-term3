@@ -151,7 +151,7 @@ function ProductList({ filteredProducts, onEditedProductSubmit, deleteProduct })
 															<button
 																type="submit"
 																form={`editForm-${product.code}`}
-                                                className="btn btn-primary "
+																className="btn btn-primary "
 															>
 																Save changes
 															</button>
@@ -269,29 +269,26 @@ function ProductList({ filteredProducts, onEditedProductSubmit, deleteProduct })
 											<div className="collapse" id={product._id}>
 												<div className="card card-body m-3">
 													<div className="row">
-														<div className="col-2">
-															<p>Total sales: {product.totalSales}</p>
-														</div>
 														<div className="col-3">
+															<p>Total sales: {product.totalSales}</p>
 															<p>Total Orders: {product.totalOrders}</p>
 														</div>
-														<div className="col-3" />
+														<div className="col text-center">
+															{product.image ? (
+																<img
+																	src={product.image}
+																	style={{ width: "100%" }}
+																/>
+															) : (
+																<img
+																	src={noImage}
+																	width={200}
+																	height={150}
+																	className="mx-auto"
+																/>
+															)}
+														</div>
 													</div>
-
-													{product.image ? (
-														<img
-															src={product.image}
-															height={250}
-															style={{ width: "100%" }}
-														/>
-													) : (
-														<img
-															src={noImage}
-															width={200}
-															height={150}
-															className="mx-auto"
-														/>
-													)}
 												</div>
 											</div>
 										</td>

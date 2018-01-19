@@ -10,6 +10,10 @@
   font-size: 1.5em;
 }
 
+.huge {
+  font-size: 2.5em;
+}
+
 .med {
   font-size: 1.3em;
 }
@@ -52,6 +56,15 @@ td a:hover {
 
 #trash:hover {
   color: red;
+}
+
+#notification-check {
+   color: rgb(221, 221, 221);
+   transition: .2s;
+}
+
+#notification-check:hover {
+   color: dodgerblue;
 }
 
 .box-shadow {
