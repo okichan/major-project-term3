@@ -461,6 +461,21 @@ class App extends Component {
       });
       this.getPieChartChefData();
       this.getPieChartOriginData();
+      dailySales(this.state.date.format("YYYY-MM-DD"))
+        .then(dailySales => {
+          this.setState({ dailySales });
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
+
+      dailyCustomerTraffics(this.state.date.format("YYYY-MM-DD"))
+        .then(dailyCustomerTraffics => {
+          this.setState({ dailyCustomerTraffics });
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
       alert("Add new customer traffic");
     });
   };

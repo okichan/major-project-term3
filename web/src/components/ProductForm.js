@@ -8,6 +8,18 @@ const dropzoneStyle = {
   position: "relative"
 };
 
+const categoryArray = [
+  "Wa-Bocho",
+  "Damascus",
+  "Carbon Steel",
+  "Inox Steel",
+  "SP Inox",
+  "Saya",
+  "Hayate",
+  "Stone",
+  "Sharpening"
+];
+
 function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
   const clear = () => {
     document.getElementById("create-product").reset();
@@ -42,14 +54,11 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
           <div className="form-group">
             <label htmlFor="knifeCategory">Category</label>
             <select className="form-control" name="category">
-              <option>Wa-Bocho</option>
-              <option>Damascus</option>
-              <option>Carbon Steel</option>
-              <option>Inox Steel</option>
-              <option>SP Inox</option>
-              <option>Saya</option>
-              <option>Hayate</option>
-              <option>Stone</option>
+              {categoryArray.map((categoryArr, index) => {
+                return (
+                  <option key={`productCate${index}`}>{categoryArr}</option>
+                );
+              })}
             </select>
           </div>
           <div className="form-group">
@@ -110,7 +119,9 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
                 />
               </div>
             ) : (
-              <p className="text-muted text-center">Drop your file or click here to upload</p>
+              <p className="text-muted text-center">
+                Drop your file or click here to upload
+              </p>
             )}
           </Dropzone>
 
