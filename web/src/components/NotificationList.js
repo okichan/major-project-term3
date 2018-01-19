@@ -3,24 +3,22 @@ import React, { Fragment } from "react";
 
 // create notification body
 function createNotificationsBody(type, data) {
-   if (type === "stock" && data) {
-     //stock body
-     return `${data.title}'s stock is ${
-       data.stock
-     } now. `;
-   } else if (data) {
-     //sharpening
-     if (data.customer) {
-       return `${data.customer.firstName} (${
-         data.customer.email ? data.customer.email : "email unknown"
-       })`;
-     } else {
-       return `More than 80 days have passed since Deleted Customer last purchased knife(s). Please send a sharpening reminder.`;
-     }
-   } else {
-     return "Error loading notification";
-   }
- }
+	if (type === "stock" && data) {
+		//stock body
+		return `${data.title}'s stock is ${data.stock} now. `;
+	} else if (data) {
+		//sharpening
+		if (data.customer) {
+			return `${data.customer.firstName} (${
+				data.customer.email ? data.customer.email : "email unknown"
+			})`;
+		} else {
+			return `More than 80 days have passed since Deleted Customer last purchased knife(s). Please send a sharpening reminder.`;
+		}
+	} else {
+		return "Error loading notification";
+	}
+}
 
 function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 	return (
@@ -29,9 +27,9 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 				<h2 className="text-center m-3">Notification list</h2>
 				<div className="col-md-7 mx-auto">
 					<input
-						className="mb-2 btn btn-warning btn-sm"
+						className="mb-0 btn btn-warning btn-sm"
 						type="button"
-						value="Delete all"
+						value="Delete checked"
 						onClick={() => {
 							onClickDelete();
 						}}
@@ -43,41 +41,89 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 						return (
 							<div>
 								{notification.type === "stock" ? (
-									<div className="row">
-										<div className="col-10">
+									<div
+										className="row my-4 py-3"
+										style={{ borderBottom: "1px solid #ddd" }}
+									>
+										<input
+											type="checkbox"
+											id={`check${notification._id}`}
+											className="notification-checkbox sr-only"
+											onClick={e => {
+												const judge = e.target.checked;
+												console.log(judge);
+
+												onClickToggle(notification._id, { checked: judge });
+											}}
+										/>
+										<label className="col" htmlFor={`check${notification._id}`}>
 											<strong>
-												<a href="#">
+												<a
+													href={`#${notification._id}`}
+													data-toggle="collapse"
+													role="button"
+													aria-expanded="false"
+													aria-controls="showdetails"
+												>
 													{createNotificationsBody(notification.type, chosenData)}
 												</a>
 											</strong>
-											<br />Please consider re-ordering.
-										</div>
-										<i className="fa fa-check-square-o pointer huge " id="notification-check" />
+											<br />
+											Please consider re-ordering.
+										</label>
 										{/* begin detail */}
-										<div className="col-12 ">
-											<small>Code: {notification.product["code"]}</small>
-											<small>Price: {notification.product["stock"]}</small>
-											<small>Stock: {notification.product["stock"]}</small>
-                                 <hr />
+										<div className="col-12 collapse " id={notification._id}>
+											<p className="m-0 p-0">Code: {notification.product["code"]}</p>
+											<p className="m-0 p-0">
+												Price: {notification.product["stock"]}
+											</p>
+											<p className="m-0 p-0">
+												Stock: {notification.product["stock"]}
+											</p>
+											<p className="m-0 p-0">
+												Total sales: {notification.product["totalSales"]}
+											</p>
 										</div>
 										{/* end detail */}
 									</div>
 								) : (
-									<div className="row">
-										<div className="col-10 ">
-											More than 80 days have passed since {" "}
+									<div
+										className="row my-4 py-3"
+										style={{ borderBottom: "1px solid #ddd" }}
+									>
+										<input
+											type="checkbox"
+											id={`check${notification._id}`}
+											className="notification-checkbox sr-only"
+											onClick={e => {
+												const judge = e.target.checked;
+												console.log(judge);
+
+												onClickToggle(notification._id, { checked: judge });
+											}}
+										/>
+										<label className="col-10" htmlFor={`check${notification._id}`}>
+											More than 80 days have passed since{" "}
 											<strong>
-												<a href="#">
-                                    {createNotificationsBody(notification.type, chosenData)}
+												<a
+													href={`#${notification._id}`}
+													data-toggle="collapse"
+													role="button"
+													aria-expanded="false"
+													aria-controls="showdetails"
+												>
+													{createNotificationsBody(notification.type, chosenData)}
 												</a>
-											</strong>
-											{" "}last purchased knife(s). Please send a sharpening reminder.
+											</strong>{" "}
+											last purchased knife(s). Please send a sharpening reminder.
+										</label>
+										{/* begin detail */}
+										<div className="col-12 collapse" id={notification._id}>
+											<p className="m-0 p-0">Gender: {notification.sale.customer["gender"]}</p>
+											<p className="m-0 p-0">Phone: {notification.sale.customer["phone"]}</p>
+											<p className="m-0 p-0">Notes: {notification.sale.customer["note"]}</p>
 										</div>
-											<i className="fa fa-check-square-o pointer huge" id="notification-check"/>
-                                 <div className="col-12 ">
-											<small>Code: {notification.sale.customer["gender"]}</small>
-                                 <hr />
-										</div>
+										{/* end detail */}
 									</div>
 								)}
 							</div>
