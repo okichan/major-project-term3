@@ -143,13 +143,14 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
 					</div>
 
 					<button className="btn btn-primary btn-lg float-right">{submitTitle}</button>
-					<a
-						href="/customers"
-						className="btn btn-light btn-lg mr-2 float-right"
-						role="button"
-					>
-						Cancel
-					</a>
+               <button
+            className="btn btn-light btn-lg mr-2 float-right"
+            onClick={() => {
+               window.history.back();
+            }}
+          >
+            Cancel
+          </button>
 				</form>
 			)}
 		</div>
