@@ -429,7 +429,57 @@ function CustomerList({
 										</div>
 									</div>
 									{/* end modal edit */}
-									{/* begin modal delete */}
+                           {/* begin modal delete */}
+                           <div
+                        className="modal fade"
+                        id={`modaldelete-${customer._id}`}
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="exampleModalLabel"
+                              >
+                                {`Are you sure you want to delete "${
+                                  customer.firstName === "" ? "" : customer.firstName
+                                }"?`}
+                              </h5>
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div className="modal-footer">
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-dismiss="modal"
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-danger "
+                                onClick={() => {
+                                  deleteCustomer(customer._id);
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                           
 									{/* end modal delete */}
 								</tbody>
 							);

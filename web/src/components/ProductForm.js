@@ -117,13 +117,14 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
           <button className="btn btn-primary btn-lg float-right  my-3">
             {submitTitle}
           </button>
-          <Link
-            to="/products"
+          <button
             className="btn btn-light btn-lg mr-2 float-right  my-3"
-            role="button"
+            onClick={() => {
+               window.history.back();
+            }}
           >
             Cancel
-          </Link>
+          </button>
         </form>
       )}
     </div>
