@@ -3,7 +3,12 @@ import "./css/App.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
 import "./css/SalesForm.css";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ProductList from "./components/ProductList";
@@ -26,7 +31,13 @@ import WeeklyReport from "./components/WeeklyReport";
 import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
-import { listSales, createSale, updateSale, dailySales, monthRangeSales } from "./api/sales";
+import {
+  listSales,
+  createSale,
+  updateSale,
+  dailySales,
+  monthRangeSales
+} from "./api/sales";
 
 import {
   dailyCustomerTraffics,
@@ -42,8 +53,17 @@ import {
   updateProduct,
   deleteProduct
 } from "./api/products";
-import { listCustomers, createCustomer, updateCustomer, deleteCustomer } from "./api/customers";
-import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
+import {
+  listCustomers,
+  createCustomer,
+  updateCustomer,
+  deleteCustomer
+} from "./api/customers";
+import {
+  listNotifications,
+  updateNotifications,
+  deleteNotifications
+} from "./api/notifications";
 import axios from "axios";
 import moment from "moment";
 
@@ -85,9 +105,13 @@ class App extends Component {
 
       // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
       return axios
-        .post("https://api.cloudinary.com/v1_1/dbbim9cy0/image/upload", formData, {
-          headers: { "X-Requested-With": "XMLHttpRequest" }
-        })
+        .post(
+          "https://api.cloudinary.com/v1_1/dbbim9cy0/image/upload",
+          formData,
+          {
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+          }
+        )
         .then(response => {
           const data = response.data;
           const fileURL = data.secure_url; // You should store this URL for future references in your app
@@ -117,7 +141,9 @@ class App extends Component {
   };
 
   getPieChartOriginData = () => {
-    const chartData = this.getDataCustomerOriginPieChart(this.state.customerTraffics);
+    const chartData = this.getDataCustomerOriginPieChart(
+      this.state.customerTraffics
+    );
     this.setState({
       pieChartOriginData: {
         labels: [
@@ -411,13 +437,33 @@ class App extends Component {
     dailySales(event.format("YYYY-MM-DD")).then(dailySales => {
       this.setState({ dailySales });
     });
-    dailyCustomerTraffics(event.format("YYYY-MM-DD")).then(dailyCustomerTraffics => {
-      this.setState({ dailyCustomerTraffics });
-    });
+    dailyCustomerTraffics(event.format("YYYY-MM-DD")).then(
+      dailyCustomerTraffics => {
+        this.setState({ dailyCustomerTraffics });
+      }
+    );
   };
 
   onChageRange = (type, range) => {
     this.setState({ ["weekRange" + type]: range });
+  };
+
+  // create customer Traffics
+  onCreateCustomerTraffics = data => {
+    createCustomerTraffics(data).then(newCustomerTraffic => {
+      this.setState(prevState => {
+        // Append to existing products array
+        const updatedProducts = prevState.customerTraffics.concat(
+          newCustomerTraffic
+        );
+        return {
+          customerTraffics: updatedProducts
+        };
+      });
+      this.getPieChartChefData();
+      this.getPieChartOriginData();
+      alert("Add new customer traffic");
+    });
   };
 
   render() {
@@ -446,7 +492,8 @@ class App extends Component {
     } = this.state;
     const signedIn = !!decodedToken;
 
-    const requireAuth = render => props => (!signedIn ? <Redirect to="/signin" /> : render(props));
+    const requireAuth = render => props =>
+      !signedIn ? <Redirect to="/signin" /> : render(props);
 
     return (
       <Router>
@@ -473,7 +520,11 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        <Home />
+                        <Home
+                          onCreateCustomerTraffics={
+                            this.onCreateCustomerTraffics
+                          }
+                        />
                       </Fragment>
                     ))}
                   />
@@ -529,8 +580,14 @@ class App extends Component {
                       <Fragment>
                         <div className="mb-3">
                           <p>Email: {decodedToken.email}</p>
-                          <p>Signed in at: {new Date(decodedToken.iat * 1000).toISOString()}</p>
-                          <p>Expire at: {new Date(decodedToken.exp * 1000).toISOString()}</p>
+                          <p>
+                            Signed in at:{" "}
+                            {new Date(decodedToken.iat * 1000).toISOString()}
+                          </p>
+                          <p>
+                            Expire at:{" "}
+                            {new Date(decodedToken.exp * 1000).toISOString()}
+                          </p>
                         </div>
                       </Fragment>
                     ))}
@@ -586,7 +643,11 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        {!!traffics ? <CustomerTraffic traffics={traffics} /> : <p>Loading</p>}
+                        {!!traffics ? (
+                          <CustomerTraffic traffics={traffics} />
+                        ) : (
+                          <p>Loading</p>
+                        )}
                       </Fragment>
                     ))}
                   />
@@ -626,7 +687,11 @@ class App extends Component {
                     ))}
                   />
 
-                  <Route path="/report-monthly" exact render={requireAuth(() => <div />)} />
+                  <Route
+                    path="/report-monthly"
+                    exact
+                    render={requireAuth(() => <div />)}
+                  />
 
                   <Route
                     path="/sales"
@@ -669,7 +734,11 @@ class App extends Component {
                     ))}
                   />
 
-                  <Route render={({ location }) => <h2>Page not found: {location.pathname}</h2>} />
+                  <Route
+                    render={({ location }) => (
+                      <h2>Page not found: {location.pathname}</h2>
+                    )}
+                  />
                 </Switch>
               </div>
             </div>
