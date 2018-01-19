@@ -123,19 +123,11 @@ function CustomerList({
 											{/* Delete button should only show if purchase history is 0 */}
 											{customer.purchasedHistory.length === 0 ? (
 												<i
-													className="fa fa-trash mx-1 med"
+													className="fa fa-trash med mx-1"
 													id="trash"
+													data-toggle="modal"
+													data-target={`#modaldelete-${customer._id}`}
 													style={{ cursor: "pointer" }}
-													onClick={() => {
-														const confirm = window.confirm(
-															`Do you really want to delete "${
-																customer.firstName
-															}"?`
-														);
-														if (confirm) {
-															deleteCustomer(customer._id);
-														}
-													}}
 													title="Delete"
 												/>
 											) : (
@@ -162,7 +154,9 @@ function CustomerList({
 															</p>
 														</div>
 														<div className="col-md-6 ">
-															<p>Customer Origin: {customer.origin}</p>
+															<p>
+																Customer Origin: {customerOriginPicks[customer.origin]}
+															</p>
 														</div>
 													</div>
 													<hr />
@@ -429,59 +423,56 @@ function CustomerList({
 										</div>
 									</div>
 									{/* end modal edit */}
-                           {/* begin modal delete */}
-                           <div
-                        className="modal fade"
-                        id={`modaldelete-${customer._id}`}
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-labelledby="exampleModalLabel"
-                        aria-hidden="true"
-                      >
-                        <div className="modal-dialog" role="document">
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5
-                                className="modal-title"
-                                id="exampleModalLabel"
-                              >
-                                {`Are you sure you want to delete "${
-                                  customer.firstName === "" ? "" : customer.firstName
-                                }"?`}
-                              </h5>
-                              <button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                              >
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div className="modal-footer">
-                              <button
-                                type="button"
-                                className="btn btn-secondary"
-                                data-dismiss="modal"
-                              >
-                                Cancel
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-danger "
-                                onClick={() => {
-                                  deleteCustomer(customer._id);
-                                }}
-                                data-dismiss="modal"
-                                
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                           
+									{/* begin modal delete */}
+									<div
+										className="modal fade"
+										id={`modaldelete-${customer._id}`}
+										tabIndex="-1"
+										role="dialog"
+										aria-labelledby="exampleModalLabel"
+										aria-hidden="true"
+									>
+										<div className="modal-dialog" role="document">
+											<div className="modal-content">
+												<div className="modal-header">
+													<h5 className="modal-title" id="exampleModalLabel">
+														Are you sure you want to delete{" "}
+														{customer.firstName === ""
+															? "this customer"
+															: `"${customer.firstName}"`}?
+													</h5>
+													<button
+														type="button"
+														className="close"
+														data-dismiss="modal"
+														aria-label="Close"
+													>
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div className="modal-footer">
+													<button
+														type="button"
+														className="btn btn-secondary"
+														data-dismiss="modal"
+													>
+														Cancel
+													</button>
+													<button
+														type="button"
+														className="btn btn-danger "
+														onClick={() => {
+															deleteCustomer(customer._id);
+														}}
+														data-dismiss="modal"
+													>
+														Delete
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
 									{/* end modal delete */}
 								</tbody>
 							);
