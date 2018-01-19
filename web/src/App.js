@@ -366,7 +366,6 @@ class App extends Component {
   onDeleteCustomer = id => {
     deleteCustomer(id)
       .then(customer => {
-         window.location.href = "/customers";
         this.load();
       })
       .catch(error => {

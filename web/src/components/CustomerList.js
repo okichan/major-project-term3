@@ -472,6 +472,8 @@ function CustomerList({
                                 onClick={() => {
                                   deleteCustomer(customer._id);
                                 }}
+                                data-dismiss="modal"
+                                
                               >
                                 Delete
                               </button>
