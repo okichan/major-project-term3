@@ -35,6 +35,7 @@ import {
   listSales,
   createSale,
   updateSale,
+  deleteSale,
   dailySales,
   monthRangeSales
 } from "./api/sales";
@@ -318,6 +319,27 @@ class App extends Component {
       });
   };
 
+  onEditSale = data => {
+    updateSale(data.id, data)
+      .then(updatedSale => {
+        this.setState(prevState => {
+          const updatedSales = prevState.sales.map(sale => {
+            if (sale._id === updatedSale._id) {
+              return updatedSale;
+            } else {
+              return sale;
+            }
+          });
+          return {
+            sales: updatedSales
+          };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
   onDeleteCustomer = id => {
     deleteCustomer(id)
       .then(customer => {
@@ -340,6 +362,16 @@ class App extends Component {
   onChangePrice = e => {
     const value = e.target.value;
     this.setState({ productPrice: value });
+  };
+
+  onDeleteSale = id => {
+    deleteSale(id)
+      .then(sale => {
+        this.load();
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
   };
 
   onClickDelete = () => {
@@ -373,6 +405,10 @@ class App extends Component {
       }
     );
   };
+
+  multiplyNumbers(num1, num2) {
+    return num1 * num2;
+  }
 
   render() {
     const {
@@ -590,8 +626,13 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        <LinkButton href="/new-sales" name="sale" />
-                        <SaleList sales={sales} />
+                        <LinkButton href="/new-sales" name="Add Sale" />
+                        <SaleList
+                          sales={sales}
+                          editSale={this.onEditSale}
+                          deleteSale={this.onDeleteSale}
+                          multiplyNumbers={this.multiplyNumbers}
+                        />
                       </Fragment>
                     ))}
                   />
