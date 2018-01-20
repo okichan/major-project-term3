@@ -51,26 +51,6 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 						onSubmit({ category, code, title, price, stock, image });
 					}}
 				>
-
-
-
-
-<div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email"/>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password"/>
-    </div>
-  </div>
-
-
-
-
-
-
 					<div className="form-group">
 						<label htmlFor="knifeCategory">Category</label>
 						<select className="form-control" name="category">
@@ -103,7 +83,7 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 					{/* RRP and amount same row begin */}
 					<div className="form-row">
 						{/* RRP */}
-						<div className="form-group col-md-6 ">
+						<div className="form-group col-md-4 ">
 							<label htmlFor="price">RRP</label>
 							<input
 								type="number"
@@ -115,16 +95,15 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 						</div>
 
 						{/* amount */}
-
-						<div className="form-group">
+						<div className="form-group col-md-3 ">
 							<label htmlFor="amount">Amount</label>
-							<div className="input-group col-md-6">
+							<div className="input-group">
 								<div className="input-group-prepend">
 									<span
 										className="input-group-text pointer"
 										onClick={e => {
 											let amount = document.getElementById("amount");
-											if (/\d/.test(amount.value)) {
+											if (/\d/.test(amount.value) && amount.value > 1) {
 												amount.value = Number(amount.value) - 1;
 											}
 										}}
@@ -137,7 +116,6 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 									name="stock"
 									type="text"
 									className="form-control text-center"
-									min="1"
 									defaultValue="1"
 								/>
 								<div className="input-group-append">
@@ -156,9 +134,6 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 							</div>
 						</div>
 					</div>
-
-					
-
 					{/* RRP and amount same row end */}
 
 					<label htmlFor="image">Image</label>
