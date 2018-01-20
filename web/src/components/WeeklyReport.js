@@ -4,6 +4,7 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import Chart from "chart.js";
 import { PieChartChef, PieChartOrigin } from "./PieChart";
+import ReactLoading from "react-loading";
 // recharts
 import {
   BarChart,
@@ -15,7 +16,8 @@ import {
   Legend,
   ReferenceLine,
   Bar,
-  ComposedChart
+  ComposedChart,
+  ResponsiveContainer
 } from "recharts";
 
 // get weekly data(sales)
@@ -51,7 +53,7 @@ function getWeeklySaleData(weekRange, salesData) {
 
   // put the sales data in the container created above
   for (var i = 0; i < salesData.length; i++) {
-    if (moment(salesData[i].date).week() == WeekEnd) break;
+    if (!weekNumberArr.includes(moment(salesData[i].date).week())) break;
     let key = `${moment(salesData[i].date)
       .startOf("week")
       .format("YYYY MMM DD")}`;
@@ -92,7 +94,8 @@ function getWeeklyCustomerData(weekRange, customerData) {
 
   // put the customer data in the container created above
   for (var i = 0; i < customerData.length; i++) {
-    if (moment(customerData[i].createdAt).week() == WeekEnd) break;
+    if (!weekNumberArr.includes(moment(customerData[i].createdAt).week()))
+      break;
     let key = `${moment(customerData[i].date)
       .startOf("week")
       .format("YYYY MMM DD")}`;
@@ -101,12 +104,7 @@ function getWeeklyCustomerData(weekRange, customerData) {
   return weeklyCustomerObject;
 }
 
-const sharpningCategory = [
-  "Sharpening Small",
-  "Sharpening Medium",
-  "Sharpening Damaged",
-  "Sharpening Damaged Tip"
-];
+const sharpningCategory = ["Sharpening"];
 
 // get customer data for customer Graph(chef and non chef)
 function getDataCustomerGraph(weeklyCustomerData) {
@@ -128,7 +126,6 @@ function getDataCustomerGraph(weeklyCustomerData) {
       .reduce((a, b) => {
         return a + b;
       }, 0);
-
     // number of chef
     weeklyCustomerGraph["chef"] = weeklyCustomerData[customer]
       .map(weeklyCustomers => {
@@ -182,7 +179,11 @@ function saleTrendForKnife(weeklySales) {
       return weeklySales.products
         .map(weekSale => {
           // check knife, stone or sharpening
-          if (!sharpningCategory.includes(weekSale.product.category)) {
+          if (
+            !sharpningCategory.includes(
+              weekSale.product ? weekSale.product.category : "null"
+            )
+          ) {
             // knife and stone only
             return weekSale.salePrice;
           } else {
@@ -204,7 +205,11 @@ function saleTrendForKnife(weeklySales) {
       return weeklySales.products
         .map(product => {
           // check knife, stone or sharpening
-          if (!sharpningCategory.includes(product.product.category)) {
+          if (
+            !sharpningCategory.includes(
+              product.product ? product.product.category : "null"
+            )
+          ) {
             // knife and stone only
             return product.unitAmount;
           } else {
@@ -243,7 +248,11 @@ function saleTrendForSharpening(weeklySales) {
       return weeklySales.products
         .map(weekSale => {
           // check knife, stone or sharpening
-          if (sharpningCategory.includes(weekSale.product.category)) {
+          if (
+            sharpningCategory.includes(
+              weekSale.product ? weekSale.product.category : "null"
+            )
+          ) {
             // sharpening only
             return weekSale.salePrice;
           } else {
@@ -265,7 +274,11 @@ function saleTrendForSharpening(weeklySales) {
       return weeklySales.products
         .map(product => {
           // check knife, stone or sharpening
-          if (sharpningCategory.includes(product.product.category)) {
+          if (
+            sharpningCategory.includes(
+              product.product ? product.product.category : "null"
+            )
+          ) {
             // sharpening only
             return product.unitAmount;
           } else {
@@ -380,139 +393,238 @@ function WeeklyReport({
   monthRangeSales,
   customerTraffics,
   pieChartChefData,
-  pieChartOriginData
+  pieChartOriginData,
+  weekRangeChef,
+  weekRangeKnife,
+  weekRangeSharp,
+  weekRangeOrigin,
+  onChageRange
 }) {
   const customerGraph = customerTraffics
     ? getDataCustomerGraph(
-        getWeeklyCustomerData(12, customerTraffics)
+        getWeeklyCustomerData(weekRangeChef, customerTraffics)
       ).reverse()
     : null;
 
   const saleTrendKnife = monthRangeSales
-    ? saleTrendForKnife(getWeeklySaleData(12, monthRangeSales)).reverse()
+    ? saleTrendForKnife(
+        getWeeklySaleData(weekRangeKnife, monthRangeSales)
+      ).reverse()
     : null;
 
   const saleTrendSharpening = monthRangeSales
-    ? saleTrendForSharpening(getWeeklySaleData(12, monthRangeSales)).reverse()
+    ? saleTrendForSharpening(
+        getWeeklySaleData(weekRangeSharp, monthRangeSales)
+      ).reverse()
     : null;
 
   const customerOriginChart = customerTraffics
     ? getWeeklyCustomerOriginData(
-        getWeeklySaleData(12, customerTraffics)
+        getWeeklySaleData(weekRangeOrigin, customerTraffics)
       ).reverse()
     : null;
 
   return (
-    <div>
-      <h2>Customer Traffic (Chef or NonChef)</h2>
-      {customerGraph && (
-        <ComposedChart width={800} height={300} data={customerGraph}>
-          <XAxis dataKey="week" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Bar
-            dataKey="totalCustomer"
-            name="Total customer"
-            barSize={20}
-            fill="#413ea0"
+    <div className="container text-center">
+      {customerGraph ? (
+        <div style={{ marginBottom: "30px" }}>
+          <h2>Customer Traffic (Chef or NonChef)</h2>
+          <p>Week range : {weekRangeChef}</p>
+          <input
+            min="1"
+            max="26"
+            type="range"
+            value={weekRangeChef}
+            onChange={e => {
+              onChageRange("Chef", e.target.value);
+            }}
           />
-          <Line type="monotone" dataKey="chef" name="Chef" stroke="#ff7300" />
-          <Line
-            type="monotone"
-            dataKey="nonChef"
-            name="NonChef"
-            stroke="rgb(13, 194, 255)"
-          />
-          <Line
-            type="monotone"
-            dataKey="unknown"
-            name="Unknown"
-            stroke="rgb(191, 30, 86)"
-          />
-        </ComposedChart>
+
+          <ResponsiveContainer width="85%" height={300}>
+            <ComposedChart width={800} height={300} data={customerGraph}>
+              <XAxis dataKey="week" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Bar
+                dataKey="totalCustomer"
+                name="Total customer"
+                barSize={20}
+                fill="#413ea0"
+              />
+
+              <Line
+                type="monotone"
+                dataKey="chef"
+                name="Chef"
+                stroke="#ff7300"
+              />
+              <Line
+                type="monotone"
+                dataKey="nonChef"
+                name="NonChef"
+                stroke="rgb(13, 194, 255)"
+              />
+
+              <Line
+                type="monotone"
+                dataKey="unknown"
+                name="Unknown"
+                stroke="rgb(191, 30, 86)"
+              />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        <ReactLoading type="bars" color="rgb(121, 3, 34)" />
       )}
 
-      <h2>Customer with origin</h2>
       {customerOriginChart && (
-        <ComposedChart width={800} height={300} data={customerOriginChart}>
-          <XAxis dataKey="week" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Bar
-            dataKey="totalCustomer"
-            name="Total customer"
-            barSize={20}
-            fill="#413ea0"
+        <div style={{ marginBottom: "30px" }}>
+          <h2>Customer with origin</h2>
+          <p>Week range : {weekRangeOrigin}</p>
+          <input
+            min="1"
+            max="26"
+            type="range"
+            value={weekRangeOrigin}
+            onChange={e => {
+              onChageRange("Origin", e.target.value);
+            }}
           />
-          <Line type="monotone" dataKey="Facebook" stroke="#ff7300" />
-          <Line
-            type="monotone"
-            dataKey="OnlineSearch"
-            stroke="rgb(43, 251, 146)"
-          />
-          <Line type="monotone" dataKey="Referral" stroke="rgb(202, 210, 25)" />
-          <Line
-            type="monotone"
-            dataKey="Newspaper"
-            stroke="rgb(185, 45, 241)"
-          />
-          <Line type="monotone" dataKey="WalkIn" stroke="rgb(131, 87, 173)" />
-          <Line
-            type="monotone"
-            dataKey="HotelGuest"
-            stroke="rgb(138, 227, 19)"
-          />
-          <Line type="monotone" dataKey="Return" stroke="rgb(187, 113, 129)" />
-          <Line type="monotone" dataKey="Unknown" stroke="rgb(125, 122, 120)" />
-        </ComposedChart>
-      )}
 
-      <h2>Sale Trend Knife and Stone</h2>
+          <ResponsiveContainer width="85%" height={300}>
+            <ComposedChart width={800} height={300} data={customerOriginChart}>
+              <XAxis dataKey="week" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Bar
+                dataKey="totalCustomer"
+                name="Total customer"
+                barSize={20}
+                fill="#413ea0"
+              />
+
+              <Line type="monotone" dataKey="Facebook" stroke="#ff7300" />
+              <Line
+                type="monotone"
+                dataKey="OnlineSearch"
+                stroke="rgb(43, 251, 146)"
+              />
+              <Line
+                type="monotone"
+                dataKey="Referral"
+                stroke="rgb(202, 210, 25)"
+              />
+              <Line
+                type="monotone"
+                dataKey="Newspaper"
+                stroke="rgb(185, 45, 241)"
+              />
+              <Line
+                type="monotone"
+                dataKey="WalkIn"
+                stroke="rgb(131, 87, 173)"
+              />
+              <Line
+                type="monotone"
+                dataKey="HotelGuest"
+                stroke="rgb(138, 227, 19)"
+              />
+              <Line
+                type="monotone"
+                dataKey="Return"
+                stroke="rgb(187, 113, 129)"
+              />
+              <Line
+                type="monotone"
+                dataKey="Unknown"
+                stroke="rgb(125, 122, 120)"
+              />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+      )}
       {saleTrendKnife && (
-        <BarChart
-          width={800}
-          height={300}
-          data={saleTrendKnife}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-        >
-          <XAxis dataKey="week" />
-          <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-          <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Bar yAxisId="left" dataKey="totalUnit" fill="#8884d8" />
-          <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
-        </BarChart>
+        <div style={{ marginBottom: "30px" }}>
+          <h2>Sale Trend Knife and Stone</h2>
+          <p>Week range : {weekRangeKnife}</p>
+          <input
+            min="1"
+            max="26"
+            type="range"
+            value={weekRangeKnife}
+            onChange={e => {
+              onChageRange("Knife", e.target.value);
+            }}
+          />
+
+          <ResponsiveContainer width="90%" height={300}>
+            <BarChart
+              width={800}
+              height={300}
+              data={saleTrendKnife}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <XAxis dataKey="week" />
+              <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+              <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Legend />
+              <Bar yAxisId="left" dataKey="totalUnit" fill="#8884d8" />
+              <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+      {saleTrendSharpening && (
+        <div style={{ marginBottom: "30px" }}>
+          <h2>Sale Trend Sharpening</h2>
+          <p>Week range : {weekRangeSharp}</p>
+          <input
+            min="1"
+            max="26"
+            type="range"
+            value={weekRangeSharp}
+            onChange={e => {
+              onChageRange("Sharp", e.target.value);
+            }}
+          />
+          <ResponsiveContainer width="90%" height={300}>
+            <BarChart
+              width={800}
+              height={300}
+              data={saleTrendSharpening}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <XAxis dataKey="week" />
+              <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+              <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Legend />
+              <Bar yAxisId="left" dataKey="totalUnit" fill="#8884d8" />
+              <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       )}
 
-      <h2>Sale Trend Sharpening</h2>
-      {saleTrendSharpening && (
-        <BarChart
-          width={800}
-          height={300}
-          data={saleTrendSharpening}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-        >
-          <XAxis dataKey="week" />
-          <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-          <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Bar yAxisId="left" dataKey="totalUnit" fill="#8884d8" />
-          <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
-        </BarChart>
+      {pieChartChefData && (
+        <div style={{ marginBottom: "30px" }}>
+          <h2>Customer Chef Non Chef</h2>
+          <PieChartChef pieChartChefData={pieChartChefData} />
+        </div>
       )}
-      <h2>Customer Chef Non Chef</h2>
-      {pieChartChefData && <PieChartChef pieChartChefData={pieChartChefData} />}
-      <h2>Customer Origin</h2>
       {pieChartOriginData && (
-        <PieChartOrigin pieChartOriginData={pieChartOriginData} />
+        <div>
+          <h2>Customer Origin</h2>
+          <PieChartOrigin pieChartOriginData={pieChartOriginData} />
+        </div>
       )}
     </div>
   );

@@ -14,9 +14,7 @@ const weatherApi = axios.create({
 // get weather data from api
 getWeatherByDate = date => {
   return weatherApi
-    .get(
-      `/history.json?key=04042066cca345ad89331024170512&q=Melbourne&dt=${date}`
-    )
+    .get(`/history.json?key=${process.env.WEATHER_API}&q=Melbourne&dt=${date}`)
     .then(weather => {
       return weather.data.forecast.forecastday[0];
     })
@@ -223,7 +221,10 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
                   // check if sharpen reminder needed
                   Product.findById(product.product).then(product => {
                     ctr2++;
-                    if (product.category !== "stone") {
+                    if (
+                      product.category !== "Stone" &&
+                      product.category !== "Sharpening"
+                    ) {
                       sharpReminderNeeded = true;
                     }
                     // after forEach execute below code

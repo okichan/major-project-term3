@@ -1,100 +1,171 @@
 .test {
-  border: 1px solid #0f0;
+	border: 1px solid #0f0;
 }
 
 .test2 {
-  border: 1px solid #f0f;
+	border: 1px solid #f0f;
 }
 
 .big {
-  font-size: 1.5em;
+	font-size: 1.5em;
 }
 
 .med {
-  font-size: 1.3em;
+	font-size: 1.3em;
+}
+
+.link-dark a {
+	color: rgb(124, 124, 124);
+}
+
+.link-dark a:hover {
+	color: rgb(90, 90, 90);
 }
 
 td a {
-  color: #222;
+	color: #222;
 }
 
 td a:hover {
-  color: rgb(24, 122, 219);
-  text-decoration: none;
+	color: rgb(24, 122, 219);
+	text-decoration: none;
+}
+
+/* in mobile view, create a line separator */
+#sidebar {
+	border-bottom: 1px solid lightgray;
+}
+
+#sidebar a {
+	color: rgb(87, 87, 87);
+	transition: 0.2s;
+}
+
+#sidebar a:hover {
+	color: rgb(32, 32, 32);
+	text-shadow: 0px 2px 1px rgb(196, 196, 196);
 }
 
 #trash {
-  transition: 0.4s ease;
+	transition: 0.4s ease;
 }
 
 #trash:hover {
-  color: red;
+	color: red;
+}
+
+/* notification checkbox */
+input[type='checkbox'].notification-checkbox + label:before,
+input[type='checkbox'].notification-checkbox + label:after{
+   position: relative;
+   top: 3px;
+   display: inline-block;
+   font-family: 'FontAwesome';
+   font-size: 1.5rem;
+   padding-right: 1rem;
+}
+
+input[type='checkbox'].notification-checkbox + label:before{/*unchecked icon*/
+   content: "\f096";
+}
+
+input[type='checkbox']:checked.notification-checkbox + label:before{/*checked icon*/
+   content: "\f046";
 }
 
 .box-shadow {
-  box-shadow: 7px 7px 12px 0px rgba(153, 153, 153, 1);
+	box-shadow: 7px 7px 12px 0px rgba(153, 153, 153, 1);
 }
 
 .text-shadow {
-  text-shadow: 3px 2px 2px rgba(175, 175, 175, 0.527);
+	text-shadow: 3px 2px 2px rgba(175, 175, 175, 0.527);
 }
 
 .login-screen {
-  position: absolute;
-  padding: 1em 1em;
-  left: 1vw;
-  right: 1vw;
+	position: absolute;
+	padding: 1em 1em;
+	left: 1vw;
+	right: 1vw;
 }
 
 .logo {
-  width: 80px;
+	width: 80px;
 }
 
 .row-hover {
-  transition: 0.2s;
+	transition: 0.2s;
 }
 
 .row-hover:hover {
-  cursor: pointer;
-  background: rgb(235, 237, 243);
+	cursor: pointer;
+	background: rgb(235, 237, 243);
+}
+
+.pointer {
+	cursor: pointer;
 }
 
 #purchase-history {
-  border: 1px dotted rgb(202, 202, 202);
-  background: rgb(245, 251, 255);
-  border-radius: 0.3em;
-  padding: 0.6em;
-  max-height: 25vh;
-  overflow-y: scroll;
+	border: 1px dotted rgb(202, 202, 202);
+	background: rgb(245, 251, 255);
+	border-radius: 0.3em;
+	padding: 0.6em;
+	max-height: 25vh;
+	overflow-y: scroll;
 }
 
 #notification-badge {
-  position: absolute;
-  font-size: 0.5em;
-  font-family: sans-serif;
-  /* right: 0; */
+	position: absolute;
+	font-size: 0.5em;
+	font-family: sans-serif;
+}
+
+/* for range input */
+input[type="range"] {
+	-webkit-appearance: none;
+	width: 180px;
+	background: #eee;
+	box-shadow: 0 0 2px #666;
+	border-radius: 50px;
+}
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background: #333;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+
+input[type="range"]:focus {
+	outline: 0;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+	background: #999;
+}
+input[type="range"]::-webkit-slider-thumb:active {
+	background: #fefefe;
 }
 
 @media (min-width: 768px) {
-  .logo {
-    width: 160px;
-    /* height: 26%; */
-  }
+	.logo {
+		width: 160px;
+		/* height: 26%; */
+	}
 
-  .login-screen {
-    position: absolute;
-    display: block;
-    right: 12vw;
-    left: 12vw;
-    margin: 0 auto;
-    width: auto;
-    padding: 3em 4em;
-    box-shadow: 7px 7px 12px 0px rgba(153, 153, 153, 1);
-  }
+	.login-screen {
+		position: absolute;
+		display: block;
+		right: 12vw;
+		left: 12vw;
+		margin: 0 auto;
+		width: auto;
+		padding: 3em 4em;
+		box-shadow: 7px 7px 12px 0px rgba(153, 153, 153, 1);
+	}
 
-  #sidebar {
-    max-width: 160px;
-    border-right: 1px solid lightgray;
-    border-bottom: 0;
-  }
+	#sidebar {
+		max-width: 160px;
+		border-right: 1px solid lightgray;
+		border-bottom: 0;
+	}
 }
