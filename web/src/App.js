@@ -35,6 +35,7 @@ import { getDecodedToken } from "./api/token";
 import {
   listSales,
   createSale,
+  deleteSale,
   updateSale,
   dailySales,
   monthRangeSales
@@ -375,27 +376,60 @@ class App extends Component {
   };
 
   onEditCustomer = data => {
-   updateCustomer(data._id, data)
-     .then(updatedCustomer => {
-       window.location.href = "/customers";
-       this.setState(prevState => {
-         // Replace in existing customers array
-         const updatedCustomer = prevState.customers.map(customer => {
-           if (customer._id === updatedCustomer._id) {
-             return updatedCustomer;
-           } else {
-             return customer;
-           }
-         });
-         return {
-           customers: updatedCustomer
-         };
-       });
-     })
-     .catch(error => {
-       this.setState({ error });
-     });
- };
+    updateCustomer(data._id, data)
+      .then(updatedCustomer => {
+        window.location.href = "/customers";
+        this.setState(prevState => {
+          // Replace in existing customers array
+          const updatedCustomer = prevState.customers.map(customer => {
+            if (customer._id === updatedCustomer._id) {
+              return updatedCustomer;
+            } else {
+              return customer;
+            }
+          });
+          return {
+            customers: updatedCustomer
+          };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  onDeleteSale = id => {
+    deleteSale(id)
+      .then(sale => {
+        this.load();
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  onEditSale = data => {
+    updateSale(data._id, data)
+      .then(updatedSale => {
+        window.location.href = "/sales";
+        this.setState(prevState => {
+          // Replace in existing products array
+          const updatedSales = prevState.sales.map(sale => {
+            if (sale._id === updatedSale._id) {
+              return updatedSale;
+            } else {
+              return sale;
+            }
+          });
+          return {
+            sales: updatedSales
+          };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
 
   // onChange function for saleForm.js select menu
   onChangeTitle = title => {
@@ -479,6 +513,18 @@ class App extends Component {
       alert("Add new customer traffic");
     });
   };
+
+  multiplyNumbers(numberOne, numberTwo) {
+    return numberOne * numberTwo;
+  }
+
+  capitalizeWord(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+
+  sortByDate(a, b) {
+    return new Date(b.date) - new Date(a.date);
+  }
 
   render() {
     const {
@@ -651,13 +697,11 @@ class App extends Component {
                       />
                     ))}
                   />
-                  
+
                   <Route
-                     path="/new-sales-test"
-                     exact
-                     render={requireAuth(() => (
-                           <SalesFormTomomiTest />
-                     ))}
+                    path="/new-sales-test"
+                    exact
+                    render={requireAuth(() => <SalesFormTomomiTest />)}
                   />
 
                   <Route
@@ -721,7 +765,14 @@ class App extends Component {
                     render={requireAuth(() => (
                       <Fragment>
                         <LinkButton href="/new-sales" name="sale" />
-                        <SaleList sales={sales} />
+                        <SaleList
+                          multiplyNumbers={this.multiplyNumbers}
+                          capitalizeWord={this.capitalizeWord}
+                          sortByDate={this.sortByDate}
+                          sales={sales}
+                          deleteSale={this.onDeleteSale}
+                          editSale={this.onEditSale}
+                        />
                       </Fragment>
                     ))}
                   />

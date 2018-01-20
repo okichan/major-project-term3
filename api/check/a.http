@@ -58,29 +58,10 @@ Content-Type: application/json
   "date": "2017-11-01"
 }
 
-
-
-
 ### Delete product
 DELETE http://localhost:7000/sale/5a5eb473e4b0351c94c5fea8
 Authorization: Bearer {{ token }}
 Content-Type: application/json
-
-
-
-
-
-### Edit Sale
-PUT http://localhost:7000/sale/5a5c03c94b6cfc2fd82e5a99
-Authorization: Bearer {{ token }}
-Content-Type: application/json
-
-{
-   "products": [
-        {"product": "5a54af5f8edb60461c4f45e4", "salePrice": "199", "unitAmount": "1"},
-        {"product": "5a5a922155d7671ab84f1408", "salePrice": "85", "unitAmount": "1"}
-    ]
-}
 
 ### Update product
 PUT http://localhost:7000/product/5a54e6dce51e644448cd7811
@@ -145,3 +126,18 @@ Content-Type: application/json
 {"products":[{"product":"5a5bf31f5fdac41a583aedf3","salePrice":"150","unitAmount":"1"}, {"product":"","salePrice":"","unitAmount":""}],"customer":"5a5d5c9cbfb92d3f77e60c3d","date":"2018-01-15","totalPrice":"150"}
 
 
+### Delete product
+DELETE http://localhost:7000/sale/5a5ddbe1bfb92d3f77e60c4b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTU5OTUzMTYsImV4cCI6MTUxNjYwMDExNiwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.50e44cexRalx1F7Qm-4nCB5X-93Px3AY9sF8cb-N_LM
+Content-Type: application/json
+
+### Edit Sale
+PUT http://localhost:7000/sale/5a600ed02024b62c82d613b2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyNDU4NTAsImV4cCI6MTUxNjg1MDY1MCwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.ZmFs-VTCHsyDNc8iEG5AIzHe2Jlf-n05XKdTVcFa_cc
+Content-Type: application/json
+
+{
+   "products": [
+        {"product": "5a600e452024b62c82d613ad", "salePrice": "120", "unitAmount": "10"}
+    ]
+}

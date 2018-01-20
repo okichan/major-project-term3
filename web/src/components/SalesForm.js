@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import CustomerFormNew from "./CustomerFormNew";
-import CustomerFormReturn from "./CustomerFormReturn";
 import { listProducts } from "../api/products";
 import { listCustomers, listFilteredCustomers } from "../api/customers";
 import { listSales, createSale, deleteSale } from "../api/sales";
@@ -81,31 +79,31 @@ class SalesForm extends Component {
     this.setState({ productPrice1: chosenProduct.price });
   };
 
-  onChangeTitle2 = (number, title) => {
+  onChangeTitle2 = (number, id) => {
     const { products } = this.state;
     const chosenProduct = products.filter(product => {
-      return product.title === title;
+      return product._id === id;
     })[0];
     this.setState({ productPrice2: chosenProduct.price });
   };
-  onChangeTitle3 = (number, title) => {
+  onChangeTitle3 = (number, id) => {
     const { products } = this.state;
     const chosenProduct = products.filter(product => {
-      return product.title === title;
+      return product._id === id;
     })[0];
     this.setState({ productPrice3: chosenProduct.price });
   };
-  onChangeTitle4 = (number, title) => {
+  onChangeTitle4 = (number, id) => {
     const { products } = this.state;
     const chosenProduct = products.filter(product => {
-      return product.title === title;
+      return product._id === id;
     })[0];
     this.setState({ productPrice4: chosenProduct.price });
   };
-  onChangeTitle5 = (number, title) => {
+  onChangeTitle5 = (number, id) => {
     const { products } = this.state;
     const chosenProduct = products.filter(product => {
-      return product.title === title;
+      return product._id === id;
     })[0];
     this.setState({ productPrice5: chosenProduct.price });
   };
@@ -209,10 +207,10 @@ class SalesForm extends Component {
       textEntered: value
     });
   };
-  
+
   goBack() {
     window.history.back();
-}
+  }
   render() {
     const {
       products,
@@ -302,10 +300,9 @@ class SalesForm extends Component {
               sale.totalPrice = totalPrice;
               sale.type = type;
 
-              console.log(sale);
-              // this.onCreateSale(sale);
-              // window.location.href = "/sales";
-              // return false;
+              this.onCreateSale(sale);
+              window.location.href = "/sales";
+              return false;
             }}
           >
             <fieldset>
@@ -398,8 +395,11 @@ class SalesForm extends Component {
                         this.onChangeTitle2(2, e.target.value);
                       }}
                     >
+                      <option disabled selected value>
+                        Please select product
+                      </option>
                       {products.map(m => (
-                        <option value={m.id}>{m.title}</option>
+                        <option value={m._id}>{m.title}</option>
                       ))}
                     </select>
                   </div>
@@ -462,8 +462,11 @@ class SalesForm extends Component {
                         this.onChangeTitle3(3, e.target.value);
                       }}
                     >
+                      <option disabled selected value>
+                        Please select product
+                      </option>
                       {products.map(m => (
-                        <option value={m.id}>{m.title}</option>
+                        <option value={m._id}>{m.title}</option>
                       ))}
                     </select>
                   </div>
@@ -529,8 +532,11 @@ class SalesForm extends Component {
                         this.onChangeTitle4(4, e.target.value);
                       }}
                     >
+                      <option disabled selected value>
+                        Please select product
+                      </option>
                       {products.map(m => (
-                        <option value={m.id}>{m.title}</option>
+                        <option value={m._id}>{m.title}</option>
                       ))}
                     </select>
                   </div>
@@ -597,8 +603,11 @@ class SalesForm extends Component {
                         this.onChangeTitle5(5, e.target.value);
                       }}
                     >
+                      <option disabled selected value>
+                        Please select product
+                      </option>
                       {products.map(m => (
-                        <option value={m.id}>{m.title}</option>
+                        <option value={m._id}>{m.title}</option>
                       ))}
                     </select>
                   </div>
