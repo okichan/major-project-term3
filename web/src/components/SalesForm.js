@@ -234,7 +234,6 @@ class SalesForm extends Component {
 
     return (
       <div className="col salesForm">
-        <h1 className="salesFormHeading text-center mb-5">New sales</h1>
         {products && (
           <form
             className=""

@@ -31,7 +31,7 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 			{products && (
 				<form
 					id="create-product"
-					className="col-md-7 mx-auto mb-5"
+					className="col-sm-8 mx-auto mb-5"
 					onSubmit={event => {
 						// Prevent old-school form submission
 						event.preventDefault();
@@ -83,7 +83,7 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 					{/* RRP and amount same row begin */}
 					<div className="form-row">
 						{/* RRP */}
-						<div className="form-group col-md-4 ">
+						<div className="form-group col-4 col-md-3 ">
 							<label htmlFor="price">RRP</label>
 							<input
 								type="number"
@@ -93,9 +93,10 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 								required
 							/>
 						</div>
+						<div className="form-group col-md-8"/>
 
 						{/* amount */}
-						<div className="form-group col-md-3 ">
+						<div className="form-group col-6 col-sm-4 col-md-4 col-lg-3">
 							<label htmlFor="amount">Amount</label>
 							<div className="input-group">
 								<div className="input-group-prepend">
@@ -114,7 +115,7 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 								<input
 									id="amount"
 									name="stock"
-									type="text"
+									type="number"
 									className="form-control text-center"
 									defaultValue="1"
 								/>

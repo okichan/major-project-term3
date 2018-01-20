@@ -13,7 +13,7 @@ const customerOriginPicks = {
 
 function CustomerForm({ customers, submitTitle, onSubmit }) {
 	return (
-		<div className="row ">
+		<div className="row" id="customer-form">
 			<h1 className="col-12 text-center p-3">New Customer</h1>
 
 			{customers && (
