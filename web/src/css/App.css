@@ -118,31 +118,6 @@ input[type='checkbox']:checked.notification-checkbox + label:before{/*checked ic
 	position: absolute;
 	font-size: 0.5em;
 	font-family: sans-serif;
-	/* right: 0; */
-}
-
-@media (min-width: 768px) {
-	.logo {
-		width: 160px;
-		/* height: 26%; */
-	}
-
-	.login-screen {
-		position: absolute;
-		display: block;
-		right: 12vw;
-		left: 12vw;
-		margin: 0 auto;
-		width: auto;
-		padding: 3em 4em;
-		box-shadow: 7px 7px 12px 0px rgba(153, 153, 153, 1);
-	}
-
-	#sidebar {
-		max-width: 160px;
-		border-right: 1px solid lightgray;
-		border-bottom: 0;
-	}
 }
 
 /* for range input */
@@ -169,4 +144,28 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 input[type="range"]::-webkit-slider-thumb:active {
 	background: #fefefe;
+}
+
+@media (min-width: 768px) {
+	.logo {
+		width: 160px;
+		/* height: 26%; */
+	}
+
+	.login-screen {
+		position: absolute;
+		display: block;
+		right: 12vw;
+		left: 12vw;
+		margin: 0 auto;
+		width: auto;
+		padding: 3em 4em;
+		box-shadow: 7px 7px 12px 0px rgba(153, 153, 153, 1);
+	}
+
+	#sidebar {
+		max-width: 160px;
+		border-right: 1px solid lightgray;
+		border-bottom: 0;
+	}
 }

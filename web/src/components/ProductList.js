@@ -277,14 +277,16 @@ function ProductList({ filteredProducts, onEditedProductSubmit, deleteProduct })
 															{product.image ? (
 																<img
 																	src={product.image}
-																	style={{ width: "100%" }}
+                                                   style={{ width: "100%" }}
+                                                   alt="product"
 																/>
 															) : (
 																<img
 																	src={noImage}
 																	width={200}
 																	height={150}
-																	className="mx-auto"
+                                                   className="mx-auto"
+                                                   alt="no-product"                                                   
 																/>
 															)}
 														</div>

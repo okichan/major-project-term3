@@ -40,7 +40,7 @@ function CustomerTrafficForm({ onChange }) {
               </select>
             </div>
             <div className="form-check">
-              <label for="chefSelect">Is chef?</label>
+              <label htmlFor="chefSelect">Is chef?</label>
               <select className="form-control" id="chefSelect">
                 <option value={"unknown"}>I don't know</option>
                 <option value={"true"}>Yes</option>
@@ -48,11 +48,11 @@ function CustomerTrafficForm({ onChange }) {
               </select>
             </div>
             <div className="form-check mb-3">
-              <label for="originSelect">Customers origin</label>
+              <label htmlFor="originSelect">Customers origin</label>
               <select className="form-control" id="originSelect">
                 {Object.keys(originObject).map(originkey => {
                   return (
-                    <option value={originkey}>{originObject[originkey]}</option>
+                    <option value={originkey} key={originkey}>{originObject[originkey]}</option>
                   );
                 })}
               </select>
