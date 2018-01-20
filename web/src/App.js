@@ -415,7 +415,7 @@ class App extends Component {
         this.setState(prevState => {
           // Replace in existing products array
           const updatedSales = prevState.sales.map(sale => {
-            if (sale._id === updatedsale._id) {
+            if (sale._id === updatedSale._id) {
               return updatedSale;
             } else {
               return sale;
