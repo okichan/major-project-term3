@@ -408,6 +408,29 @@ class App extends Component {
       });
   };
 
+  onEditSale = data => {
+    updateSale(data._id, data)
+      .then(updatedSale => {
+        window.location.href = "/sales";
+        this.setState(prevState => {
+          // Replace in existing products array
+          const updatedSales = prevState.sales.map(sale => {
+            if (sale._id === updatedsale._id) {
+              return updatedSale;
+            } else {
+              return sale;
+            }
+          });
+          return {
+            sales: updatedSales
+          };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
   // onChange function for saleForm.js select menu
   onChangeTitle = title => {
     const { products } = this.state;
@@ -497,6 +520,10 @@ class App extends Component {
 
   capitalizeWord(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+
+  sortByDate(a, b) {
+    return new Date(b.date) - new Date(a.date);
   }
 
   render() {
@@ -741,8 +768,10 @@ class App extends Component {
                         <SaleList
                           multiplyNumbers={this.multiplyNumbers}
                           capitalizeWord={this.capitalizeWord}
+                          sortByDate={this.sortByDate}
                           sales={sales}
                           deleteSale={this.onDeleteSale}
+                          editSale={this.onEditSale}
                         />
                       </Fragment>
                     ))}
