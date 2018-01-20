@@ -495,6 +495,10 @@ class App extends Component {
     return numberOne * numberTwo;
   }
 
+  capitalizeWord(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+
   render() {
     const {
       error,
@@ -735,8 +739,9 @@ class App extends Component {
                       <Fragment>
                         <LinkButton href="/new-sales" name="sale" />
                         <SaleList
-                          sales={sales}
                           multiplyNumbers={this.multiplyNumbers}
+                          capitalizeWord={this.capitalizeWord}
+                          sales={sales}
                           deleteSale={this.onDeleteSale}
                         />
                       </Fragment>

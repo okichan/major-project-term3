@@ -1,7 +1,13 @@
 import React, { Fragment } from "react";
 import SalesFormEdit from "./SalesFormEdit";
 
-function SaleList({ sales, deleteSale, editSale, multiplyNumbers }) {
+function SaleList({
+  sales,
+  deleteSale,
+  editSale,
+  multiplyNumbers,
+  capitalizeWord
+}) {
   return (
     <div className="col ">
       <h2 className="text-center mb-4">Sales</h2>
@@ -12,7 +18,7 @@ function SaleList({ sales, deleteSale, editSale, multiplyNumbers }) {
               <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Total</th>
-                <th scope="col">At</th>
+                <th scope="col">Location</th>
                 <th scope="col">Operator</th>
                 <th scope="col">Customer</th>
                 <th scope="col">Options</th>
@@ -65,7 +71,7 @@ function SaleList({ sales, deleteSale, editSale, multiplyNumbers }) {
                         aria-expanded="false"
                         aria-controls="collapseExample"
                       >
-                        {sale.type}
+                        {capitalizeWord(sale.type)}
                       </td>
                       <td
                         data-toggle="collapse"
