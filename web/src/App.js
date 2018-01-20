@@ -16,6 +16,7 @@ import ProductFilter from "./components/ProductFilter";
 import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
 import SaleList from "./components/SaleList";
+import SalesFormTomomiTest from "./components/SalesFormTomomiTest";
 
 import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
@@ -34,8 +35,8 @@ import { getDecodedToken } from "./api/token";
 import {
   listSales,
   createSale,
-  updateSale,
   deleteSale,
+  updateSale,
   dailySales,
   monthRangeSales
 } from "./api/sales";
@@ -65,6 +66,7 @@ import {
   updateNotifications,
   deleteNotifications
 } from "./api/notifications";
+import axios from "axios";
 import moment from "moment";
 
 class App extends Component {
@@ -83,7 +85,46 @@ class App extends Component {
     dailyCustomerTraffics: null,
     customerTraffics: null,
     pieChartChefData: null,
-    pieChartOriginData: null
+    pieChartOriginData: null,
+    weekRangeChef: 10,
+    weekRangeOrigin: 10,
+    weekRangeKnife: 10,
+    weekRangeSharp: 10,
+    chosenImage: null
+  };
+
+  // for image uploading
+  handleDrop = files => {
+    // Push all the axios request promise into a single array
+    const uploaders = files.map(file => {
+      // Initial FormData
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("tags", `codeinfuse, medium, gist`);
+      formData.append("upload_preset", "drfrsbsl"); // Replace the preset name with your own
+      formData.append("api_key", "921677816388229"); // Replace API key with your own Cloudinary key
+      formData.append("timestamp", (Date.now() / 1000) | 0);
+
+      // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
+      return axios
+        .post(
+          "https://api.cloudinary.com/v1_1/dbbim9cy0/image/upload",
+          formData,
+          {
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+          }
+        )
+        .then(response => {
+          const data = response.data;
+          const fileURL = data.secure_url; // You should store this URL for future references in your app
+          this.setState({ chosenImage: fileURL });
+        });
+    });
+
+    // Once all the files are uploaded
+    axios.all(uploaders).then(() => {
+      // ... perform after upload is successful operation
+    });
   };
 
   getPieChartChefData = () => {
@@ -248,6 +289,7 @@ class App extends Component {
   onCreateProduct = productData => {
     createProduct(productData)
       .then(newProduct => {
+        window.location.href = "/products";
         this.setState(prevState => {
           // Append to existing products array
           const updatedProducts = prevState.products.concat(newProduct);
@@ -272,8 +314,9 @@ class App extends Component {
   };
 
   onEditProduct = data => {
-    updateProduct(data.id, data)
+    updateProduct(data._id, data)
       .then(updatedProduct => {
+        window.location.href = "/products";
         this.setState(prevState => {
           // Replace in existing products array
           const updatedProducts = prevState.products.map(product => {
@@ -294,18 +337,21 @@ class App extends Component {
   };
 
   onProductFilter = query => {
-    listFilteredProducts(query)
-      .then(products => {
-        this.setState({ filteredProducts: products });
-      })
-      .catch(error => {
-        alert(`No product found in category "${query}"!`);
-      });
+    const matchProducts = this.state.products.filter(product => {
+      return product.category === query;
+    });
+    if (query !== "") {
+      this.setState({ filteredProducts: matchProducts });
+    } else {
+      this.setState({ filteredProducts: this.state.products });
+    }
   };
 
   onCreateCustomer = customerData => {
+    console.log(customerData);
     createCustomer(customerData)
       .then(newCustomer => {
+        window.location.href = "/customers";
         this.setState(prevState => {
           // Append to existing customers array
           const updatedCustomers = prevState.customers.concat(newCustomer);
@@ -319,19 +365,31 @@ class App extends Component {
       });
   };
 
-  onEditSale = data => {
-    updateSale(data.id, data)
-      .then(updatedSale => {
+  onDeleteCustomer = id => {
+    deleteCustomer(id)
+      .then(customer => {
+        this.load();
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  onEditCustomer = data => {
+    updateCustomer(data._id, data)
+      .then(updatedCustomer => {
+        window.location.href = "/customers";
         this.setState(prevState => {
-          const updatedSales = prevState.sales.map(sale => {
-            if (sale._id === updatedSale._id) {
-              return updatedSale;
+          // Replace in existing customers array
+          const updatedCustomer = prevState.customers.map(customer => {
+            if (customer._id === updatedCustomer._id) {
+              return updatedCustomer;
             } else {
-              return sale;
+              return customer;
             }
           });
           return {
-            sales: updatedSales
+            customers: updatedCustomer
           };
         });
       })
@@ -340,9 +398,9 @@ class App extends Component {
       });
   };
 
-  onDeleteCustomer = id => {
-    deleteCustomer(id)
-      .then(customer => {
+  onDeleteSale = id => {
+    deleteSale(id)
+      .then(sale => {
         this.load();
       })
       .catch(error => {
@@ -362,16 +420,6 @@ class App extends Component {
   onChangePrice = e => {
     const value = e.target.value;
     this.setState({ productPrice: value });
-  };
-
-  onDeleteSale = id => {
-    deleteSale(id)
-      .then(sale => {
-        this.load();
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
   };
 
   onClickDelete = () => {
@@ -406,8 +454,45 @@ class App extends Component {
     );
   };
 
-  multiplyNumbers(num1, num2) {
-    return num1 * num2;
+  onChageRange = (type, range) => {
+    this.setState({ ["weekRange" + type]: range });
+  };
+
+  // create customer Traffics
+  onCreateCustomerTraffics = data => {
+    createCustomerTraffics(data).then(newCustomerTraffic => {
+      this.setState(prevState => {
+        // Append to existing products array
+        const updatedProducts = prevState.customerTraffics.concat(
+          newCustomerTraffic
+        );
+        return {
+          customerTraffics: updatedProducts
+        };
+      });
+      this.getPieChartChefData();
+      this.getPieChartOriginData();
+      dailySales(this.state.date.format("YYYY-MM-DD"))
+        .then(dailySales => {
+          this.setState({ dailySales });
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
+
+      dailyCustomerTraffics(this.state.date.format("YYYY-MM-DD"))
+        .then(dailyCustomerTraffics => {
+          this.setState({ dailyCustomerTraffics });
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
+      alert("Add new customer traffic");
+    });
+  };
+
+  multiplyNumbers(one, two) {
+    return one * two;
   }
 
   render() {
@@ -427,7 +512,12 @@ class App extends Component {
       dailyCustomerTraffics,
       customerTraffics,
       pieChartChefData,
-      pieChartOriginData
+      pieChartOriginData,
+      weekRangeChef,
+      weekRangeOrigin,
+      weekRangeKnife,
+      weekRangeSharp,
+      chosenImage
     } = this.state;
     const signedIn = !!decodedToken;
 
@@ -459,7 +549,11 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        <Home />
+                        <Home
+                          onCreateCustomerTraffics={
+                            this.onCreateCustomerTraffics
+                          }
+                        />
                       </Fragment>
                     ))}
                   />
@@ -553,6 +647,8 @@ class App extends Component {
                           products={products}
                           submitTitle="Create Product"
                           onSubmit={this.onCreateProduct}
+                          chosenImage={chosenImage}
+                          onDrop={this.handleDrop}
                         />
                       </Fragment>
                     ))}
@@ -569,6 +665,12 @@ class App extends Component {
                         onChangePrice={this.onChangePrice}
                       />
                     ))}
+                  />
+
+                  <Route
+                    path="/new-sales-test"
+                    exact
+                    render={requireAuth(() => <SalesFormTomomiTest />)}
                   />
 
                   <Route
@@ -610,6 +712,11 @@ class App extends Component {
                           customerTraffics={customerTraffics}
                           pieChartChefData={pieChartChefData}
                           pieChartOriginData={pieChartOriginData}
+                          weekRangeChef={weekRangeChef}
+                          weekRangeOrigin={weekRangeOrigin}
+                          weekRangeKnife={weekRangeKnife}
+                          weekRangeSharp={weekRangeSharp}
+                          onChageRange={this.onChageRange}
                         />
                       </div>
                     ))}
@@ -626,12 +733,11 @@ class App extends Component {
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        <LinkButton href="/new-sales" name="Add Sale" />
+                        <LinkButton href="/new-sales" name="sale" />
                         <SaleList
                           sales={sales}
-                          editSale={this.onEditSale}
-                          deleteSale={this.onDeleteSale}
                           multiplyNumbers={this.multiplyNumbers}
+                          deleteSale={this.onDeleteSale}
                         />
                       </Fragment>
                     ))}
@@ -647,6 +753,7 @@ class App extends Component {
                           products={products}
                           customers={customers}
                           deleteCustomer={this.onDeleteCustomer}
+                          editCustomer={this.onEditCustomer}
                         />
                       </Fragment>
                     ))}
@@ -660,7 +767,7 @@ class App extends Component {
                         <CustomerForm
                           customers={customers}
                           submitTitle="Create Customer"
-                          onSubmit={this.onCreateProduct}
+                          onSubmit={this.onCreateCustomer}
                         />
                       </Fragment>
                     ))}

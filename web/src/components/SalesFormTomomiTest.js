@@ -95,7 +95,7 @@ class SalesFormTomomiTest extends Component {
       products.push(product);
     });
 
-    this.onCreateSale({ date, products, type, customer, totalPrice })
+    this.onCreateSale({ date, products, type, customer, totalPrice });
   }
 
   onCreateSale = customerData => {

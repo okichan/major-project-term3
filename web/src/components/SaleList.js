@@ -150,9 +150,8 @@ function SaleList({ sales, deleteSale, editSale, multiplyNumbers }) {
                               className="btn btn-danger"
                               onClick={() => {
                                 deleteSale(sale._id);
-                                window.location.href = "/sales";
-                                return false;
                               }}
+                              data-dismiss="modal"
                             >
                               Delete
                             </button>
@@ -220,8 +219,7 @@ function SaleList({ sales, deleteSale, editSale, multiplyNumbers }) {
                                       <td>{s.unitAmount}</td>
                                       <td>
                                         {multiplyNumbers(
-                                          s.product.price,
-                                          s.unitAmount
+                                          s.product.price * s.unitAmount
                                         )}
                                       </td>
                                     </tr>
