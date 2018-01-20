@@ -16,6 +16,7 @@ import ProductFilter from "./components/ProductFilter";
 import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
 import SaleList from "./components/SaleList";
+import SalesFormTomomiTest from "./components/SalesFormTomomiTest";
 
 import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
@@ -649,6 +650,14 @@ class App extends Component {
                         onChangePrice={this.onChangePrice}
                       />
                     ))}
+                  />
+                  
+                  <Route
+                     path="/new-sales-test"
+                     exact
+                     render={requireAuth(() => (
+                           <SalesFormTomomiTest />
+                     ))}
                   />
 
                   <Route
