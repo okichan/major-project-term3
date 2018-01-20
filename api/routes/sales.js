@@ -271,18 +271,94 @@ router.post("/sales", authMiddleware.requireJWT, (req, res) => {
 // Update
 router.put("/sale/:id", authMiddleware.requireJWT, (req, res) => {
   const { id } = req.params;
-  Sale.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
-    .then(sale => {
-      if (sale) {
-        res.json(sale);
-      } else {
-        res.status(404).json({
-          error: new Error(`Sale with id '${id}' not found`)
+  const updateData = req.body;
+
+  Sale.findById(id)
+    .then(originalSale => {
+      Sale.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+        .then(updatedSale => {
+          if (updatedSale) {
+            res.json(updatedSale);
+
+            //calculate the stock and totalSales for sales
+            updatedSale.products.forEach(updatedProductInfo => {
+              if (updatedProductInfo) {
+                // find each product for updateData
+                Product.findById(updatedProductInfo.product)
+                  .then(product => {
+                    if (
+                      originalSale.products.length < updatedSale.products.length
+                    ) {
+                      // find originalSale data to reset stock and totalSales
+                      const originalSaleProduct = originalSale.products.filter(
+                        saleProduct => {
+                          return `${saleProduct.product}` === `${product._id}`;
+                        }
+                      );
+
+                      if (originalSaleProduct.length !== 0) {
+                        // need to reset with original data
+                        const originalSaleAmount =
+                          originalSaleProduct[0].unitAmount;
+                        // set it as it used to be
+                        product.stock += originalSaleAmount;
+                        product.totalSales -= originalSaleAmount;
+                      }
+                      // reset not needed
+                      // calculate with new sale data
+                      product.stock -= updatedProductInfo.unitAmount;
+                      product.totalSales += updatedProductInfo.unitAmount;
+
+                      product.save();
+                    } else {
+                      // if something is deleted
+                      // find canceled products
+                      const cancelProducts = originalSale.products.filter(
+                        originalPro => {
+                          return `${product._id}` !== `${originalPro.product}`;
+                        }
+                      );
+                      cancelProducts.forEach(cancelProduct => {
+                        Product.findByIdAndUpdate(
+                          cancelProduct.product,
+                          {
+                            $inc: {
+                              stock: cancelProduct.unitAmount,
+                              totalSales: -cancelProduct.unitAmount
+                            }
+                          },
+                          { new: true }
+                        ).exec();
+                      });
+                    }
+                  })
+                  .catch(error => {
+                    res.status(404).json({
+                      error: new Error(
+                        `Sale with id '${
+                          updatedProductInfo.products
+                        }' not found`
+                      )
+                    });
+                  });
+              } else {
+                return;
+              }
+            });
+          } else {
+            res.status(404).json({
+              error: new Error(`Sale with id '${id}' not found`)
+            });
+          }
+        })
+        .catch(error => {
+          res.status(400).json({ error });
         });
-      }
     })
     .catch(error => {
-      res.status(400).json({ error });
+      res.status(404).json({
+        error: new Error(`Sale with id '${id}' not found`)
+      });
     });
 });
 
