@@ -195,7 +195,7 @@ function SaleList({ sales, deleteSale, editSale, multiplyNumbers }) {
                       </div>
                     </div>
 
-                    {/* collapse begin */}
+                    {/* Collapse sale begin */}
                     <tr>
                       <td colSpan="10" className="p-0">
                         <div className="collapse" id={sale._id}>
@@ -205,6 +205,7 @@ function SaleList({ sales, deleteSale, editSale, multiplyNumbers }) {
                                 <tr className="table-light">
                                   <th scope="col">Product Code</th>
                                   <th scope="col">Product</th>
+                                  <th scope="col">Price</th>
                                   <th scope="col">Quantity</th>
                                   <th scope="col">Total</th>
                                   <th />
@@ -216,10 +217,12 @@ function SaleList({ sales, deleteSale, editSale, multiplyNumbers }) {
                                     <tr>
                                       <th scope="row">{s.product.code}</th>
                                       <td>{s.product.title}</td>
+                                      <td>{s.product.price}</td>
                                       <td>{s.unitAmount}</td>
                                       <td>
                                         {multiplyNumbers(
-                                          s.product.price * s.unitAmount
+                                          s.product.price,
+                                          s.unitAmount
                                         )}
                                       </td>
                                     </tr>

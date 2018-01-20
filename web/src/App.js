@@ -491,8 +491,8 @@ class App extends Component {
     });
   };
 
-  multiplyNumbers(one, two) {
-    return one * two;
+  multiplyNumbers(numberOne, numberTwo) {
+    return numberOne * numberTwo;
   }
 
   render() {
