@@ -293,7 +293,27 @@ router.delete("/sale/:id", (req, res) => {
     .then(sale => {
       if (sale) {
         res.json({ message: `Sale ${sale._id} is deleted` });
+        // calculate stock and total sales
+        sale.products.forEach(productInfo => {
+          Product.findByIdAndUpdate(
+            productInfo && productInfo.product,
+            {
+              $inc: {
+                stock: productInfo.unitAmount,
+                totalSales: -productInfo.unitAmount
+              }
+            },
+            { new: true }
+          )
+            .then(data => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.error(error.message);
+            });
+        });
       } else {
+        // if sale not found
         res.status(404).json({ message: `could not find id with ${id}` });
       }
     })
