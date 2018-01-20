@@ -142,7 +142,9 @@ function SaleList({
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <div className="modal-body">...</div>
+                          <div className="modal-body">
+                            Are you sure you would like to delete this sale?
+                          </div>
                           <div className="modal-footer">
                             <button
                               type="button"
