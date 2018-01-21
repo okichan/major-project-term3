@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { listProducts } from "../api/products";
-import { listCustomers } from "../api/customers";
+import { listCustomers, createCustomer } from "../api/customers";
 import { createSale } from "../api/sales";
 import CustomerForm from "./CustomerForm";
 
@@ -20,11 +20,31 @@ class SalesFormV2 extends Component {
       products: null,
       customers: null,
       startDate: moment(),
-      newCustomer: false
+      newCustomer: false,
+      selectedCustomer: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
   }
+
+  onCreateCustomer = customerData => {
+    createCustomer(customerData)
+      .then(newCustomer => {
+        this.setState(prevState => {
+          // Append to existing customers array
+          const updatedCustomers = prevState.customers.concat(newCustomer);
+          return {
+            customers: updatedCustomers
+          };
+        });
+        this.setState({ selectedCustomer: newCustomer._id });
+        this.setState({ newCustomer: !this.state.newCustomer });
+        alert("Add new Customer");
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
 
   getTotalPrice() {
     const salePrices = this.state.productPrice.map((pro, index) => {
@@ -309,6 +329,11 @@ class SalesFormV2 extends Component {
                     name="phone"
                     required
                     className="form-control  col-sm-9 col-md-10"
+                    value={
+                      this.state.selectedCustomer
+                        ? this.state.selectedCustomer
+                        : ""
+                    }
                   >
                     <option value="" />
                     {customers.map(m => {
@@ -347,7 +372,11 @@ class SalesFormV2 extends Component {
             </form>
           )}
         {newCustomer && (
-          <CustomerForm customers={customers} submitTitle="Create Customer" />
+          <CustomerForm
+            customers={customers}
+            submitTitle="Create Customer"
+            onSubmit={this.onCreateCustomer}
+          />
         )}
       </Fragment>
     );
@@ -358,7 +387,6 @@ class SalesFormV2 extends Component {
       var sortedData = [].slice
         .call(products)
         .sort((x, y) => x.category.toUpperCase() > y.category.toUpperCase());
-      console.log(sortedData);
       this.setState({ products: sortedData });
     });
 
