@@ -522,8 +522,12 @@ class App extends Component {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   }
 
-  sortByDate(a, b) {
-    return new Date(b.date) - new Date(a.date);
+  sortByKey(array, key) {
+    return array.sort(function(a, b) {
+      var x = a[key];
+      var y = b[key];
+      return x < y ? 1 : x > y ? -1 : 0;
+    });
   }
 
   render() {
@@ -768,7 +772,7 @@ class App extends Component {
                         <SaleList
                           multiplyNumbers={this.multiplyNumbers}
                           capitalizeWord={this.capitalizeWord}
-                          sortByDate={this.sortByDate}
+                          sortByDate={this.sortByKey}
                           sales={sales}
                           deleteSale={this.onDeleteSale}
                           editSale={this.onEditSale}

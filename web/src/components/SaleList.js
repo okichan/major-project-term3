@@ -1,12 +1,14 @@
 import React, { Fragment } from "react";
 import SalesFormEdit from "./SalesFormEdit";
+import "datejs";
 
 function SaleList({
   sales,
   deleteSale,
   editSale,
   multiplyNumbers,
-  capitalizeWord
+  capitalizeWord,
+  sortByDate
 }) {
   return (
     <div className="col ">
@@ -24,24 +26,8 @@ function SaleList({
                 <th scope="col">Options</th>
               </tr>
             </thead>
-            {sales.map(sale => {
-              const days = [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-              ];
-              const day = days[new Date(sale.date).getDay()];
-              const date = `${day}, ${new Date(sale.date).toLocaleString(
-                "ja-JP",
-                {
-                  timeZone: "Australia/Melbourne"
-                }
-              )}`;
 
+            {sortByDate(sales, "date").map(sale => {
               return (
                 <Fragment key={sale._id}>
                   <tbody>
@@ -53,7 +39,7 @@ function SaleList({
                         aria-expanded="false"
                         aria-controls="collapseExample"
                       >
-                        {date}
+                        {Date.parse(sale.date).toString("dddd, MMMM dd, yyyy")}
                       </td>
                       <td
                         data-toggle="collapse"
