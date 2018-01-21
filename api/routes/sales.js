@@ -282,7 +282,7 @@ router.put("/sale/:id", authMiddleware.requireJWT, (req, res) => {
 
             //calculate the stock and totalSales for sales
             updatedSale.products.forEach(updatedProductInfo => {
-              if (updatedProductInfo) {
+              if (updatedProductInfo.product) {
                 // find each product for updateData
                 Product.findById(updatedProductInfo.product)
                   .then(product => {
@@ -315,7 +315,13 @@ router.put("/sale/:id", authMiddleware.requireJWT, (req, res) => {
                       // find canceled products
                       const cancelProducts = originalSale.products.filter(
                         originalPro => {
-                          return `${product._id}` !== `${originalPro.product}`;
+                          if (originalPro.product) {
+                            return (
+                              `${product._id}` !== `${originalPro.product}`
+                            );
+                          } else {
+                            return;
+                          }
                         }
                       );
                       cancelProducts.forEach(cancelProduct => {
