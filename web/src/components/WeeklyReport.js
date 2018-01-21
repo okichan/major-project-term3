@@ -22,7 +22,6 @@ import {
 
 // get weekly data(sales)
 function getWeeklySaleData(weekRange, salesData) {
-  console.log(salesData);
   // detect today's weekNumber
   const WeekBegin = moment().week();
 
