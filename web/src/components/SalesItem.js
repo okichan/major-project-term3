@@ -24,7 +24,11 @@ function SalesItem({
             }}
           >
             {products.map(m => {
-              if (saleId.products[itemNumber].product._id === m._id) {
+              if (
+                saleId.products[itemNumber].product
+                  ? saleId.products[itemNumber].product._id
+                  : null === m._id
+              ) {
                 return (
                   <option value={m._id} selected="selected">
                     {m.title}
@@ -47,7 +51,9 @@ function SalesItem({
               value={
                 productPrice
                   ? productPrice
-                  : saleId.products[itemNumber].product.price
+                  : saleId.products[itemNumber].product
+                    ? saleId.products[itemNumber].product.price
+                    : 0
               }
               type="number"
               onChange={e => {

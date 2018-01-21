@@ -221,7 +221,7 @@ function SaleList({
                               </thead>
                               <tbody>
                                 {sale.products.map(s => {
-                                  return (
+                                  return s.product ? (
                                     <tr>
                                       <th scope="row">{s.product.code}</th>
                                       <td>{s.product.title}</td>
@@ -233,6 +233,14 @@ function SaleList({
                                           s.unitAmount
                                         )}
                                       </td>
+                                    </tr>
+                                  ) : (
+                                    <tr>
+                                      <th scope="row">deleted</th>
+                                      <td>deleted</td>
+                                      <td>deleted</td>
+                                      <td>deleted</td>
+                                      <td>deleted</td>
                                     </tr>
                                   );
                                 })}
