@@ -11,7 +11,7 @@ import ProductFilter from "./components/ProductFilter";
 import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
 import SaleList from "./components/SaleList";
-import SalesFormTomomiTest from "./components/SalesFormTomomiTest";
+import SalesFormV2 from "./components/SalesFormV2";
 
 import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
@@ -695,7 +695,7 @@ class App extends Component {
 												<h1 className="text-center my-4">
 													New sales
 												</h1>
-												<SalesFormTomomiTest />
+												<SalesFormV2 />
 												{/* <SalesForm
 													products={products}
 													productPrice={productPrice}

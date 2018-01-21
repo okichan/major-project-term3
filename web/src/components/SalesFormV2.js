@@ -7,7 +7,7 @@ import CustomerForm from "./CustomerForm";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
-class SalesFormTomomiTest extends Component {
+class SalesFormV2 extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -355,4 +355,4 @@ class SalesFormTomomiTest extends Component {
 	}
 }
 
-export default SalesFormTomomiTest;
+export default SalesFormV2;
