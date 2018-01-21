@@ -171,6 +171,7 @@ class SalesFormV2 extends Component {
         const updateSalePrice = prevState.productPrice.splice(i, 1);
         const updateProductId = prevState.productID.splice(i, 1);
         const updateUnitAmount = prevState.unitAmount.splice(i, 1);
+        const updateFilteredProducts = prevState.filteredProducts.splice(i, 1);
       },
       () => {
         this.getTotalPrice();
