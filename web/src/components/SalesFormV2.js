@@ -3,6 +3,7 @@ import { listProducts } from "../api/products";
 import { listCustomers, createCustomer } from "../api/customers";
 import { createSale } from "../api/sales";
 import CustomerForm from "./CustomerForm";
+import ProductFilterForNewSale from "./ProductFilterForNewSale";
 
 import DatePicker from "react-datepicker";
 import moment from "moment";
@@ -21,11 +22,31 @@ class SalesFormV2 extends Component {
       customers: null,
       startDate: moment(),
       newCustomer: false,
-      selectedCustomer: null
+      selectedCustomer: null,
+      filteredProducts: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
   }
+
+  onProductFilter = (countKey, query) => {
+    const matchProducts = this.state.products.filter(product => {
+      return product.category === query;
+    });
+    if (query !== "") {
+      this.setState(prevState => {
+        const updatedProducts = prevState.filteredProducts;
+        updatedProducts[countKey] = matchProducts;
+        return { filteredProducts: updatedProducts };
+      });
+    } else {
+      this.setState(prevState => {
+        const updatedProducts = prevState.filteredProducts;
+        updatedProducts[countKey] = this.state.products;
+        return { filteredProducts: updatedProducts };
+      });
+    }
+  };
 
   onCreateCustomer = customerData => {
     createCustomer(customerData)
@@ -131,6 +152,11 @@ class SalesFormV2 extends Component {
     this.setState(prevState => {
       const updateUnitAmount = prevState.unitAmount.push("1");
     });
+    this.setState(prevState => {
+      const updateFilteredProducts = prevState.filteredProducts.push(
+        this.state.products
+      );
+    });
   }
 
   removeClick(i) {
@@ -145,6 +171,7 @@ class SalesFormV2 extends Component {
         const updateSalePrice = prevState.productPrice.splice(i, 1);
         const updateProductId = prevState.productID.splice(i, 1);
         const updateUnitAmount = prevState.unitAmount.splice(i, 1);
+        const updateFilteredProducts = prevState.filteredProducts.splice(i, 1);
       },
       () => {
         this.getTotalPrice();
@@ -159,6 +186,10 @@ class SalesFormV2 extends Component {
         <div key={i} className="form-row ">
           <div className="form-group col-10">
             <label>Product</label>
+            <ProductFilterForNewSale
+              prodCategory={this.onProductFilter}
+              countKey={i}
+            />
             <select
               onChange={this.handleChangeProduct.bind(this, i)}
               name="product"
@@ -166,7 +197,7 @@ class SalesFormV2 extends Component {
               required
             >
               <option value="" />
-              {this.state.products.map(product => {
+              {this.state.filteredProducts[i].map(product => {
                 return (
                   <option key={product._id} value={product._id}>
                     {product.category} - {product.title}
@@ -330,7 +361,11 @@ class SalesFormV2 extends Component {
                     name="phone"
                     required
                     className="form-control  col-sm-9 col-md-10"
-                    value={this.state.selectedCustomer}
+                    value={
+                      this.state.selectedCustomer
+                        ? this.state.selectedCustomer
+                        : undefined
+                    }
                     onChange={e => {
                       const id = e.target.value;
                       this.setState({ selectedCustomer: id });
@@ -385,6 +420,7 @@ class SalesFormV2 extends Component {
 
   load() {
     listProducts().then(products => {
+      this.setState({ products, filteredProducts: [products] });
       var sortedData = [].slice
         .call(products)
         .sort((x, y) => x.category.toUpperCase() > y.category.toUpperCase());
