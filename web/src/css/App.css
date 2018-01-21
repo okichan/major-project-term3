@@ -77,6 +77,12 @@ input[type='checkbox']:checked.notification-checkbox + label:before{/*checked ic
    content: "\f046";
 }
 
+/* Sales form "New Customer" invisible checkbox */
+input[type='checkbox']#create-new-customer + label:before,
+input[type='checkbox']#create-new-customer + label:after{
+   display: none;
+}
+
 .box-shadow {
 	box-shadow: 7px 7px 12px 0px rgba(153, 153, 153, 1);
 }

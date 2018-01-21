@@ -288,13 +288,13 @@ class SalesFormTomomiTest extends Component {
 							{/* <label className="form-check-label">Return</label> */}
 							{/* <hr /> */}
 
-							<div className="input-group">
-								<div className="input-group-prepend">
+							<div className="input-group ">
+								<div className="input-group-prepend ">
 									<i className="fa fa-user input-group-text" />
 									<select
 										name="phone"
 										required
-										className="form-control col-sm-9 col-md-10 "
+										className="form-control  col-sm-9 col-md-10"
 									>
 										<option value="" />
 										{customers.map(m => {
@@ -307,14 +307,20 @@ class SalesFormTomomiTest extends Component {
 											);
 										})}
 									</select>
+                           
 								</div>
-								<label>
-									<input
-										type="checkbox"
-										onClick={e => {
-											this.setState({ newCustomer: e.target.checked });
-										}}
-									/>
+								<input
+									type="checkbox"
+									onClick={e => {
+										this.setState({ newCustomer: e.target.checked });
+									}}
+									id="create-new-customer"
+									className="notification-checkbox sr-only"
+								/>
+								<label
+									htmlFor="create-new-customer"
+									className=" pointer text-info"
+								>
 									Create new
 								</label>
 							</div>
