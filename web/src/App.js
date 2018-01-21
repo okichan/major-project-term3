@@ -514,6 +514,10 @@ class App extends Component {
     });
   };
 
+  onImageReset = () => {
+    this.setState({ chosenImage: null });
+  };
+
   multiplyNumbers(numberOne, numberTwo) {
     return numberOne * numberTwo;
   }
@@ -664,6 +668,9 @@ class App extends Component {
                           filteredProducts={filteredProducts}
                           onEditedProductSubmit={this.onEditProduct}
                           deleteProduct={this.onDeleteProduct}
+                          chosenImage={chosenImage}
+                          onDrop={this.handleDrop}
+                          onImageReset={this.onImageReset}
                         />
                       </Fragment>
                     ))}
