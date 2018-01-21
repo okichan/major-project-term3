@@ -662,6 +662,7 @@ class App extends Component {
                     render={requireAuth(() => (
                       <Fragment>
                         <LinkButton href="/admin/products" name="product" />
+                        <h2 className="text-center mb-4">Products</h2>
                         <ProductFilter prodCategory={this.onProductFilter} />
                         <ProductList
                           filteredProducts={filteredProducts}

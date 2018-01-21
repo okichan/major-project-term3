@@ -15,7 +15,6 @@ const arr = [
 const ProductFilter = ({ prodCategory }) => {
   return (
     <Fragment>
-      <h2 className="text-center mb-4">Products</h2>
       <small>Filter by category:</small>
       <br />
       <div

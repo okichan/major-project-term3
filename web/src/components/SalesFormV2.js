@@ -205,8 +205,10 @@ class SalesFormV2 extends Component {
                 onClick={() => {
                   const updatedUnitAmount = this.state.unitAmount.slice();
                   updatedUnitAmount[i] =
-                    Number(updatedUnitAmount[i]) - Number(1);
-                  console.log(updatedUnitAmount);
+                    Number(updatedUnitAmount[i]) - 1 < 1
+                      ? 1
+                      : Number(updatedUnitAmount[i]) - 1;
+
                   this.setState({ unitAmount: updatedUnitAmount }, () => {
                     this.getTotalPrice();
                   });
@@ -229,7 +231,6 @@ class SalesFormV2 extends Component {
                   const updatedUnitAmount = this.state.unitAmount.slice();
                   updatedUnitAmount[i] =
                     Number(updatedUnitAmount[i]) + Number(1);
-                  console.log(updatedUnitAmount);
                   this.setState({ unitAmount: updatedUnitAmount }, () => {
                     this.getTotalPrice();
                   });
@@ -329,11 +330,7 @@ class SalesFormV2 extends Component {
                     name="phone"
                     required
                     className="form-control  col-sm-9 col-md-10"
-                    value={
-                      this.state.selectedCustomer
-                        ? this.state.selectedCustomer
-                        : ""
-                    }
+                    value={this.state.selectedCustomer}
                   >
                     <option value="" />
                     {customers.map(m => {
