@@ -102,7 +102,7 @@ class SalesFormV2 extends Component {
     const productPrice = this.state.productPrice; // array of productPrice
     const unitAmount = this.state.unitAmount; // array of unit unitAmount
     const type = elements.type.value; // store or online
-    const customer = elements.phone.value; // customer._id
+    const customer = this.state.selectedCustomer; // customer._id
     const totalPrice = this.state.totalPrice;
 
     const products = [];
@@ -331,6 +331,10 @@ class SalesFormV2 extends Component {
                     required
                     className="form-control  col-sm-9 col-md-10"
                     value={this.state.selectedCustomer}
+                    onChange={e => {
+                      const id = e.target.value;
+                      this.setState({ selectedCustomer: id });
+                    }}
                   >
                     <option value="" />
                     {customers.map(m => {
