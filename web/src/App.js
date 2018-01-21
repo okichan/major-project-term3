@@ -3,7 +3,12 @@ import "./css/App.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
 import "./css/SalesForm.css";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ProductList from "./components/ProductList";
@@ -28,38 +33,38 @@ import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import {
-	listSales,
-	createSale,
-	deleteSale,
-	updateSale,
-	dailySales,
-	monthRangeSales
+  listSales,
+  createSale,
+  deleteSale,
+  updateSale,
+  dailySales,
+  monthRangeSales
 } from "./api/sales";
 
 import {
-	dailyCustomerTraffics,
-	listCustomerTraffics,
-	createCustomerTraffics,
-	updateCustomerTraffic
+  dailyCustomerTraffics,
+  listCustomerTraffics,
+  createCustomerTraffics,
+  updateCustomerTraffic
 } from "./api/customerTraffics";
 
 import {
-	listProducts,
-	listFilteredProducts,
-	createProduct,
-	updateProduct,
-	deleteProduct
+  listProducts,
+  listFilteredProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct
 } from "./api/products";
 import {
-	listCustomers,
-	createCustomer,
-	updateCustomer,
-	deleteCustomer
+  listCustomers,
+  createCustomer,
+  updateCustomer,
+  deleteCustomer
 } from "./api/customers";
 import {
-	listNotifications,
-	updateNotifications,
-	deleteNotifications
+  listNotifications,
+  updateNotifications,
+  deleteNotifications
 } from "./api/notifications";
 import axios from "axios";
 import moment from "moment";
@@ -687,24 +692,22 @@ class App extends Component {
                     ))}
                   />
 
-<Route
-										path="/new-sales"
-										exact
-										render={requireAuth(() => (
-											<Fragment>
-												<h1 className="text-center my-4">
-													New sales
-												</h1>
-												<SalesFormV2 />
-												{/* <SalesForm
+                  <Route
+                    path="/new-sales"
+                    exact
+                    render={requireAuth(() => (
+                      <Fragment>
+                        <h1 className="text-center my-4">New sales</h1>
+                        <SalesFormV2 />
+                        {/* <SalesForm
 													products={products}
 													productPrice={productPrice}
 													onChangeTitle={this.onChangeTitle}
 													onChangePrice={this.onChangePrice}
 												/> */}
-											</Fragment>
-										))}
-									/>
+                      </Fragment>
+                    ))}
+                  />
 
                   <Route
                     path="/customertraffic"
@@ -865,7 +868,8 @@ class App extends Component {
       })
       .catch(saveError);
 
-    monthRangeSales(3)
+    // default a half year
+    monthRangeSales(6)
       .then(monthRangeSales => {
         this.setState({ monthRangeSales });
       })
