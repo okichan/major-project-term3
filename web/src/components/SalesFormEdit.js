@@ -360,7 +360,11 @@ class SalesFormEdit extends Component {
                       <select name="customer" className="form-control">
                         <option value="">Please select customer</option>
                         {customers.map(c => {
-                          if (this.props.saleId.customer._id === c._id) {
+                          if (
+                            this.props.saleId.customer
+                              ? this.props.saleId.customer._id
+                              : null === c._id
+                          ) {
                             return (
                               <option value={c._id} selected="selected">
                                 {c.firstName}
