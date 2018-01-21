@@ -35,12 +35,6 @@ class SalesFormTomomiTest extends Component {
 		});
 	}
 
-	handleChangeValue(i, event) {
-		let value = this.state.value.slice();
-		value[i] = event.target.value;
-		this.setState({ value });
-	}
-
 	handleChangeProduct(i, event) {
 		let productID = this.state.productID.slice();
 		productID[i] = event.target.value;
@@ -51,9 +45,11 @@ class SalesFormTomomiTest extends Component {
 			})[0];
 			productPrice[i] = !!product ? product.price : 0;
 
-			this.setState({ productPrice });
-		});
-	}
+      this.setState({ productPrice }, () => {
+        this.getTotalPrice();
+      });
+    });
+  }
 
 	handleChangeAmount(i, event) {
 		let unitAmount = this.state.unitAmount.slice();
