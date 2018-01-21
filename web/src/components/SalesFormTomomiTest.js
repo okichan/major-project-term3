@@ -49,7 +49,9 @@ class SalesFormTomomiTest extends Component {
       })[0];
       productPrice[i] = !!product ? product.price : 0;
 
-      this.setState({ productPrice });
+      this.setState({ productPrice }, () => {
+        this.getTotalPrice();
+      });
     });
   }
 
