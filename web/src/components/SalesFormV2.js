@@ -267,7 +267,7 @@ class SalesFormV2 extends Component {
               <div className="form-group">
                 <label>Date</label>
                 <DatePicker
-                  dateFormat="YYYY/MM/DD"
+                  dateFormat="YYYY-MM-DD"
                   selected={startDate}
                   onChange={this.handleChangeDate}
                   className="form-control"
