@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import SalesFormEdit from "./SalesFormEdit";
 import "datejs";
 
 function SaleList({
@@ -101,100 +100,100 @@ function SaleList({
                           data-toggle="modal"
                           data-target={`#modaldelete-${sale._id}`}
                         />
+                        {/* Delete modal */}
+                        <div
+                          className="modal fade"
+                          id={`modaldelete-${sale._id}`}
+                          tabIndex="-1"
+                          role="dialog"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModal">
+                                  {sale._id}
+                                </h5>
+                                <button
+                                  type="button"
+                                  className="close"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div className="modal-body">
+                                Are you sure you would like to delete this sale?
+                              </div>
+                              <div className="modal-footer">
+                                <button
+                                  type="button"
+                                  className="btn btn-secondary"
+                                  data-dismiss="modal"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn btn-danger"
+                                  onClick={() => {
+                                    deleteSale(sale._id);
+                                  }}
+                                  data-dismiss="modal"
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {/* Edit modal */}
+                        <div
+                          className={`modaledit-${
+                            sale._id
+                          }-modal-lg modal fade`}
+                          id={`modaledit-${sale._id}`}
+                          tabIndex="-1"
+                          role="dialog"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div
+                            className="modal-dialog modal-lg"
+                            role="document"
+                          >
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <h5
+                                  className="modal-title text-center"
+                                  id="exampleModalLabel"
+                                >
+                                  Edit Sale #{sale._id}{" "}
+                                  <small>{sale.date}</small>
+                                </h5>
+                                <button
+                                  type="button"
+                                  className="close"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div className="modal-body" />
+                            </div>
+                          </div>
+                        </div>
                       </td>
                     </tr>
-                    {/* Delete modal */}
-
-                    <div
-                      className="modal fade"
-                      id={`modaldelete-${sale._id}`}
-                      tabIndex="-1"
-                      role="dialog"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModal">
-                              {sale._id}
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            Are you sure you would like to delete this sale?
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              data-dismiss="modal"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-danger"
-                              onClick={() => {
-                                deleteSale(sale._id);
-                              }}
-                              data-dismiss="modal"
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Edit modal */}
-
-                    <div
-                      className={`modaledit-${sale._id}-modal-lg modal fade`}
-                      id={`modaledit-${sale._id}`}
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog modal-lg" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5
-                              class="modal-title text-center"
-                              id="exampleModalLabel"
-                            >
-                              Edit Sale #{sale._id} <small>{sale.date}</small>
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            <SalesFormEdit saleId={sale} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
                     {/* Collapse sale begin */}
                     <tr>
                       <td colSpan="10" className="p-0">
                         <div className="collapse" id={sale._id}>
                           <div className="card card-body m-3">
-                            <table class="table">
+                            <table className="table">
                               <thead>
                                 <tr className="table-light">
                                   <th scope="col">Product Code</th>
@@ -208,7 +207,7 @@ function SaleList({
                               <tbody>
                                 {sale.products.map(s => {
                                   return (
-                                    <tr>
+                                    <tr key={s._id}>
                                       <th scope="row">{s.product.code}</th>
                                       <td>{s.product.title}</td>
                                       <td>{s.product.price}</td>
