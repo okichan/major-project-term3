@@ -348,7 +348,6 @@ class App extends Component {
   };
 
   onCreateCustomer = customerData => {
-    console.log(customerData);
     createCustomer(customerData)
       .then(newCustomer => {
         window.location.href = "/customers";
