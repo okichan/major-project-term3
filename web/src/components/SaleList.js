@@ -208,13 +208,25 @@ function SaleList({
                                 {sale.products.map(s => {
                                   return (
                                     <tr key={s._id}>
-                                      <th scope="row">{s.product.code}</th>
-                                      <td>{s.product.title}</td>
-                                      <td>{s.product.price}</td>
-                                      <td>{s.unitAmount}</td>
+                                      <th scope="row">
+                                        {s.product ? s.product.code : "deleted"}
+                                      </th>
+                                      <td>
+                                        {s.product
+                                          ? s.product.title
+                                          : "deleted"}
+                                      </td>
+                                      <td>
+                                        {s.product
+                                          ? s.product.price
+                                          : "deleted"}
+                                      </td>
+                                      <td>
+                                        {s.product ? s.unitAmount : "deleted"}
+                                      </td>
                                       <td>
                                         {multiplyNumbers(
-                                          s.product.price,
+                                          s.product ? s.product.price : 0,
                                           s.unitAmount
                                         )}
                                       </td>
