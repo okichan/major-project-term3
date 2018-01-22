@@ -6,11 +6,17 @@ import CustomerTrafficForm from "./CustomerTrafficForm";
 function Home({ signedIn, onCreateCustomerTraffics }) {
   return (
     <div>
-      <CustomerTrafficForm onChange={onCreateCustomerTraffics} />
-      <hr />
-      <CurrencyConverter />
-      <hr />
-      <Weather />
+      <div className="component">
+        <CustomerTrafficForm onChange={onCreateCustomerTraffics} />
+        <hr />
+      </div>
+      <div className="component">
+        <CurrencyConverter />
+        <hr />
+      </div>
+      <div className="component">
+        <Weather />
+      </div>
     </div>
   );
 }
