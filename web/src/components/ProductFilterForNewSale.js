@@ -24,7 +24,7 @@ const ProductFilterForNewSale = ({ prodCategory, countKey }) => {
         {arr.map((pick, index) => {
           return (
             <label
-              className="btn btn-secondary btn-sm"
+              className="btn btn-primary btn-sm"
               id={pick}
               htmlFor="inlineRadio1"
               key={pick}
