@@ -53,7 +53,7 @@ function getWeeklySaleData(weekRange, salesData) {
 
   // put the sales data in the container created above
   for (var i = 0; i < salesData.length; i++) {
-    if (!weekNumberArr.includes(moment(salesData[i].date).week())) break;
+    if (!weekNumberArr.includes(moment(salesData[i].date).week())) continue;
     let key = `${moment(salesData[i].date)
       .startOf("week")
       .format("YYYY MMM DD")}`;
@@ -94,9 +94,10 @@ function getWeeklyCustomerData(weekRange, customerData) {
 
   // put the customer data in the container created above
   for (var i = 0; i < customerData.length; i++) {
-    if (!weekNumberArr.includes(moment(customerData[i].createdAt).week()))
-      break;
-    let key = `${moment(customerData[i].date)
+    if (!weekNumberArr.includes(moment(customerData[i].createdAt).week())) {
+      continue;
+    }
+    let key = `${moment(customerData[i].createdAt)
       .startOf("week")
       .format("YYYY MMM DD")}`;
     weeklyCustomerObject[key].push(customerData[i]);
@@ -406,6 +407,12 @@ function WeeklyReport({
       ).reverse()
     : null;
 
+  const customerOriginChart = customerTraffics
+    ? getWeeklyCustomerOriginData(
+        getWeeklyCustomerData(weekRangeOrigin, customerTraffics)
+      ).reverse()
+    : null;
+
   const saleTrendKnife = monthRangeSales
     ? saleTrendForKnife(
         getWeeklySaleData(weekRangeKnife, monthRangeSales)
@@ -415,12 +422,6 @@ function WeeklyReport({
   const saleTrendSharpening = monthRangeSales
     ? saleTrendForSharpening(
         getWeeklySaleData(weekRangeSharp, monthRangeSales)
-      ).reverse()
-    : null;
-
-  const customerOriginChart = customerTraffics
-    ? getWeeklyCustomerOriginData(
-        getWeeklySaleData(weekRangeOrigin, customerTraffics)
       ).reverse()
     : null;
 

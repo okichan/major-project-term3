@@ -1,10 +1,20 @@
 import React, { Fragment } from "react";
 import noImage from "../noImage.png";
+import Dropzone from "react-dropzone";
+const dropzoneStyle = {
+  width: "60%",
+  height: "20%",
+  border: "1px solid black",
+  position: "relative"
+};
 
 function ProductList({
   filteredProducts,
   onEditedProductSubmit,
-  deleteProduct
+  deleteProduct,
+  chosenImage,
+  onDrop,
+  onImageReset
 }) {
   return (
     <Fragment>
@@ -73,6 +83,7 @@ function ProductList({
                                   const title = elements.title.value;
                                   const price = elements.price.value;
                                   const stock = elements.stock.value;
+                                  const image = chosenImage;
 
                                   onEditedProductSubmit({
                                     _id,
@@ -80,7 +91,8 @@ function ProductList({
                                     category,
                                     title,
                                     price,
-                                    stock
+                                    stock,
+                                    image
                                   });
                                 }}
                               >
@@ -144,6 +156,37 @@ function ProductList({
                                     defaultValue={product.stock}
                                   />
                                 </div>
+                                <Dropzone
+                                  onDrop={onDrop}
+                                  multiple={false}
+                                  accept="image/*"
+                                  // style={dropzoneStyle}
+                                  className="form-control w-50 pointer pt-3 "
+                                >
+                                  {chosenImage ? (
+                                    <div>
+                                      <img
+                                        src={chosenImage}
+                                        height="125"
+                                        width="100%"
+                                        style={{ opacity: "0.6" }}
+                                      />
+                                    </div>
+                                  ) : (
+                                    <p className="text-muted text-center">
+                                      {product.image ? (
+                                        <img
+                                          src={product.image}
+                                          height="125"
+                                          width="100%"
+                                          style={{ opacity: "0.6" }}
+                                        />
+                                      ) : (
+                                        "Drop your file or click here to upload"
+                                      )}
+                                    </p>
+                                  )}
+                                </Dropzone>
                               </form>
                             </div>
                             <div className="modal-footer ">
@@ -256,6 +299,10 @@ function ProductList({
                         data-toggle="modal"
                         data-target={`#modal-${product.code}`}
                         title="Edit"
+                        onClick={() => {
+                          //reset chosenImage
+                          onImageReset();
+                        }}
                       />
 
                       {/* Delete button should only show if total sales is 0 */}

@@ -2,28 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 const dropzoneStyle = {
-	width: "60%",
-	height: "20%",
-	border: "1px solid black",
-	position: "relative"
+  width: "60%",
+  height: "20%",
+  border: "1px solid black",
+  position: "relative"
 };
 
 const categoryArray = [
-	"Wa-Bocho",
-	"Damascus",
-	"Carbon Steel",
-	"Inox Steel",
-	"SP Inox",
-	"Saya",
-	"Hayate",
-	"Stone",
-	"Sharpening"
+  "Wa-Bocho",
+  "Damascus",
+  "Carbon Steel",
+  "Inox Steel",
+  "SP Inox",
+  "Saya",
+  "Hayate",
+  "Stone",
+  "Sharpening"
 ];
 
 function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
-	const clear = () => {
-		document.getElementById("create-product").reset();
-	};
+  const clear = () => {
+    document.getElementById("create-product").reset();
+  };
 
 	return (
 		<div className="row ">
@@ -31,59 +31,61 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 			{products && (
 				<form
 					id="create-product"
-					className="col-md-7 mx-auto mb-5"
+					className="col-sm-8 mx-auto mb-5"
 					onSubmit={event => {
 						// Prevent old-school form submission
 						event.preventDefault();
 
-						const form = event.target;
-						const elements = form.elements; // Allows looking up fields using their 'name' attributes
+            const form = event.target;
+            const elements = form.elements; // Allows looking up fields using their 'name' attributes
 
-						// Get entered values from fields
-						const category = elements.category.value;
-						const code = elements.code.value;
-						const title = elements.title.value;
-						const price = elements.price.value;
-						const stock = elements.stock.value;
-						const image = chosenImage;
+            // Get entered values from fields
+            const category = elements.category.value;
+            const code = elements.code.value;
+            const title = elements.title.value;
+            const price = elements.price.value;
+            const stock = elements.stock.value;
+            const image = chosenImage;
 
-						// Pass this information along to the parent component
-						onSubmit({ category, code, title, price, stock, image });
-					}}
-				>
-					<div className="form-group">
-						<label htmlFor="knifeCategory">Category</label>
-						<select className="form-control" name="category">
-							{categoryArray.map((categoryArr, index) => {
-								return <option key={`productCate${index}`}>{categoryArr}</option>;
-							})}
-						</select>
-					</div>
-					<div className="form-group">
-						<label htmlFor="code">Code</label>
-						<input
-							type="text"
-							className="form-control"
-							name="code"
-							placeholder="e.g. 101012"
-							required
-						/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="knifeName">Name</label>
-						<input
-							type="text"
-							className="form-control"
-							name="title"
-							placeholder="e.g. 300MM YANAGIBA HAYATE (RIGHT HAND USE)"
-							required
-						/>
-					</div>
+            // Pass this information along to the parent component
+            onSubmit({ category, code, title, price, stock, image });
+          }}
+        >
+          <div className="form-group">
+            <label htmlFor="knifeCategory">Category</label>
+            <select className="form-control" name="category">
+              {categoryArray.map((categoryArr, index) => {
+                return (
+                  <option key={`productCate${index}`}>{categoryArr}</option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="code">Code</label>
+            <input
+              type="text"
+              className="form-control"
+              name="code"
+              placeholder="e.g. 101012"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="knifeName">Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="title"
+              placeholder="e.g. 300MM YANAGIBA HAYATE (RIGHT HAND USE)"
+              required
+            />
+          </div>
 
 					{/* RRP and amount same row begin */}
 					<div className="form-row">
 						{/* RRP */}
-						<div className="form-group col-md-4 ">
+						<div className="form-group col-4 col-md-3 ">
 							<label htmlFor="price">RRP</label>
 							<input
 								type="number"
@@ -93,9 +95,10 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 								required
 							/>
 						</div>
+						<div className="form-group col-md-8"/>
 
 						{/* amount */}
-						<div className="form-group col-md-3 ">
+						<div className="form-group col-6 col-sm-4 col-md-4 col-lg-3">
 							<label htmlFor="amount">Amount</label>
 							<div className="input-group">
 								<div className="input-group-prepend">
@@ -114,7 +117,7 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 								<input
 									id="amount"
 									name="stock"
-									type="text"
+									type="number"
 									className="form-control text-center"
 									defaultValue="1"
 								/>
@@ -136,45 +139,46 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 					</div>
 					{/* RRP and amount same row end */}
 
-					<label htmlFor="image">Image</label>
-					<Dropzone
-						onDrop={onDrop}
-						multiple={false}
-						accept="image/*"
-						// style={dropzoneStyle}
-						className="form-control w-50 pointer pt-3 "
-					>
-						{chosenImage ? (
-							<div>
-								<img
-									src={chosenImage}
-									height="125"
-									width="100%"
-									style={{ opacity: "0.6" }}
-								/>
-							</div>
-						) : (
-							<p className="text-muted text-center">
-								Drop your file or click here to upload
-							</p>
-						)}
-					</Dropzone>
+          <label htmlFor="image">Image</label>
 
-					<button className="btn btn-primary btn-lg float-right  my-3">
-						{submitTitle}
-					</button>
-					<button
-						className="btn btn-light btn-lg mr-2 float-right  my-3"
-						onClick={() => {
-							window.history.back();
-						}}
-					>
-						Cancel
-					</button>
-				</form>
-			)}
-		</div>
-	);
+          <Dropzone
+            onDrop={onDrop}
+            multiple={false}
+            accept="image/*"
+            // style={dropzoneStyle}
+            className="form-control w-50 pointer pt-3 "
+          >
+            {chosenImage ? (
+              <div>
+                <img
+                  src={chosenImage}
+                  height="125"
+                  width="100%"
+                  style={{ opacity: "0.6" }}
+                />
+              </div>
+            ) : (
+              <p className="text-muted text-center">
+                Drop your file or click here to upload
+              </p>
+            )}
+          </Dropzone>
+
+          <button className="btn btn-primary btn-lg float-right  my-3">
+            {submitTitle}
+          </button>
+          <button
+            className="btn btn-light btn-lg mr-2 float-right  my-3"
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            Cancel
+          </button>
+        </form>
+      )}
+    </div>
+  );
 }
 
 export default ProductForm;

@@ -16,7 +16,7 @@ import ProductFilter from "./components/ProductFilter";
 import ProductForm from "./components/ProductForm";
 import CustomerList from "./components/CustomerList";
 import SaleList from "./components/SaleList";
-import SalesFormTomomiTest from "./components/SalesFormTomomiTest";
+import SalesFormV2 from "./components/SalesFormV2";
 
 import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
@@ -348,7 +348,6 @@ class App extends Component {
   };
 
   onCreateCustomer = customerData => {
-    console.log(customerData);
     createCustomer(customerData)
       .then(newCustomer => {
         window.location.href = "/customers";
@@ -514,6 +513,10 @@ class App extends Component {
     });
   };
 
+  onImageReset = () => {
+    this.setState({ chosenImage: null });
+  };
+
   multiplyNumbers(numberOne, numberTwo) {
     return numberOne * numberTwo;
   }
@@ -663,11 +666,15 @@ class App extends Component {
                     render={requireAuth(() => (
                       <Fragment>
                         <LinkButton href="/admin/products" name="product" />
+                        <h2 className="text-center mb-4">Products</h2>
                         <ProductFilter prodCategory={this.onProductFilter} />
                         <ProductList
                           filteredProducts={filteredProducts}
                           onEditedProductSubmit={this.onEditProduct}
                           deleteProduct={this.onDeleteProduct}
+                          chosenImage={chosenImage}
+                          onDrop={this.handleDrop}
+                          onImageReset={this.onImageReset}
                         />
                       </Fragment>
                     ))}
@@ -693,19 +700,17 @@ class App extends Component {
                     path="/new-sales"
                     exact
                     render={requireAuth(() => (
-                      <SalesForm
-                        products={products}
-                        productPrice={productPrice}
-                        onChangeTitle={this.onChangeTitle}
-                        onChangePrice={this.onChangePrice}
-                      />
+                      <Fragment>
+                        <h1 className="text-center my-4">New sales</h1>
+                        <SalesFormV2 />
+                        {/* <SalesForm
+													products={products}
+													productPrice={productPrice}
+													onChangeTitle={this.onChangeTitle}
+													onChangePrice={this.onChangePrice}
+												/> */}
+                      </Fragment>
                     ))}
-                  />
-
-                  <Route
-                    path="/new-sales-test"
-                    exact
-                    render={requireAuth(() => <SalesFormTomomiTest />)}
                   />
 
                   <Route
@@ -867,7 +872,8 @@ class App extends Component {
       })
       .catch(saveError);
 
-    monthRangeSales(3)
+    // default a half year
+    monthRangeSales(6)
       .then(monthRangeSales => {
         this.setState({ monthRangeSales });
       })

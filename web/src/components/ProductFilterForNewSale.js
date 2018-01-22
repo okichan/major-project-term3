@@ -12,7 +12,7 @@ const arr = [
   "Sharpening"
 ];
 
-const ProductFilter = ({ prodCategory }) => {
+const ProductFilterForNewSale = ({ prodCategory, countKey }) => {
   return (
     <Fragment>
       <small>Filter by category:</small>
@@ -31,9 +31,9 @@ const ProductFilter = ({ prodCategory }) => {
               onClick={e => {
                 const category = e.target.id;
                 if (category !== "All") {
-                  prodCategory(category);
+                  prodCategory(countKey, category);
                 } else {
-                  prodCategory("");
+                  prodCategory(countKey, "");
                 }
               }}
             >
@@ -53,4 +53,4 @@ const ProductFilter = ({ prodCategory }) => {
   );
 };
 
-export default ProductFilter;
+export default ProductFilterForNewSale;
