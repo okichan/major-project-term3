@@ -159,6 +159,7 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
           </button>
           <button
             className="btn btn-light btn-lg mr-2 float-right"
+            type="button"
             onClick={() => {
               window.history.back();
             }}
