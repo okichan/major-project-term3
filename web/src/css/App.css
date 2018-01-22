@@ -23,7 +23,7 @@
 }
 
 .close {
-display: none;
+  display: none;
 }
 
 td a {
@@ -88,9 +88,9 @@ input[type="checkbox"]:checked.notification-checkbox + label:before {
 }
 
 /* Sales form "New Customer" invisible checkbox */
-input[type='checkbox']#create-new-customer + label:before,
-input[type='checkbox']#create-new-customer + label:after{
-   display: none;
+input[type="checkbox"]#create-new-customer + label:before,
+input[type="checkbox"]#create-new-customer + label:after {
+  display: none;
 }
 
 .box-shadow {
@@ -127,7 +127,6 @@ input[type='checkbox']#create-new-customer + label:after{
 
 #purchase-history {
   border: 1px dotted rgb(202, 202, 202);
-  background: rgb(245, 251, 255);
   border-radius: 0.3em;
   padding: 0.6em;
   max-height: 25vh;
@@ -188,4 +187,8 @@ input[type="range"]::-webkit-slider-thumb:active {
     border-right: 1px solid lightgray;
     border-bottom: 0;
   }
+}
+
+.component {
+  width: 50%;
 }

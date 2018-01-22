@@ -397,6 +397,14 @@ class App extends Component {
       });
   };
 
+  findProduct = id => {
+    const { products } = this.state;
+    var selectedProduct = products.filter(product => {
+      return product._id === id;
+    })[0];
+    return selectedProduct;
+  };
+
   onDeleteSale = id => {
     deleteSale(id)
       .then(sale => {
@@ -797,6 +805,9 @@ class App extends Component {
                           customers={customers}
                           deleteCustomer={this.onDeleteCustomer}
                           editCustomer={this.onEditCustomer}
+                          findProduct={this.findProduct}
+                          sortByKey={this.sortByKey}
+                          multiplyNumbers={this.multiplyNumbers}
                         />
                       </Fragment>
                     ))}
