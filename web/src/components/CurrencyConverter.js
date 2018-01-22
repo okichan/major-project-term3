@@ -28,7 +28,7 @@ class CurrencyConverter extends Component {
           {!!currency ? (
             <Fragment>
               <h3>Currency</h3>
-              <div className="form-inline text-center">
+              <div className="row form-inline text-center">
                 <input
                   className="form-control w-25 mr-1"
                   value={enteredNumber}
@@ -41,23 +41,34 @@ class CurrencyConverter extends Component {
                 />
                 {invert ? (
                   <span>
-                    AUD = {(currency.JPY * enteredNumber).toFixed(2)} JPY
+                    AUD{" "}
+                    <i
+                      className="fa fa-exchange fa-1x mx-1 text-center"
+                      id="invert"
+                      aria-hidden="true"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.setState({ invert: !invert });
+                      }}
+                    />{" "}
+                    {(currency.JPY * enteredNumber).toFixed(2)} JPY
                   </span>
                 ) : (
                   <span>
-                    JPY = {(1 / currency.JPY * enteredNumber).toFixed(2)} AUS
+                    JPY{" "}
+                    <i
+                      className="fa fa-exchange fa-1x mx-1 text-center"
+                      id="invert"
+                      aria-hidden="true"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.setState({ invert: !invert });
+                      }}
+                    />{" "}
+                    {(1 / currency.JPY * enteredNumber).toFixed(2)} AUS
                   </span>
                 )}
               </div>
-              <i
-                className="fa fa-arrows-h fa-2x mx-1 text-center"
-                id="invert"
-                aria-hidden="true"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  this.setState({ invert: !invert });
-                }}
-              />
             </Fragment>
           ) : (
             <p>Loading...</p>
