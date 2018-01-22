@@ -26,6 +26,8 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 			<Fragment>
 				<h2 className="text-center m-3">Notification list</h2>
 				<div className="col-md-7 mx-auto">
+
+               {/* Delete button only comes up if notifications > 0 */}
 					{notifications.length > 0 ? (
 						<input
 							className="mb-0 btn btn-warning btn-sm"
@@ -36,12 +38,15 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 							}}
 						/>
 					) : (
-						<h5 className="text-center p-4 ">Yay! You're all caught up!</h5>
+						<h5 className="text-center p-4 ">
+							Yay! You're all caught up!
+						</h5>
 					)}
-
 					{notifications.map(notification => {
 						const chosenData =
-							notification.type === "stock" ? notification.product : notification.sale;
+							notification.type === "stock"
+								? notification.product
+								: notification.sale;
 						return (
 							<div>
 								{notification.type === "stock" ? (
@@ -57,10 +62,15 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 												const judge = e.target.checked;
 												console.log(judge);
 
-												onClickToggle(notification._id, { checked: judge });
+												onClickToggle(notification._id, {
+													checked: judge
+												});
 											}}
 										/>
-										<label className="col" htmlFor={`check${notification._id}`}>
+										<label
+											className="col"
+											htmlFor={`check${notification._id}`}
+										>
 											<strong>
 												<a
 													href={`#${notification._id}`}
@@ -69,7 +79,10 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 													aria-expanded="false"
 													aria-controls="showdetails"
 												>
-													{createNotificationsBody(notification.type, chosenData)}
+													{createNotificationsBody(
+														notification.type,
+														chosenData
+													)}
 												</a>
 											</strong>
 											<br />
@@ -77,16 +90,22 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 										</label>
 										{/* begin detail */}
 										{notification.product && (
-											<div className="col-12 collapse " id={notification._id}>
-												<p className="m-0 p-0">Code: {notification.product["code"]}</p>
+											<div
+												className="col-12 collapse "
+												id={notification._id}
+											>
 												<p className="m-0 p-0">
-													Price: {notification.product["stock"]}
+													Code: {notification.product["code"]}
+												</p>
+												<p className="m-0 p-0">
+													Price: {notification.product["price"]}
 												</p>
 												<p className="m-0 p-0">
 													Stock: {notification.product["stock"]}
 												</p>
 												<p className="m-0 p-0">
-													Total sales: {notification.product["totalSales"]}
+													Total sales:{" "}
+													{notification.product["totalSales"]}
 												</p>
 											</div>
 										)}
@@ -104,10 +123,15 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 											onClick={e => {
 												const judge = e.target.checked;
 
-												onClickToggle(notification._id, { checked: judge });
+												onClickToggle(notification._id, {
+													checked: judge
+												});
 											}}
 										/>
-										<label className="col-10" htmlFor={`check${notification._id}`}>
+										<label
+											className="col-10"
+											htmlFor={`check${notification._id}`}
+										>
 											More than 80 days have passed since{" "}
 											<strong>
 												<a
@@ -117,22 +141,32 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
 													aria-expanded="false"
 													aria-controls="showdetails"
 												>
-													{createNotificationsBody(notification.type, chosenData)}
+													{createNotificationsBody(
+														notification.type,
+														chosenData
+													)}
 												</a>
 											</strong>{" "}
-											last purchased knife(s). Please send a sharpening reminder.
+											last purchased knife(s). Please send a
+											sharpening reminder.
 										</label>
 										{/* begin detail */}
 										{notification.sale.customer && (
-											<div className="col-12 collapse" id={notification._id}>
+											<div
+												className="col-12 collapse"
+												id={notification._id}
+											>
 												<p className="m-0 p-0">
-													Gender: {notification.sale.customer["gender"]}
+													Gender:{" "}
+													{notification.sale.customer["gender"]}
 												</p>
 												<p className="m-0 p-0">
-													Phone: {notification.sale.customer["phone"]}
+													Phone:{" "}
+													{notification.sale.customer["phone"]}
 												</p>
 												<p className="m-0 p-0">
-													Notes: {notification.sale.customer["note"]}
+													Notes:{" "}
+													{notification.sale.customer["note"]}
 												</p>
 											</div>
 										)}
