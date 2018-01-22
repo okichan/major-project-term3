@@ -61,6 +61,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
                     className="nav-link"
                     title="Logout"
                     onClick={signOut}
+                    data-dismiss="modal"
                   >
                     <i className="fa fa-sign-out big" />
                   </Link>

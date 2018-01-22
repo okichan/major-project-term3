@@ -130,10 +130,16 @@ router.get("/sales", (req, res) => {
       });
   } else if (monthRange) {
     // weekly data
-    let periodDate = new Date();
+    const today = moment
+      .utc()
+      .add(11, "hours")
+      .toDate();
+
+    let periodDate = today;
     periodDate.setMonth(periodDate.getMonth() - monthRange);
+
     // find the data between today to periodDate
-    Sale.find({ date: { $gte: periodDate, $lt: new Date() } })
+    Sale.find({ date: { $gte: periodDate } })
       .populate("products.product")
       .populate("customer")
       .populate("inCharge")
