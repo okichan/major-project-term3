@@ -83,7 +83,7 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
                           Code: {notification.product["code"]}
                         </p>
                         <p className="m-0 p-0">
-                          Price: {notification.product["stock"]}
+                          Price: {notification.product["price"]}
                         </p>
                         <p className="m-0 p-0">
                           Stock: {notification.product["stock"]}
