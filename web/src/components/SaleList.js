@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import "datejs";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
@@ -43,9 +42,17 @@ function SaleList({
 													aria-expanded="false"
 													aria-controls="collapseExample"
 												>
-													{Date.parse(sale.date).toString("dddd, MMMM dd, yyyy")}
+                                       {moment(sale.date).format('YYYY-MM-DD')}
 												</td>
-												<td>{sale.weather.description}</td>
+												<td
+													data-toggle="collapse"
+													data-target={`#${sale._id}`}
+													role="button"
+													aria-expanded="false"
+													aria-controls="collapseExample"
+												>
+													{sale.weather.description}
+												</td>
 												<td
 													data-toggle="collapse"
 													data-target={`#${sale._id}`}
@@ -159,7 +166,7 @@ function SaleList({
 												</td>
 											</tr>
 
-											<tr className="test">
+											{/* <tr className="test">
 												<td className="test w-100">
 													<form
 														onSubmit={event => {
@@ -202,8 +209,8 @@ function SaleList({
 															defaultValue={sale._id}
 														/>{" "}
 														<br />
-														date:{" "}
-														{/* <DatePicker
+														date:{" "} */}
+											{/* <DatePicker
 															dateFormat="YYYY-MM-DD"
 															selected={moment(sale.date)}
 															onChange={() => console.log(this.value)}
@@ -211,7 +218,7 @@ function SaleList({
 															name="date"
 															id="sale-edit-date"
 														/> */}
-                                          <input type="date" defaultValue={moment(sale.date).format('YYYY-MM-DD')}
+											{/* <input type="date" defaultValue={moment(sale.date).format('YYYY-MM-DD')}
                                           name="date"/>
 														<br />
 														location: store:{" "}
@@ -284,7 +291,7 @@ function SaleList({
 														<button>Save changes</button>
 													</form>
 												</td>
-											</tr>
+											</tr> */}
 
 											{/* Collapse sale begin */}
 											<tr>
