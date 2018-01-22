@@ -434,10 +434,9 @@ function CustomerList({
                               <p>
                                 Registered:{" "}
                                 {Date.parse(customer.registerDate).toString(
-                                  "dddd, MMMM dd, yyyy"
+                                  "yyyy-MM-dd"
                                 )}
                               </p>
-                              <p>customer id (TEST): {customer._id}</p>
                               <p>
                                 Email:{" "}
                                 {customer.email ? customer.email : "(unknown)"}
@@ -455,62 +454,63 @@ function CustomerList({
                             <h5 className="col-12">Purchase History:</h5>
                           </div>
                           <div id="purchase-history">
-                            {sortByKey(customer.purchasedHistory, "date").map(
-                              sale => {
-                                return (
-                                  <div className="m-2" key={sale._id}>
-                                    {Date.parse(sale.date).toString(
-                                      "dddd, MMMM dd, yyyy"
-                                    )}
-                                    <table class="table table-sm">
-                                      <thead>
-                                        <tr>
-                                          <th scope="col">#</th>
-                                          <th scope="col">Product</th>
-                                          <th scope="col">Quantity</th>
-                                          <th scope="col">Price</th>
-                                          <th scope="col">Total</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {sale.products.map(product => {
-                                          return (
-                                            <tr>
-                                              <th scope="row">
-                                                {
-                                                  findProduct(product.product)
-                                                    .code
-                                                }
-                                              </th>
-                                              <td className="col">
-                                                {
-                                                  findProduct(product.product)
-                                                    .title
-                                                }
-                                              </td>
-                                              <td>{product.unitAmount}</td>
-                                              <td>
-                                                {
-                                                  findProduct(product.product)
-                                                    .price
-                                                }
-                                              </td>
-                                              <td>
-                                                {multiplyNumbers(
-                                                  findProduct(product.product)
-                                                    .price,
-                                                  product.unitAmount
-                                                )}
-                                              </td>
-                                            </tr>
-                                          );
-                                        })}
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                );
-                              }
-                            )}
+                            <table className="table table-sm">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Product</th>
+                                  <th scope="col">Quantity</th>
+                                  <th scope="col">Price</th>
+                                  <th scope="col">Total</th>
+                                </tr>
+                              </thead>
+                              {sortByKey(customer.purchasedHistory, "date").map(
+                                sale => {
+                                  return (
+                                    <tbody key={sale._id}>
+                                      {sale.products.map(product => {
+                                        return (
+                                          <tr key={product._id}>
+                                            <th scope="row">
+                                              {Date.parse(sale.date).toString(
+                                                "yyyy-MM-dd"
+                                              )}
+                                            </th>
+                                            <td>
+                                              {
+                                                findProduct(product.product)
+                                                  .code
+                                              }
+                                            </td>
+                                            <td>
+                                              {
+                                                findProduct(product.product)
+                                                  .title
+                                              }
+                                            </td>
+                                            <td>{product.unitAmount}</td>
+                                            <td>
+                                              {
+                                                findProduct(product.product)
+                                                  .price
+                                              }
+                                            </td>
+                                            <td>
+                                              {multiplyNumbers(
+                                                findProduct(product.product)
+                                                  .price,
+                                                product.unitAmount
+                                              )}
+                                            </td>
+                                          </tr>
+                                        );
+                                      })}
+                                    </tbody>
+                                  );
+                                }
+                              )}
+                            </table>
                           </div>
                         </div>
                       </div>
