@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import "./css/App.css";
 import "./css/CustomerTraffic.css";
 import "./css/CustomerTrafficForm.css";
-import "./css/SalesForm.css";
+// import "./css/SalesForm.css";
 import {
   BrowserRouter as Router,
   Switch,
@@ -416,6 +416,7 @@ class App extends Component {
   };
 
   onEditSale = data => {
+     debugger
     updateSale(data._id, data)
       .then(updatedSale => {
         window.location.href = "/sales";
@@ -788,6 +789,7 @@ class App extends Component {
                           capitalizeWord={this.capitalizeWord}
                           sortByDate={this.sortByKey}
                           sales={sales}
+                          customers={customers}
                           deleteSale={this.onDeleteSale}
                           editSale={this.onEditSale}
                         />

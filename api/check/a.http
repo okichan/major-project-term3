@@ -130,15 +130,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lb
 Content-Type: application/json
 
 ### Edit Sale
-PUT http://localhost:7000/sale/5a656548e1fe093180297571
+PUT http://localhost:7000/sale/5a65f03515b3c830b86fb0d8
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
-{
-   "products": [{"product": "5a636eddd0cee30d18b48b74", "salePrice": "111", "unitAmount": "1"},
-   {"product": "5a636eefd0cee30d18b48b75", "salePrice": "222", "unitAmount": "2"},
+{  "customer": "5a61322d773bab1d041a80d9",
+    "date": "2018-12-25",
+    "type": "store",
+    "totalPrice": 1980
+}
+
+### 
+ "products": [{"product": "5a636eddd0cee30d18b48b74", "salePrice": "111", "unitAmount": "1"},
+   {"product": "5a636eefd0cee30d18b48b75", "salePrice": "666", "unitAmount": "2"},
    {"product": "5a636f02d0cee30d18b48b76", "salePrice": "333", "unitAmount": "3"},
    {"product": "5a636f31d0cee30d18b48b77", "salePrice": "444", "unitAmount": "4"},
    {"product": "5a636f4cd0cee30d18b48b78", "salePrice": "555", "unitAmount": "5"}
-    ]
-}
+    ],
