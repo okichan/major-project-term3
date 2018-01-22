@@ -1,6 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdHJpY2suc21pdGhAY29kZXJhY2FkZW15LmVkdS5hdSIsImlhdCI6MTUxNTg1MDI1MywiZXhwIjoxNTE2NDU1MDUzLCJzdWIiOiI1YTI3NzYyMzhmZjE3ODA1MDRiMWQxOTAifQ.9vAto6y4DTXMtTvPfqPbnXPr02wbBiBZ3Bn7t7CLrFs
-
-# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE1MTYyNTYxMDMsImV4cCI6MTUxNjg2MDkwMywic3ViIjoiNWE2MDFlOGEyMTAxYWYwMDc4ZDc5M2ZkIn0.7VwReJeNxt9aAhdzIeXBSBtJ1MbDKsrtv683Hvwy5Vg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9raTEwQG9raS5jb20iLCJpYXQiOjE1MTY1OTg4MjQsImV4cCI6MTUxNzIwMzYyNCwic3ViIjoiNWE2MDI5NjZlODdlYjMzZGE4ZTRhZWZmIn0.29ZVlM0I71gOtjFOLqFUIhcmKGuRC7BOKIRgPcTW8OE
 
 ### Sign in
 POST https://tanto-api.now.sh/auth
@@ -11,11 +9,11 @@ Content-Type: application/json
   "password": "12345"
 }
 ### Sign in
-POST https://localhost:7000/auth
+POST http://localhost:7000/auth
 Content-Type: application/json
 
 {
-  "email": "oki4@oki.com",
+  "email": "oki10@oki.com",
   "password": "123123"
 }
 
@@ -79,7 +77,7 @@ Content-Type: application/json
 
 ### Read customer
 GET http://localhost:7000/customers
-Authorization: Bearer {{ token }}
+# Authorization: Bearer {{ token }}
 
 ### Add new customer
 POST http://localhost:7000/customers
@@ -132,12 +130,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lb
 Content-Type: application/json
 
 ### Edit Sale
-PUT http://localhost:7000/sale/5a600ed02024b62c82d613b2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyNDU4NTAsImV4cCI6MTUxNjg1MDY1MCwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.ZmFs-VTCHsyDNc8iEG5AIzHe2Jlf-n05XKdTVcFa_cc
+PUT http://localhost:7000/sale/5a656548e1fe093180297571
+Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-   "products": [
-        {"product": "5a600e452024b62c82d613ad", "salePrice": "120", "unitAmount": "10"}
+   "products": [{"product": "5a636eddd0cee30d18b48b74", "salePrice": "111", "unitAmount": "1"},
+   {"product": "5a636eefd0cee30d18b48b75", "salePrice": "222", "unitAmount": "2"},
+   {"product": "5a636f02d0cee30d18b48b76", "salePrice": "333", "unitAmount": "3"},
+   {"product": "5a636f31d0cee30d18b48b77", "salePrice": "444", "unitAmount": "4"},
+   {"product": "5a636f4cd0cee30d18b48b78", "salePrice": "555", "unitAmount": "5"}
     ]
 }

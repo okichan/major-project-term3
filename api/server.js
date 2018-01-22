@@ -38,6 +38,6 @@ server.listen(7000, error => {
   if (error) {
     console.error("Error starting", error);
   } else {
-    console.log("Server started.");
+    console.log("Server started on port http://localhost:7000");
   }
 });
