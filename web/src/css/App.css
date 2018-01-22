@@ -189,6 +189,6 @@ input[type="range"]::-webkit-slider-thumb:active {
   }
 }
 
-.component {
-  width: 50%;
+#traffic {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 }

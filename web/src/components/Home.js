@@ -5,17 +5,16 @@ import CustomerTrafficForm from "./CustomerTrafficForm";
 
 function Home({ signedIn, onCreateCustomerTraffics }) {
   return (
-    <div>
-      <div className="component">
+    <div className="row mt-5">
+      <div className="col-lg-6" id="traffic">
         <CustomerTrafficForm onChange={onCreateCustomerTraffics} />
         <hr />
       </div>
-      <div className="component">
+      <div className="col-lg-6 float-right" id="">
         <CurrencyConverter />
         <hr />
-      </div>
-      <div className="component">
         <Weather />
+        <hr />
       </div>
     </div>
   );
