@@ -167,7 +167,7 @@ class App extends Component {
               "rgb(23, 214, 240)",
               "rgb(176, 210, 19)",
               "rgb(209, 47, 215)",
-              "rgb(238, 69, 23)",
+              "rgb(231, 126, 55)",
               "rgb(70, 0, 249)"
             ],
             data: chartData
@@ -915,8 +915,15 @@ class App extends Component {
 
   // When state changes
   componentDidUpdate(prevProps, prevState) {
+    if (this.state.error !== null) {
+      // reset error
+      setTimeout(() => {
+        this.setState({ error: null });
+      }, 4000);
+    }
     // If just signed in, signed up, or signed out,
     // then the token will have changed
+
     if (this.state.decodedToken !== prevState.decodedToken) {
       this.load();
     }

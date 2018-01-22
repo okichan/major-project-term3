@@ -3,7 +3,7 @@ import chef from "../chef.png";
 
 const customerOriginPicks = {
   Facebook: "SNS (Facebook, Twitter etc)",
-  OnlineSearch: "Online",
+  OnlineSearch: "Online search",
   Referral: "Family / Friend / Colleague",
   Newspaper: "Newspaper Article",
   WalkIn: "Walk In",

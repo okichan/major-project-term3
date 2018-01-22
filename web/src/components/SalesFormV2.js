@@ -95,9 +95,26 @@ class SalesFormV2 extends Component {
   handleChangeAmount(i, event) {
     let unitAmount = this.state.unitAmount.slice();
     unitAmount[i] = event.target.value;
-    this.setState({ unitAmount }, () => {
-      this.getTotalPrice();
-    });
+
+    if (this.state.productID[i]) {
+      //check if stock is ok
+      const correspondingProduct = this.state.products.filter(product => {
+        return this.state.productID[i] === product._id;
+      })[0];
+      if (Number(correspondingProduct.stock) < Number(unitAmount[i])) {
+        // stock validation failed
+        alert(
+          `Amount can not exceed ${correspondingProduct.title}'s stock (${
+            correspondingProduct.stock
+          })`
+        );
+      } else {
+        // stock validation passed
+        this.setState({ unitAmount }, () => {
+          this.getTotalPrice();
+        });
+      }
+    }
   }
 
   handleChangePrice(i, event) {
@@ -262,9 +279,30 @@ class SalesFormV2 extends Component {
                   const updatedUnitAmount = this.state.unitAmount.slice();
                   updatedUnitAmount[i] =
                     Number(updatedUnitAmount[i]) + Number(1);
-                  this.setState({ unitAmount: updatedUnitAmount }, () => {
-                    this.getTotalPrice();
-                  });
+                  if (this.state.productID[i]) {
+                    //check if stock is ok
+                    const correspondingProduct = this.state.products.filter(
+                      product => {
+                        return this.state.productID[i] === product._id;
+                      }
+                    )[0];
+                    if (
+                      Number(correspondingProduct.stock) <
+                      Number(updatedUnitAmount[i])
+                    ) {
+                      // stock validation failed
+                      alert(
+                        `Amount can not exceed ${
+                          correspondingProduct.title
+                        }'s stock (${correspondingProduct.stock})`
+                      );
+                    } else {
+                      // stock validation passed
+                      this.setState({ unitAmount: updatedUnitAmount }, () => {
+                        this.getTotalPrice();
+                      });
+                    }
+                  }
                 }}
               >
                 <i className="fa fa-plus input-group-text" />
