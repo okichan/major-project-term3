@@ -25,16 +25,16 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
     document.getElementById("create-product").reset();
   };
 
-	return (
-		<div className="row ">
-			<h1 className="col-12 text-center p-3">New Product</h1>
-			{products && (
-				<form
-					id="create-product"
-					className="col-sm-8 mx-auto mb-5"
-					onSubmit={event => {
-						// Prevent old-school form submission
-						event.preventDefault();
+  return (
+    <div className="row ">
+      <h1 className="col-12 text-center p-3">New Product</h1>
+      {products && (
+        <form
+          id="create-product"
+          className="col-sm-8 mx-auto mb-5"
+          onSubmit={event => {
+            // Prevent old-school form submission
+            event.preventDefault();
 
             const form = event.target;
             const elements = form.elements; // Allows looking up fields using their 'name' attributes
@@ -82,62 +82,62 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
             />
           </div>
 
-					{/* RRP and amount same row begin */}
-					<div className="form-row">
-						{/* RRP */}
-						<div className="form-group col-4 col-md-3 ">
-							<label htmlFor="price">RRP</label>
-							<input
-								type="number"
-								className="form-control"
-								name="price"
-								placeholder="e.g.100"
-								required
-							/>
-						</div>
-						<div className="form-group col-md-8"/>
+          {/* RRP and amount same row begin */}
+          <div className="form-row">
+            {/* RRP */}
+            <div className="form-group col-4 col-md-3 ">
+              <label htmlFor="price">RRP</label>
+              <input
+                type="number"
+                className="form-control"
+                name="price"
+                placeholder="e.g.100"
+                required
+              />
+            </div>
+            <div className="form-group col-md-8" />
 
-						{/* amount */}
-						<div className="form-group col-6 col-sm-4 col-md-4 col-lg-3">
-							<label htmlFor="amount">Amount</label>
-							<div className="input-group">
-								<div className="input-group-prepend">
-									<span
-										className="input-group-text pointer"
-										onClick={e => {
-											let amount = document.getElementById("amount");
-											if (/\d/.test(amount.value) && amount.value > 1) {
-												amount.value = Number(amount.value) - 1;
-											}
-										}}
-									>
-										<i className="fa fa-minus " />
-									</span>
-								</div>
-								<input
-									id="amount"
-									name="stock"
-									type="number"
-									className="form-control text-center"
-									defaultValue="1"
-								/>
-								<div className="input-group-append">
-									<span
-										className="input-group-text pointer"
-										onClick={e => {
-											let amount = document.getElementById("amount");
-											if (/\d/.test(amount.value)) {
-												amount.value = Number(amount.value) + 1;
-											}
-										}}
-									>
-										<i className="fa fa-plus " />
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					{/* RRP and amount same row end */}
+            {/* amount */}
+            <div className="form-group col-6 col-sm-4 col-md-4 col-lg-3">
+              <label htmlFor="amount">Amount</label>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span
+                    className="input-group-text pointer"
+                    onClick={e => {
+                      let amount = document.getElementById("amount");
+                      if (/\d/.test(amount.value) && amount.value > 1) {
+                        amount.value = Number(amount.value) - 1;
+                      }
+                    }}
+                  >
+                    <i className="fa fa-minus " />
+                  </span>
+                </div>
+                <input
+                  id="amount"
+                  name="stock"
+                  type="number"
+                  className="form-control text-center"
+                  defaultValue="1"
+                />
+                <div className="input-group-append">
+                  <span
+                    className="input-group-text pointer"
+                    onClick={e => {
+                      let amount = document.getElementById("amount");
+                      if (/\d/.test(amount.value)) {
+                        amount.value = Number(amount.value) + 1;
+                      }
+                    }}
+                  >
+                    <i className="fa fa-plus " />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* RRP and amount same row end */}
 
           <label htmlFor="image">Image</label>
 
@@ -169,6 +169,7 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
           </button>
           <button
             className="btn btn-light btn-lg mr-2 float-right  my-3"
+            type="button"
             onClick={() => {
               window.history.back();
             }}
