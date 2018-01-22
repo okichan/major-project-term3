@@ -22,8 +22,10 @@ import {
 
 // get weekly data(sales)
 function getWeeklySaleData(weekRange, salesData) {
+  console.log(new Date());
   // detect today's weekNumber
   const WeekBegin = moment().week();
+  console.log(salesData);
 
   // detect until which weekNumber
   let WeekEnd = moment()
@@ -105,7 +107,7 @@ function getWeeklyCustomerData(weekRange, customerData) {
   return weeklyCustomerObject;
 }
 
-const sharpningCategory = ["Sharpening"];
+const sharpeningCategory = ["Sharpening"];
 
 // get customer data for customer Graph(chef and non chef)
 function getDataCustomerGraph(weeklyCustomerData) {
@@ -181,7 +183,7 @@ function saleTrendForKnife(weeklySales) {
         .map(weekSale => {
           // check knife, stone or sharpening
           if (
-            !sharpningCategory.includes(
+            !sharpeningCategory.includes(
               weekSale.product ? weekSale.product.category : "null"
             )
           ) {
@@ -207,7 +209,7 @@ function saleTrendForKnife(weeklySales) {
         .map(product => {
           // check knife, stone or sharpening
           if (
-            !sharpningCategory.includes(
+            !sharpeningCategory.includes(
               product.product ? product.product.category : "null"
             )
           ) {
@@ -243,14 +245,14 @@ function saleTrendForSharpening(weeklySales) {
     let weeklySalesTrendSharp = {};
     // week
     weeklySalesTrendSharp["week"] = sale;
-
+    console.log(weeklySales);
     // totalSales(money)
     weeklySalesTrendSharp["totalSales"] = weeklySales[sale].map(weeklySales => {
       return weeklySales.products
         .map(weekSale => {
           // check knife, stone or sharpening
           if (
-            sharpningCategory.includes(
+            sharpeningCategory.includes(
               weekSale.product ? weekSale.product.category : "null"
             )
           ) {
@@ -276,7 +278,7 @@ function saleTrendForSharpening(weeklySales) {
         .map(product => {
           // check knife, stone or sharpening
           if (
-            sharpningCategory.includes(
+            sharpeningCategory.includes(
               product.product ? product.product.category : "null"
             )
           ) {
@@ -428,7 +430,7 @@ function WeeklyReport({
   return (
     <div className="container text-center">
       {customerGraph ? (
-        <div style={{ marginBottom: "30px" }}>
+        <div className="mb-4">
           <h2>Customer Traffic (Chef or NonChef)</h2>
           <p>Week range : {weekRangeChef}</p>
           <input
@@ -476,13 +478,14 @@ function WeeklyReport({
               />
             </ComposedChart>
           </ResponsiveContainer>
+          <hr />
         </div>
       ) : (
         <ReactLoading type="bars" color="rgb(121, 3, 34)" />
       )}
 
       {customerOriginChart && (
-        <div style={{ marginBottom: "30px" }}>
+        <div className="mb-4">
           <h2>Customer with origin</h2>
           <p>Week range : {weekRangeOrigin}</p>
           <input
@@ -547,10 +550,11 @@ function WeeklyReport({
               />
             </ComposedChart>
           </ResponsiveContainer>
+          <hr />
         </div>
       )}
       {saleTrendKnife && (
-        <div style={{ marginBottom: "30px" }}>
+        <div className="mb-4">
           <h2>Sale Trend Knife and Stone</h2>
           <p>Week range : {weekRangeKnife}</p>
           <input
@@ -580,10 +584,11 @@ function WeeklyReport({
               <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
             </BarChart>
           </ResponsiveContainer>
+          <hr />
         </div>
       )}
       {saleTrendSharpening && (
-        <div style={{ marginBottom: "30px" }}>
+        <div className="mb-4">
           <h2>Sale Trend Sharpening</h2>
           <p>Week range : {weekRangeSharp}</p>
           <input
@@ -612,19 +617,22 @@ function WeeklyReport({
               <Bar yAxisId="right" dataKey="totalSales" fill="#82ca9d" />
             </BarChart>
           </ResponsiveContainer>
+          <hr />
         </div>
       )}
 
       {pieChartChefData && (
-        <div style={{ marginBottom: "30px" }}>
+        <div className="mb-4">
           <h2>Customer Chef Non Chef</h2>
           <PieChartChef pieChartChefData={pieChartChefData} />
+          <hr />
         </div>
       )}
       {pieChartOriginData && (
         <div>
           <h2>Customer Origin</h2>
           <PieChartOrigin pieChartOriginData={pieChartOriginData} />
+          <hr />
         </div>
       )}
     </div>
