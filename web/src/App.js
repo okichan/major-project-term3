@@ -904,8 +904,15 @@ class App extends Component {
 
   // When state changes
   componentDidUpdate(prevProps, prevState) {
+    if (this.state.error !== null) {
+      // reset error
+      setTimeout(() => {
+        this.setState({ error: null });
+      }, 2000);
+    }
     // If just signed in, signed up, or signed out,
     // then the token will have changed
+
     if (this.state.decodedToken !== prevState.decodedToken) {
       this.load();
     }
