@@ -579,6 +579,7 @@ class App extends Component {
               <PrimaryNav
                 signedIn={signedIn}
                 signOut={this.onSignOut}
+                currentUser={this.state.decodedToken}
                 notificationCount={notifications ? notifications.length : "0"}
               />
             </header>

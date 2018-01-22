@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import logo from "../logo.png";
 
-function PrimaryNav({ signedIn, signOut, notificationCount }) {
+function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
   return (
     <nav
       className="navbar navbar-expand-sm navbar-light"
@@ -27,6 +27,12 @@ function PrimaryNav({ signedIn, signOut, notificationCount }) {
           <ul className="nav nav-justified ">
             {signedIn ? (
               <Fragment>
+                <li
+                  className="nav-item  link-dark"
+                  style={{ lineHeight: "42px" }}
+                >
+                  {`${currentUser.userName}`}
+                </li>
                 <li className="nav-item link-dark">
                   <Link
                     to="/notifications"
