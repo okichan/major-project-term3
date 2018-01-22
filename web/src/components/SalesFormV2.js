@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import ReactDOM from "react-dom";
 import { listProducts } from "../api/products";
 import { listCustomers, createCustomer } from "../api/customers";
 import { createSale } from "../api/sales";
@@ -7,6 +8,7 @@ import ProductFilterForNewSale from "./ProductFilterForNewSale";
 
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import jump from "jump.js";
 
 class SalesFormV2 extends Component {
   constructor(props) {
@@ -202,7 +204,7 @@ class SalesFormV2 extends Component {
       uiItems.push(
         <div key={i} className="form-row ">
           <div className="form-group col-10">
-            <label>Product</label>
+            <p>Product</p>
             <ProductFilterForNewSale
               prodCategory={this.onProductFilter}
               countKey={i}
@@ -425,6 +427,7 @@ class SalesFormV2 extends Component {
                   type="checkbox"
                   onClick={e => {
                     this.setState({ newCustomer: e.target.checked });
+                    jump(".NewCustomer");
                   }}
                   id="create-new-customer"
                   className="notification-checkbox sr-only"
@@ -445,13 +448,15 @@ class SalesFormV2 extends Component {
               />
             </form>
           )}
-        {newCustomer && (
-          <CustomerForm
-            customers={customers}
-            submitTitle="Create Customer"
-            onSubmit={this.onCreateCustomer}
-          />
-        )}
+        <div ref="NewCustomer" className="NewCustomer">
+          {newCustomer && (
+            <CustomerForm
+              customers={customers}
+              submitTitle="Create Customer"
+              onSubmit={this.onCreateCustomer}
+            />
+          )}
+        </div>
       </Fragment>
     );
   }
