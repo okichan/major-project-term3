@@ -35,6 +35,10 @@ td a:hover {
   text-decoration: none;
 }
 
+.weekWeather {
+  font-size: 15px;
+}
+
 /* in mobile view, create a line separator */
 #sidebar {
   border-bottom: 1px solid lightgray;
@@ -165,6 +169,14 @@ input[type="range"]::-webkit-slider-thumb:active {
   background: #fefefe;
 }
 
+#traffic {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#greeting {
+   display: none;
+}
+
 @media (min-width: 768px) {
   .logo {
     width: 160px;
@@ -187,8 +199,10 @@ input[type="range"]::-webkit-slider-thumb:active {
     border-right: 1px solid lightgray;
     border-bottom: 0;
   }
-}
 
-#traffic {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  #greeting {
+   display: inline;
+}  
+
+
 }
