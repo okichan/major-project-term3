@@ -35,6 +35,10 @@ td a:hover {
   text-decoration: none;
 }
 
+menu a {
+  text-decoration: none;
+}
+
 /* in mobile view, create a line separator */
 #sidebar {
   border-bottom: 1px solid lightgray;

@@ -12,15 +12,6 @@ class Weather extends Component {
     error: null
   };
 
-  componentDidMount() {
-    fetchWeather()
-      .then(weather => {
-        this.setState({ weather });
-      })
-      .catch(error => {
-        this.setState({ error: error });
-      });
-  }
   render() {
     const { weather, error } = this.state;
     return (
@@ -38,65 +29,75 @@ class Weather extends Component {
                     }.png`}
                     alt="icon"
                   />
-                  <p>{weather.data[0].datetime}</p>
+                  <p>{weather.data[0].datetime.slice(0, -3)}</p>
                   <h2>{`${weather.data[0].temp} \u2103`} </h2>
                   <p>{weather.data[0].weather.description}</p>
                 </div>
               </div>
 
-              <div className="d-flex flex-nowrap">
-                <div className="p-2">
+              {/* <div className="d-flex flex-nowrap"> */}
+              <div className="row text-center">
+                <div className="col-2" style={{ margin: "auto" }}>
                   <img
                     src={`https://www.weatherbit.io/static/img/icons/${
                       weather.data[8].weather.icon
                     }.png`}
                     alt="icon"
+                    style={{ width: "100%" }}
                   />
-                  <p>{weather.data[8].datetime}</p>
+                  <p>
+                    {moment(weather.data[8].datetime.slice(0, -3)).format(
+                      "dddd"
+                    )}
+                  </p>
                   <p>{`${weather.data[8].temp} \u2103`} </p>
                   <p>{weather.data[8].weather.description}</p>
                 </div>
-                <div className="p-2">
+                <div className="col-2" style={{ margin: "auto" }}>
                   <img
                     src={`https://www.weatherbit.io/static/img/icons/${
                       weather.data[16].weather.icon
                     }.png`}
                     alt="icon"
+                    style={{ width: "100%" }}
                   />
-                  <p>{weather.data[16].datetime}</p>
+                  <p>{weather.data[16].datetime.slice(0, -3)}</p>
                   <p>{`${weather.data[16].temp} \u2103`} </p>
                   <p>{weather.data[16].weather.description}</p>
                 </div>
-                <div className="p-2">
+                <div className="col-2" style={{ margin: "auto" }}>
                   <img
                     src={`https://www.weatherbit.io/static/img/icons/${
                       weather.data[24].weather.icon
                     }.png`}
                     alt="icon"
+                    style={{ width: "100%" }}
                   />
-                  <p>{weather.data[24].datetime}</p>
+                  <p>{weather.data[24].datetime.slice(0, -3)}</p>
                   <p>{`${weather.data[24].temp} \u2103`} </p>
                   <p>{weather.data[24].weather.description}</p>
                 </div>
-                <div className="p-2">
+                <div className="col-2" style={{ margin: "auto" }}>
                   <img
                     src={`https://www.weatherbit.io/static/img/icons/${
                       weather.data[32].weather.icon
                     }.png`}
                     alt="icon"
+                    style={{ width: "100%" }}
                   />
-                  <p>{weather.data[32].datetime}</p>
+                  <p>{weather.data[32].datetime.slice(0, -3)}</p>
                   <p>{`${weather.data[32].temp} \u2103`} </p>
                   <p>{weather.data[32].weather.description}</p>
                 </div>
-                <div className="p-2">
+                <div className="col-2" style={{ margin: "auto" }}>
                   <img
                     src={`https://www.weatherbit.io/static/img/icons/${
                       weather.data[39].weather.icon
                     }.png`}
                     alt="icon"
+                    style={{ width: "100%" }}
                   />
-                  <p>{weather.data[39].datetime}</p>
+                  <p>{weather.data[39].datetime.slice(0, -3)}</p>
                   <p>{`${weather.data[39].temp} \u2103`} </p>
                   <p>{weather.data[39].weather.description}</p>
                 </div>

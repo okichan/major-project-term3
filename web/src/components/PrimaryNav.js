@@ -22,13 +22,59 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
         <span className="navbar-toggler-icon" />
       </button>
 
+      <div className="collapse navbar-collapse nav ml-4 float-left">
+        <li
+          className="nav-item link-dark p-3 big"
+          style={{ lineHeight: "42px" }}
+        >
+          <a
+            className="menu"
+            href="https://www.qthotelsandresorts.com/melbourne/evt-admin"
+            target="_blank"
+            title="Wordpress"
+          >
+            <i className="fa fa-wordpress" />
+          </a>
+        </li>
+        <li className="nav-item link-dark p-3 big">
+          <a
+            className="menu"
+            href="https://transact.nab.com.au/nabtransact/"
+            target="_blank"
+            title="NAB"
+          >
+            <i className="fa fa-star" />
+          </a>
+        </li>
+        <li className="nav-item link-dark p-3 big">
+          <a
+            className="menu"
+            href="https://www.qthotelsandresorts.com/melbourne/eat-drink/tanto/"
+            target="_blank"
+            title="QT Hotel"
+          >
+            <i className="fa fa-building-o" />
+          </a>
+        </li>
+        <li className="nav-item link-dark p-3 big">
+          <a
+            className="menu"
+            href="https://vimeo.com/user16748524/review/188253523/dc2848426c"
+            target="_blank"
+            title="Vimeo"
+          >
+            <i className="fa fa-vimeo" />
+          </a>
+        </li>
+      </div>
+
       <div className="collapse navbar-collapse" id="collapsibleNavbar">
         <div className="ml-auto">
-          <ul className="nav nav-justified ">
+          <ul className="nav nav-justified">
             {signedIn ? (
               <Fragment>
                 <li
-                  className="nav-item  link-dark"
+                  className="nav-item link-dark"
                   style={{ lineHeight: "42px" }}
                 >
                   {`${currentUser.userName}`}
@@ -49,12 +95,6 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
                     </i>
                   </Link>
                 </li>
-                {/*<li className="nav-item  link-dark">
-                 <Link to="/account" className="nav-link" title="Account">
-                     <i className="fa fa-user big mr-3" />
-                  </Link>
-                </li>*/}
-
                 <li className="nav-item  link-dark">
                   <Link
                     to="/account"
@@ -64,10 +104,6 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
                   >
                     <i className="fa fa-sign-out big" />
                   </Link>
-
-                  {/* <button >
-                           <i className="fa fa-sign-out big" ></i>
-                                    </button> */}
                 </li>
               </Fragment>
             ) : (
