@@ -1,10 +1,8 @@
-import React, { Fragment } from "react";
-import DatePicker from "react-datepicker";
+import React from "react";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import Chart from "chart.js";
 import { PieChartChef, PieChartOrigin } from "./PieChart";
-import ReactLoading from "react-loading";
 // recharts
 import {
   BarChart,
@@ -14,7 +12,6 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ReferenceLine,
   Bar,
   ComposedChart,
   ResponsiveContainer
@@ -22,10 +19,8 @@ import {
 
 // get weekly data(sales)
 function getWeeklySaleData(weekRange, salesData) {
-  console.log(new Date());
   // detect today's weekNumber
   const WeekBegin = moment().week();
-  console.log(salesData);
 
   // detect until which weekNumber
   let WeekEnd = moment()
@@ -245,7 +240,6 @@ function saleTrendForSharpening(weeklySales) {
     let weeklySalesTrendSharp = {};
     // week
     weeklySalesTrendSharp["week"] = sale;
-    console.log(weeklySales);
     // totalSales(money)
     weeklySalesTrendSharp["totalSales"] = weeklySales[sale].map(weeklySales => {
       return weeklySales.products
@@ -481,7 +475,7 @@ function WeeklyReport({
           <hr />
         </div>
       ) : (
-        <ReactLoading type="bars" color="rgb(121, 3, 34)" />
+        <p>Loading...</p>
       )}
 
       {customerOriginChart && (
