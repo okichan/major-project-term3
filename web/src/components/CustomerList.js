@@ -18,63 +18,77 @@ const customerOriginPicks = {
 };
 
 function CustomerList({
-	customers,
-	products,
-	editCustomer,
-	renderEditForm,
-	deleteCustomer,
-	findProduct,
-	sortByKey,
-	multiplyNumbers
+  sortedCustomers,
+  products,
+  editCustomer,
+  renderEditForm,
+  deleteCustomer,
+  findProduct,
+  sortByKey,
+  multiplyNumbers,
+  onFilter
 }) {
-	if (customers && products) {
-		let productIds = [];
-		customers.map(customer => {
-			customer.purchasedHistory.map(sale => {
-				sale.products.map(product => {
-					const id = product.product;
-					productIds.push(id);
-				});
-			});
-		});
-	}
+  if (sortedCustomers && products) {
+    let productIds = [];
+    sortedCustomers.map(customer => {
+      customer.purchasedHistory.map(sale => {
+        sale.products.map(product => {
+          const id = product.product;
+          productIds.push(id);
+        });
+      });
+    });
+  }
 
-	return (
-		<Fragment>
-			<h2 className="text-center mb-4">Customers</h2>
-			{customers && (
-				<section className="table-responsive">
-					<table className="table">
-						<thead>
-							<tr>
-								<th scope="col">Name</th>
-								<th scope="col" />
-								<th scope="col">Phone</th>
-								<th scope="col">Note</th>
-								<th scope="col" />
-								<th scope="col" />
-							</tr>
-						</thead>
+  return (
+    <Fragment>
+      <h2 className="text-center mb-4">Customers</h2>
+      <small>Sort by name:</small>
+      <br />
+      <input
+        style={{ width: "70%" }}
+        className="mb-4 form-control"
+        type="text"
+        placeholder="Enter customer's name"
+        onChange={e => {
+          const value = e.target.value;
+          onFilter(value);
+        }}
+      />
 
-						{customers.map((customer, index) => {
-							return (
-								<tbody key={index}>
-									<tr className="row-hover">
-										<td
-											data-toggle="collapse"
-											data-target={`#${customer._id}`}
-											role="button"
-											aria-expanded="false"
-											aria-controls="collapseExample"
-										>
-											{customer.gender === "male" ? (
-												<i className="fa fa-male text-primary" />
-											) : (
-												<i className="fa fa-female text-danger" />
-											)}{" "}
-											{customer.firstName ? customer.firstName : "(unknown)"}{" "}
-											{customer.lastName ? customer.lastName : ""}
-										</td>
+      {sortedCustomers && (
+        <section className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col" />
+                <th scope="col">Phone</th>
+                <th scope="col">Note</th>
+                <th scope="col" />
+                <th scope="col" />
+              </tr>
+            </thead>
+
+            {sortedCustomers.map((customer, index) => {
+              return (
+                <tbody key={index}>
+                  <tr className="row-hover">
+                    <td
+                      data-toggle="collapse"
+                      data-target={`#${customer._id}`}
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      {customer.gender === "male" ? (
+                        <i className="fa fa-male text-primary" />
+                      ) : (
+                        <i className="fa fa-female text-danger" />
+                      )}{" "}
+                      {customer.firstName ? customer.firstName : "(unknown)"}{" "}
+                      {customer.lastName ? customer.lastName : ""}
+                    </td>
 
 										<td
 											className="pr-4"
@@ -472,30 +486,28 @@ function CustomerList({
                                               )}
                                             </th>
                                             <td>
-                                              {
+                                              {products &&
                                                 findProduct(product.product)
-                                                  .code
-                                              }
+                                                  .code}
                                             </td>
                                             <td>
-                                              {
+                                              {products &&
                                                 findProduct(product.product)
-                                                  .title
-                                              }
+                                                  .title}
                                             </td>
                                             <td>{product.unitAmount}</td>
                                             <td>
-                                              {
+                                              {products &&
                                                 findProduct(product.product)
-                                                  .price
-                                              }
+                                                  .price}
                                             </td>
                                             <td>
-                                              {multiplyNumbers(
-                                                findProduct(product.product)
-                                                  .price,
-                                                product.unitAmount
-                                              )}
+                                              {products &&
+                                                multiplyNumbers(
+                                                  findProduct(product.product)
+                                                    .price,
+                                                  product.unitAmount
+                                                )}
                                             </td>
                                           </tr>
                                         );

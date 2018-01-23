@@ -56,6 +56,7 @@ import {
   deleteProduct
 } from "./api/products";
 import {
+  listFilteredCustomers,
   listCustomers,
   createCustomer,
   updateCustomer,
@@ -90,7 +91,8 @@ class App extends Component {
     weekRangeOrigin: 10,
     weekRangeKnife: 10,
     weekRangeSharp: 10,
-    chosenImage: null
+    chosenImage: null,
+    sortedCustomers: null
   };
 
   // for image uploading
@@ -542,6 +544,16 @@ class App extends Component {
     });
   }
 
+  sortByName = query => {
+    listFilteredCustomers("name", query)
+      .then(sortedCustomers => {
+        this.setState({ sortedCustomers });
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
+  };
+
   render() {
     const {
       error,
@@ -564,7 +576,8 @@ class App extends Component {
       weekRangeOrigin,
       weekRangeKnife,
       weekRangeSharp,
-      chosenImage
+      chosenImage,
+      sortedCustomers
     } = this.state;
     const signedIn = !!decodedToken;
 
@@ -805,12 +818,13 @@ class App extends Component {
                         <LinkButton href="/admin/customers" name="customer" />
                         <CustomerList
                           products={products}
-                          customers={customers}
+                          sortedCustomers={sortedCustomers}
                           deleteCustomer={this.onDeleteCustomer}
                           editCustomer={this.onEditCustomer}
                           findProduct={this.findProduct}
                           sortByKey={this.sortByKey}
                           multiplyNumbers={this.multiplyNumbers}
+                          onFilter={this.sortByName}
                         />
                       </Fragment>
                     ))}
@@ -859,6 +873,7 @@ class App extends Component {
     listCustomers()
       .then(customers => {
         this.setState({ customers });
+        this.setState({ sortedCustomers: customers });
       })
       .catch(saveError);
 
@@ -934,3 +949,4 @@ class App extends Component {
 }
 
 export default App;
+CustomerList;

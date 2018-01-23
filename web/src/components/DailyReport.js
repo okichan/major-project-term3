@@ -11,6 +11,36 @@ function getTotal(dailySalesDatas) {
   return total;
 }
 
+function getTotalCustomers(dailyCustomerTraffics) {
+  return dailyCustomerTraffics
+    .map(customerTraffic => {
+      return customerTraffic.number;
+    })
+    .reduce((a, b) => {
+      return a + b;
+    }, 0);
+}
+
+function getCloseRate(customerNumber, dailySalesDatas) {
+  let ProductSaleDatasCount = 0;
+  dailySalesDatas.forEach(dailySalesData => {
+    dailySalesData.products.forEach(productInfo => {
+      if (
+        productInfo.product &&
+        productInfo.product.category !== "Sharpening"
+      ) {
+        ProductSaleDatasCount++;
+      }
+    });
+  });
+  const value = ProductSaleDatasCount / customerNumber;
+  if (value) {
+    return Math.ceil(value * 10000) / 100;
+  } else {
+    return 0;
+  }
+}
+
 function getAmountTotal(type, dailySalesDatas) {
   if (dailySalesDatas.length === 0) {
     return 0;
@@ -63,7 +93,7 @@ function getSoldProductList(dailySalesDatas) {
           <tr>
             <th>Title</th>
             <th>Quantity</th>
-            <th>Sale Price</th>
+            <th>Sale price</th>
           </tr>
         </thead>
         <tbody>
@@ -113,6 +143,7 @@ function DailyReport({
                 <th>Total sharpening service</th>
                 <th>Total sales</th>
                 <th>Total customers</th>
+                <th>Close rate</th>
               </tr>
             </thead>
             <tbody>
@@ -124,13 +155,15 @@ function DailyReport({
                 <td>{dailySales && `$${getTotal(dailySales)}`}</td>
                 <td>
                   {dailyCustomerTraffics &&
-                    dailyCustomerTraffics
-                      .map(customerTraffic => {
-                        return customerTraffic.number;
-                      })
-                      .reduce((a, b) => {
-                        return a + b;
-                      }, 0)}
+                    getTotalCustomers(dailyCustomerTraffics)}
+                </td>
+                <td>
+                  {dailyCustomerTraffics &&
+                    dailySales &&
+                    `${getCloseRate(
+                      getTotalCustomers(dailyCustomerTraffics),
+                      dailySales
+                    )}%`}
                 </td>
               </tr>
             </tbody>
