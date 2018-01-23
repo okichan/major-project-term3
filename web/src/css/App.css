@@ -35,6 +35,10 @@ td a:hover {
   text-decoration: none;
 }
 
+.weekWeather {
+  font-size: 15px;
+}
+
 /* in mobile view, create a line separator */
 #sidebar {
   border-bottom: 1px solid lightgray;

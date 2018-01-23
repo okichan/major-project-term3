@@ -418,105 +418,107 @@ function CustomerList({
 										{/* end modal delete */}
 									</tr>
 
-									{/* collapse begin */}
-									<tr>
-										<td colSpan="10" className="p-0">
-											<div className="collapse" id={customer._id}>
-												<div className="card card-body m-3">
-													<div className="row">
-														<div className="col-md-6 ">
-															<p>
-																Registered:{" "}
-																{moment(customer.registerDate).format("YYYY-MM-DD")}
-															</p>
-															<p>
-																Email:{" "}
-																{customer.email ? customer.email : "(unknown)"}
-															</p>
-														</div>
-														<div className="col-md-6 ">
-															<p>
-																Customer Origin:{" "}
-																{customerOriginPicks[customer.origin]}
-															</p>
-														</div>
-													</div>
-													<hr />
-													<div className="row">
-														<h5 className="col-12">Purchase History:</h5>
-													</div>
-													<div id="purchase-history">
-														<table className="table table-sm">
-															<thead>
-																<tr>
-																	<th scope="col">Date</th>
-																	<th scope="col">#</th>
-																	<th scope="col">Product</th>
-																	<th scope="col">Quantity</th>
-																	<th scope="col">Price</th>
-																	<th scope="col">Total</th>
-																</tr>
-															</thead>
-															{sortByKey(customer.purchasedHistory, "date").map(
-																sale => {
-																	return (
-																		<tbody key={sale._id}>
-																			{sale.products.map(product => {
-																				return (
-																					<tr key={product._id}>
-																						<th scope="row">
-																							{moment(sale.date).format(
-																								"YYYY-MM-DD"
-																							)}
-																						</th>
-																						<td>
-																							{
-																								findProduct(product.product)
-																									.code
-																							}
-																						</td>
-																						<td>
-																							{
-																								findProduct(product.product)
-																									.title
-																							}
-																						</td>
-																						<td>{product.unitAmount}</td>
-																						<td>
-																							{
-																								findProduct(product.product)
-																									.price
-																							}
-																						</td>
-																						<td>
-																							{multiplyNumbers(
-																								findProduct(product.product)
-																									.price,
-																								product.unitAmount
-																							)}
-																						</td>
-																					</tr>
-																				);
-																			})}
-																		</tbody>
-																	);
-																}
-															)}
-														</table>
-													</div>
-												</div>
-											</div>
-										</td>
-									</tr>
-									{/* collapse end */}
-								</tbody>
-							);
-						})}
-					</table>
-				</section>
-			)}
-		</Fragment>
-	);
+                  {/* collapse begin */}
+                  <tr>
+                    <td colSpan="10" className="p-0">
+                      <div className="collapse" id={customer._id}>
+                        <div className="card card-body m-3">
+                          <div className="row">
+                            <div className="col-md-6 ">
+                              <p>
+                                Registered:{" "}
+                                {moment(customer.registerDate).format(
+                                  "YYYY-MM-DD"
+                                )}
+                              </p>
+                              <p>
+                                Email:{" "}
+                                {customer.email ? customer.email : "(unknown)"}
+                              </p>
+                            </div>
+                            <div className="col-md-6 ">
+                              <p>
+                                Customer Origin:{" "}
+                                {customerOriginPicks[customer.origin]}
+                              </p>
+                            </div>
+                          </div>
+                          <hr />
+                          <div className="row">
+                            <h5 className="col-12">Purchase History:</h5>
+                          </div>
+                          <div id="purchase-history">
+                            <table className="table table-sm">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Product</th>
+                                  <th scope="col">Quantity</th>
+                                  <th scope="col">Price</th>
+                                  <th scope="col">Total</th>
+                                </tr>
+                              </thead>
+                              {sortByKey(customer.purchasedHistory, "date").map(
+                                sale => {
+                                  return (
+                                    <tbody key={sale._id}>
+                                      {sale.products.map(product => {
+                                        return (
+                                          <tr key={product._id}>
+                                            <th scope="row">
+                                              {moment(sale.date).format(
+                                                "YYYY-MM-DD"
+                                              )}
+                                            </th>
+                                            <td>
+                                              {
+                                                findProduct(product.product)
+                                                  .code
+                                              }
+                                            </td>
+                                            <td>
+                                              {
+                                                findProduct(product.product)
+                                                  .title
+                                              }
+                                            </td>
+                                            <td>{product.unitAmount}</td>
+                                            <td>
+                                              {
+                                                findProduct(product.product)
+                                                  .price
+                                              }
+                                            </td>
+                                            <td>
+                                              {multiplyNumbers(
+                                                findProduct(product.product)
+                                                  .price,
+                                                product.unitAmount
+                                              )}
+                                            </td>
+                                          </tr>
+                                        );
+                                      })}
+                                    </tbody>
+                                  );
+                                }
+                              )}
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  {/* collapse end */}
+                </tbody>
+              );
+            })}
+          </table>
+        </section>
+      )}
+    </Fragment>
+  );
 }
 
 export default CustomerList;
