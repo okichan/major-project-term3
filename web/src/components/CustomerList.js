@@ -18,18 +18,19 @@ const customerOriginPicks = {
 };
 
 function CustomerList({
-  customers,
+  sortedCustomers,
   products,
   editCustomer,
   renderEditForm,
   deleteCustomer,
   findProduct,
   sortByKey,
-  multiplyNumbers
+  multiplyNumbers,
+  onFilter
 }) {
-  if (customers && products) {
+  if (sortedCustomers && products) {
     let productIds = [];
-    customers.map(customer => {
+    sortedCustomers.map(customer => {
       customer.purchasedHistory.map(sale => {
         sale.products.map(product => {
           const id = product.product;
@@ -42,7 +43,20 @@ function CustomerList({
   return (
     <Fragment>
       <h2 className="text-center mb-4">Customers</h2>
-      {customers && (
+      <small>Sort by name:</small>
+      <br />
+      <input
+        style={{ width: "70%" }}
+        className="mb-4 form-control"
+        type="text"
+        placeholder="Enter customer's name"
+        onChange={e => {
+          const value = e.target.value;
+          onFilter(value);
+        }}
+      />
+
+      {sortedCustomers && (
         <section className="table-responsive">
           <table className="table">
             <thead>
@@ -56,7 +70,7 @@ function CustomerList({
               </tr>
             </thead>
 
-            {customers.map((customer, index) => {
+            {sortedCustomers.map((customer, index) => {
               return (
                 <tbody key={index}>
                   <tr className="row-hover">
@@ -478,30 +492,28 @@ function CustomerList({
                                               )}
                                             </th>
                                             <td>
-                                              {
+                                              {products &&
                                                 findProduct(product.product)
-                                                  .code
-                                              }
+                                                  .code}
                                             </td>
                                             <td>
-                                              {
+                                              {products &&
                                                 findProduct(product.product)
-                                                  .title
-                                              }
+                                                  .title}
                                             </td>
                                             <td>{product.unitAmount}</td>
                                             <td>
-                                              {
+                                              {products &&
                                                 findProduct(product.product)
-                                                  .price
-                                              }
+                                                  .price}
                                             </td>
                                             <td>
-                                              {multiplyNumbers(
-                                                findProduct(product.product)
-                                                  .price,
-                                                product.unitAmount
-                                              )}
+                                              {products &&
+                                                multiplyNumbers(
+                                                  findProduct(product.product)
+                                                    .price,
+                                                  product.unitAmount
+                                                )}
                                             </td>
                                           </tr>
                                         );

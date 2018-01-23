@@ -6,9 +6,31 @@ const router = new express.Router();
 
 // get list
 router.get("/customers", (req, res) => {
-  const { phone } = req.query;
+  const { phone, name } = req.query;
   if (phone) {
+    // if phone is required
     Customer.find({ phone })
+      .populate("purchasedHistory")
+      .then(customers => {
+        if (customers.length !== 0) {
+          // when find some
+          res.json(customers);
+        } else {
+          // when no result
+          res.status(404).json({ error: `no result with ${phone}` });
+        }
+      })
+      .catch(error => {
+        res.json({ error });
+      });
+  } else if (name) {
+    // if name is required
+    Customer.find({
+      $or: [
+        { firstName: new RegExp(name, "i") },
+        { lastName: new RegExp(name, "i") }
+      ]
+    })
       .populate("purchasedHistory")
       .then(customers => {
         if (customers.length !== 0) {
