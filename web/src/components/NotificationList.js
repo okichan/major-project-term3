@@ -44,7 +44,7 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
               }}
             />
           ) : (
-            <h5 className="text-center p-4 ">Yay! You're all caught up!</h5>
+            <h5 className="text-center p-4 ">No tasks left</h5>
           )}
           {notifications.map(notification => {
             const chosenData =

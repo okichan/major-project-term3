@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import "datejs";
+import moment from "moment";
 import chef from "../chef.png";
 
 const dateFormatter = date =>
@@ -447,8 +447,8 @@ function CustomerList({
                             <div className="col-md-6 ">
                               <p>
                                 Registered:{" "}
-                                {Date.parse(customer.registerDate).toString(
-                                  "yyyy-MM-dd"
+                                {moment(customer.registerDate).format(
+                                  "YYYY-MM-DD"
                                 )}
                               </p>
                               <p>
@@ -487,8 +487,8 @@ function CustomerList({
                                         return (
                                           <tr key={product._id}>
                                             <th scope="row">
-                                              {Date.parse(sale.date).toString(
-                                                "yyyy-MM-dd"
+                                              {moment(sale.date).format(
+                                                "YYYY-MM-DD"
                                               )}
                                             </th>
                                             <td>
