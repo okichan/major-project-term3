@@ -2,10 +2,6 @@ import React, { Component, Fragment } from "react";
 import { fetchWeather } from "../api/weather";
 import moment from "moment";
 
-fetchWeather().then(res => {
-  console.log("Loaded Movie", res);
-});
-
 class Weather extends Component {
   state = {
     weather: null,

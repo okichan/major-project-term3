@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ExportRawdata } from "../components/ExportRawdata"
 
 function SideBar({ signedIn }) {
   return (
@@ -31,11 +32,11 @@ function SideBar({ signedIn }) {
                 Weekly
               </Link>
             </li>
-            {/*<li className="nav-item">
-              <Link to="/report-monthly" className="nav-link ml-3">
-                Monthly
+            <li className="nav-item">
+              <Link to="#" className="nav-link ml-3">
+                <ExportRawdata/>
               </Link>
-            </li>*/}
+            </li>
           </ul>
         </li>
         <li className="nav-item">
