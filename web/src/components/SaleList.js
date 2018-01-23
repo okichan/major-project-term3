@@ -60,7 +60,7 @@ function SaleList({
 													aria-expanded="false"
 													aria-controls="collapseExample"
 												>
-													$ {sale.totalPrice}
+													${sale.totalPrice}
 												</td>
 												<td
 													data-toggle="collapse"
@@ -99,7 +99,8 @@ function SaleList({
 														className="fa fa-pencil-square-o med mx-1"
 														id="edit"
 														style={{ cursor: "pointer" }}
-														title="Edit"
+                                          title="Edit"
+                                          onClick={() => { alert("edit under construction!") }}
 														//   data-toggle="modal"
 														//   data-target={`#modaledit-${sale._id}`}
 													/>

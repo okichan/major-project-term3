@@ -28,8 +28,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
             {signedIn ? (
               <Fragment>
                 <li
-                  className="nav-item  link-dark"
-                  style={{ lineHeight: "42px" }}
+                  className="nav-item  link-dark my-auto"
+                  style={{ whiteSpace: "nowrap" }}
                 >
                   {`${currentUser.userName}`}
                 </li>
