@@ -60,11 +60,51 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
                     to="/account"
                     className="nav-link"
                     title="Logout"
-                    onClick={signOut}
-                    data-dismiss="modal"
+                    data-toggle="modal"
+                    data-target="#logout"
                   >
                     <i className="fa fa-sign-out big" />
                   </Link>
+
+                  <div class="modal fade" id="logout">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Log out</h5>
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>{`Are you sure you would like to sign out ${
+                            currentUser.userName
+                          } ?`}</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-dismiss="modal"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={signOut}
+                            data-dismiss="modal"
+                          >
+                            Log out
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   {/* <button >
                            <i className="fa fa-sign-out big" ></i>

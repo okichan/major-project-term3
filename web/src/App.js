@@ -416,7 +416,7 @@ class App extends Component {
   };
 
   onEditSale = data => {
-     debugger
+    debugger;
     updateSale(data._id, data)
       .then(updatedSale => {
         window.location.href = "/sales";
