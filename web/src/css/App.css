@@ -35,8 +35,8 @@ td a:hover {
   text-decoration: none;
 }
 
-menu a {
-  text-decoration: none;
+.weekWeather {
+  font-size: 15px;
 }
 
 /* in mobile view, create a line separator */
