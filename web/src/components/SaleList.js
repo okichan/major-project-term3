@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import "datejs";
+import moment from "moment";
 
 function SaleList({
   sales,
@@ -38,7 +38,7 @@ function SaleList({
                         aria-expanded="false"
                         aria-controls="collapseExample"
                       >
-                        {Date.parse(sale.date).toString("dddd, MMMM dd, yyyy")}
+                        {moment(sale.date).format("dddd, MMMM DD, YYYY")}
                       </td>
                       <td
                         data-toggle="collapse"
