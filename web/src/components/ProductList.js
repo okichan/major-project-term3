@@ -1,12 +1,6 @@
 import React, { Fragment } from "react";
 import noImage from "../noImage.png";
 import Dropzone from "react-dropzone";
-const dropzoneStyle = {
-  width: "60%",
-  height: "20%",
-  border: "1px solid black",
-  position: "relative"
-};
 
 function ProductList({
   filteredProducts,
@@ -170,6 +164,7 @@ function ProductList({
                                         height="125"
                                         width="100%"
                                         style={{ opacity: "0.6" }}
+                                        alt="product"
                                       />
                                     </div>
                                   ) : (
@@ -180,6 +175,7 @@ function ProductList({
                                           height="125"
                                           width="100%"
                                           style={{ opacity: "0.6" }}
+                                          alt="product"
                                         />
                                       ) : (
                                         "Drop your file or click here to upload"

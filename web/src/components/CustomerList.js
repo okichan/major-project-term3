@@ -2,11 +2,6 @@ import React, { Fragment } from "react";
 import moment from "moment";
 import chef from "../chef.png";
 
-const dateFormatter = date =>
-  new Date(date).toLocaleDateString("ja-JP", {
-    timeZone: "Australia/Melbourne"
-  });
-
 const customerOriginPicks = {
   Facebook: "SNS (Facebook, Twitter etc)",
   OnlineSearch: "Online",
@@ -34,7 +29,7 @@ function CustomerList({
       customer.purchasedHistory.map(sale => {
         sale.products.map(product => {
           const id = product.product;
-          productIds.push(id);
+          return productIds.push(id);
         });
       });
     });

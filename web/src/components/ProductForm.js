@@ -1,12 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-const dropzoneStyle = {
-  width: "60%",
-  height: "20%",
-  border: "1px solid black",
-  position: "relative"
-};
 
 const categoryArray = [
   "Wa-Bocho",
@@ -21,10 +14,6 @@ const categoryArray = [
 ];
 
 function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
-  const clear = () => {
-    document.getElementById("create-product").reset();
-  };
-
   return (
     <div className="row ">
       <h1 className="col-12 text-center p-3">New Product</h1>
@@ -155,6 +144,7 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
                   height="125"
                   width="100%"
                   style={{ opacity: "0.6" }}
+                  alt="product"
                 />
               </div>
             ) : (

@@ -10,7 +10,7 @@ import CustomerList from "./components/CustomerList";
 import SaleList from "./components/SaleList";
 import SalesFormV2 from "./components/SalesFormV2";
 
-import SalesForm from "./components/SalesForm";
+// import SalesForm from "./components/SalesForm";
 import PrimaryNav from "./components/PrimaryNav";
 import SideBar from "./components/SideBar";
 import LinkButton from "./components/LinkButton";
@@ -26,7 +26,6 @@ import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import {
 	listSales,
-	createSale,
 	deleteSale,
 	updateSale,
 	dailySales,
@@ -36,13 +35,11 @@ import {
 import {
 	dailyCustomerTraffics,
 	listCustomerTraffics,
-	createCustomerTraffics,
-	updateCustomerTraffic
+	createCustomerTraffics
 } from "./api/customerTraffics";
 
 import {
 	listProducts,
-	listFilteredProducts,
 	createProduct,
 	updateProduct,
 	deleteProduct
@@ -541,7 +538,6 @@ class App extends Component {
 			sales,
 			customers,
 			traffics,
-			productPrice,
 			notifications,
 			date,
 			dailySales,

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import { listProducts } from "../api/products";
 import { listCustomers, createCustomer } from "../api/customers";
 import { createSale } from "../api/sales";
@@ -150,7 +150,7 @@ class SalesFormV2 extends Component {
       let product = { product: m };
       product["salePrice"] = productPrice[index] * unitAmount[index];
       product["unitAmount"] = unitAmount[index];
-      products.push(product);
+      return (products.push(product));
     });
 
     this.onCreateSale({ date, products, type, customer, totalPrice });
@@ -319,8 +319,6 @@ class SalesFormV2 extends Component {
 
   render() {
     const {
-      value,
-      count,
       products,
       customers,
       startDate,

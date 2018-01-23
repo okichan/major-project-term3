@@ -26,7 +26,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							className="menu"
 							href="https://www.qthotelsandresorts.com/melbourne/evt-admin"
 							target="_blank"
-							title="Wordpress"
+                     title="Wordpress"
+                     rel="noopener noreferrer"
 						>
 							<i className="fa fa-wordpress" />
 						</a>
@@ -36,7 +37,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							className="menu"
 							href="https://transact.nab.com.au/nabtransact/"
 							target="_blank"
-							title="NAB"
+                     title="NAB"
+                     rel="noopener noreferrer"
 						>
 							<i className="fa fa-star" />
 						</a>
@@ -46,7 +48,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							className="menu"
 							href="https://www.qthotelsandresorts.com/melbourne/eat-drink/tanto/"
 							target="_blank"
-							title="QT Hotel"
+                     title="QT Hotel"
+                     rel="noopener noreferrer"
 						>
 							<i className="fa fa-building-o" />
 						</a>
@@ -56,7 +59,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							className="menu"
 							href="https://vimeo.com/user16748524/review/188253523/dc2848426c"
 							target="_blank"
-							title="Vimeo"
+                     title="Vimeo"
+                     rel="noopener noreferrer"
 						>
 							<i className="fa fa-vimeo" />
 						</a>
