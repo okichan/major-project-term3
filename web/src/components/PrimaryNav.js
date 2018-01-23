@@ -66,26 +66,26 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
                     <i className="fa fa-sign-out big" />
                   </Link>
 
-                  <div class="modal fade" id="logout">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Log out</h5>
+                  <div className="modal fade" id="logout">
+                    <div className="modal-dialog" role="document">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5 className="modal-title">Log out</h5>
                           <button
                             type="button"
-                            class="close"
+                            className="close"
                             data-dismiss="modal"
                             aria-label="Close"
                           >
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                           <p>{`Are you sure you would like to sign out ${
                             currentUser.userName
                           } ?`}</p>
                         </div>
-                        <div class="modal-footer">
+                        <div className="modal-footer">
                           <button
                             type="button"
                             className="btn btn-primary"
