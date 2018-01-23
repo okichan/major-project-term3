@@ -1,12 +1,13 @@
 import React from "react";
 
 const originObject = {
-  Referral: "Family / Friend / Colleague",
-  OnlineSearch: "Online",
   Facebook: "SNS (Facebook, Twitter etc)",
+  OnlineSearch: "Online",
+  Referral: "Family / Friend / Colleague",
+  Newspaper: "Newspaper Article",
   WalkIn: "Walk In",
   HotelGuest: "QT Hotel Guest",
-  Return: "Newspaper Article",
+  Return: "Return",
   Unknown: "Other / Unknown"
 };
 
@@ -52,7 +53,9 @@ function CustomerTrafficForm({ onChange }) {
               <select className="form-control" id="originSelect">
                 {Object.keys(originObject).map(originkey => {
                   return (
-                    <option value={originkey} key={originkey}>{originObject[originkey]}</option>
+                    <option value={originkey} key={originkey}>
+                      {originObject[originkey]}
+                    </option>
                   );
                 })}
               </select>

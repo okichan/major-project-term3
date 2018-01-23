@@ -3,11 +3,12 @@ import chef from "../chef.png";
 
 const customerOriginPicks = {
   Facebook: "SNS (Facebook, Twitter etc)",
-  OnlineSearch: "Online search",
+  OnlineSearch: "Online",
   Referral: "Family / Friend / Colleague",
   Newspaper: "Newspaper Article",
   WalkIn: "Walk In",
   HotelGuest: "QT Hotel Guest",
+  Return: "Return",
   Unknown: "Other / Unknown"
 };
 
