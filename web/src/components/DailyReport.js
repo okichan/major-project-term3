@@ -74,7 +74,7 @@ function getSoldProductList(dailySalesDatas) {
                   <tr>
                     <td>{productInfo.product.title}</td>
                     <td>{productInfo.unitAmount}</td>
-                    <td>{productInfo.salePrice}</td>
+                    <td>{`$${productInfo.salePrice}`}</td>
                   </tr>
                 )
               );
@@ -103,42 +103,49 @@ function DailyReport({
         onChange={onClick}
       />
 
-      <h2 className="mb-3">Statistical data</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Total sold products</th>
-            <th>Total sharpening service</th>
-            <th>Total sales</th>
-            <th>Total customers</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{dailySales && getAmountTotal("Product", dailySales)}</td>
-            <td>{dailySales && getAmountTotal("Sharpening", dailySales)}</td>
-            <td>{dailySales && getTotal(dailySales)}</td>
-            <td>
-              {dailyCustomerTraffics &&
-                dailyCustomerTraffics
-                  .map(customerTraffic => {
-                    return customerTraffic.number;
-                  })
-                  .reduce((a, b) => {
-                    return a + b;
-                  }, 0)}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      {dailySales && getAmountTotal("Product", dailySales) !== 0 ? (
-        <div>
-          <h2>Sold products</h2>
-          {getSoldProductList(dailySales)}
+      <div className="row">
+        <div className="col-md">
+          <h2 className="mb-3">Statistical data</h2>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Total sold products</th>
+                <th>Total sharpening service</th>
+                <th>Total sales</th>
+                <th>Total customers</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{dailySales && getAmountTotal("Product", dailySales)}</td>
+                <td>
+                  {dailySales && getAmountTotal("Sharpening", dailySales)}
+                </td>
+                <td>{dailySales && `$${getTotal(dailySales)}`}</td>
+                <td>
+                  {dailyCustomerTraffics &&
+                    dailyCustomerTraffics
+                      .map(customerTraffic => {
+                        return customerTraffic.number;
+                      })
+                      .reduce((a, b) => {
+                        return a + b;
+                      }, 0)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
         </div>
-      ) : (
-        <hr />
-      )}
+        {dailySales &&
+          getAmountTotal("Product", dailySales) !== 0 && (
+            <div className="col-md">
+              <h2 className="mb-3">Sold products</h2>
+              {getSoldProductList(dailySales)}
+              <hr />
+            </div>
+          )}
+      </div>
     </div>
   );
 }
