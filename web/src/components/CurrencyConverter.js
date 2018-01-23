@@ -2,22 +2,22 @@ import React, { Component, Fragment } from "react";
 import { fetchCurrency } from "../api/currency";
 
 class CurrencyConverter extends Component {
-	state = {
-		enteredNumber: 1,
-		currency: null,
-		invert: true,
-		error: null
-	};
+  state = {
+    enteredNumber: 1,
+    currency: null,
+    invert: true,
+    error: null
+  };
 
-	componentDidMount() {
-		fetchCurrency()
-			.then(currency => {
-				this.setState({ currency: currency });
-			})
-			.catch(error => {
-				this.setState({ error: error });
-			});
-	}
+  componentDidMount() {
+    fetchCurrency()
+      .then(currency => {
+        this.setState({ currency: currency });
+      })
+      .catch(error => {
+        this.setState({ error: error });
+      });
+  }
 
   render() {
     const { enteredNumber, currency, invert, error } = this.state;
@@ -71,7 +71,7 @@ class CurrencyConverter extends Component {
               </div>
             </Fragment>
           ) : (
-            <p>Loading...</p>
+            <i className="fa fa-spinner fa-pulse fa-3x fa-fw" />
           )}
         </div>
       </div>

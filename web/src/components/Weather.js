@@ -43,7 +43,7 @@ class Weather extends Component {
               </div>
             </Fragment>
           ) : (
-            <p>Loading...</p>
+            <i className="fa fa-spinner fa-pulse fa-3x fa-fw" />
           )}
         </div>
       </div>
