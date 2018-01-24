@@ -1,15 +1,17 @@
 import React, { Fragment } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import SaleEditForm from "./SaleEditForm";
 
 function SaleList({
   sales,
   deleteSale,
-  editSale,
   multiplyNumbers,
   capitalizeWord,
   sortByDate,
-  customers
+  customers,
+  onClickEditSale,
+  editSaleObject
 }) {
   return (
     <div className="col ">
@@ -30,7 +32,7 @@ function SaleList({
                 </tr>
               </thead>
 
-              {sortByDate(sales, "date").map(sale => {
+              {sortByDate(sales, "date").map((sale, index) => {
                 return (
                   <Fragment key={sale._id}>
                     <tbody>
@@ -102,11 +104,11 @@ function SaleList({
                             id="edit"
                             style={{ cursor: "pointer" }}
                             title="Edit"
+                            data-toggle="modal"
+                            data-target={`#modaledit`}
                             onClick={() => {
-                              alert("edit under construction!");
+                              onClickEditSale(sale);
                             }}
-                            //   data-toggle="modal"
-                            //   data-target={`#modaledit-${sale._id}`}
                           />
                           <i
                             className="fa fa-trash med mx-1"
@@ -117,6 +119,7 @@ function SaleList({
                             data-target={`#modaldelete-${sale._id}`}
                           />
                           {/* Begin modal */}
+
                           {/* Begin Delete modal */}
                           <div
                             className="modal fade"
@@ -171,133 +174,6 @@ function SaleList({
                           {/* End modal */}
                         </td>
                       </tr>
-
-                      {/* <tr className="test">
-												<td className="test w-100">
-													<form
-														onSubmit={event => {
-															event.preventDefault();
-															const form = event.target;
-															const elements = form.elements;
-
-															const _id = elements._id.value; // sale _id
-															const customer = elements.customer.value; // customer._id
-															const totalPrice = elements.totalPrice.value;
-															const date = elements.date.value;
-															const products = [];
-															sale.products.map((m, index) => {
-																let product = {
-																	id: m.product._id,
-                                                   salePrice: m.salePrice,
-                                                   unitAmount: m.unitAmount
-																};
-																products.push(product);
-															});
-
-															const type = elements.type.value; // store or online
-
-															console.log({
-																_id,
-																customer,
-																totalPrice,
-																date,
-																products,
-																type
-															});
-															editSale({ _id, customer, totalPrice, date,  type });
-														}}
-													>
-														sale._id:{" "}
-														<input
-															type="text"
-															name="_id"
-															disabled
-															defaultValue={sale._id}
-														/>{" "}
-														<br />
-														date:{" "} */}
-                      {/* <DatePicker
-															dateFormat="YYYY-MM-DD"
-															selected={moment(sale.date)}
-															onChange={() => console.log(this.value)}
-															className="form-control"
-															name="date"
-															id="sale-edit-date"
-														/> */}
-                      {/* <input type="date" defaultValue={moment(sale.date).format('YYYY-MM-DD')}
-                                          name="date"/>
-														<br />
-														location: store:{" "}
-														<input
-															type="radio"
-															value="store"
-															name="type"
-															defaultChecked={sale.type === "store" ? true : false}
-														/>
-														online:{" "}
-														<input
-															type="radio"
-															value="online"
-															name="type"
-															defaultChecked={sale.type === "online" ? true : false}
-														/>
-														<br />
-														customer
-														<select defaultValue={sale.customer._id} name="customer">
-															{customers.map(customer => {
-																return (
-																	<option value={customer._id} key={customer._id}>
-																		{customer._id} - {customer.firstName}
-																	</option>
-																);
-															})}
-														</select>
-														{sale.products.map(s => {
-															return (
-																<div
-																	className="py-2 test2 my-3"
-																	key={s._id}
-																	style={{ whiteSpace: "nowrap" }}
-																>
-																	<input
-																		type="text"
-																		defaultValue={s.product._id}
-																	/>
-																	<span>({s.product.title})</span>
-																	<br />
-																	<span>
-																		salePrice:{" "}
-																		<input
-																			type="number"
-																			defaultValue={s.salePrice}
-																			className="myClass"
-																			id="myID"
-																		/>{" "}
-																	</span>
-																	<br />
-																	<span>
-																		unitAmount:{" "}
-																		<input
-																			type="number"
-																			defaultValue={s.unitAmount}
-																		/>{" "}
-																	</span>
-																	<br />
-																</div>
-															);
-														})}
-														<br />
-														total price:
-														<input
-															name="totalPrice"
-															defaultValue={sale.totalPrice}
-															key={sale.totalPrice}
-														/>
-														<br />
-														<button>Save changes</button>
-													</form>
-												</td>
-											</tr> */}
 
                       {/* Collapse sale begin */}
                       <tr>
@@ -359,6 +235,35 @@ function SaleList({
             </table>
           </section>
         )}
+      {/* Begin Edit modal*/}
+      <div
+        className="modal fade"
+        id={`modaledit`}
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Edit Sale</h5>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              {editSaleObject && <SaleEditForm saleObject={editSaleObject} />}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* End Eidt modal*/}
     </div>
   );
 }
