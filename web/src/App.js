@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from "react";
 import "./css/App.css";
-import "./css/CustomerTraffic.css";
-import "./css/CustomerTrafficForm.css";
 import "./css/SalesForm.css";
 import {
   BrowserRouter as Router,
@@ -45,7 +43,8 @@ import {
   dailyCustomerTraffics,
   listCustomerTraffics,
   createCustomerTraffics,
-  updateCustomerTraffic
+  updateCustomerTraffic,
+  deleteCustomerTraffics
 } from "./api/customerTraffics";
 
 import {
@@ -521,6 +520,39 @@ class App extends Component {
     });
   };
 
+  onDeleteCustomerTraffic = id => {
+    deleteCustomerTraffics(id)
+      .then(traffic => {
+        this.load();
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  onEditTraffic = data => {
+    updateCustomerTraffic(data._id, data)
+      .then(updatedTraffic => {
+        window.location.href = "/traffic";
+        this.setState(prevState => {
+          // Replace in existing products array
+          const updatedTraffic = prevState.traffics.map(traffic => {
+            if (traffic._id === updatedTraffic._id) {
+              return updatedTraffic;
+            } else {
+              return traffic;
+            }
+          });
+          return {
+            traffics: updatedTraffic
+          };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
   onImageReset = () => {
     this.setState({ chosenImage: null });
   };
@@ -723,12 +755,16 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/customertraffic"
+                    path="/traffic"
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        {!!traffics ? (
-                          <CustomerTraffic traffics={traffics} />
+                        {!!customerTraffics ? (
+                          <CustomerTraffic
+                            traffic={customerTraffics}
+                            deleteTraffic={this.onDeleteCustomerTraffic}
+                            updateTraffic={this.onEditTraffic}
+                          />
                         ) : (
                           <p>Loading</p>
                         )}

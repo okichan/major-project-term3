@@ -7,7 +7,12 @@ const customerTrafficSchema = new mongoose.Schema({
     min: 0
   },
   origin: String,
-  isChef: String
+  isChef: String,
+  note: String,
+  duration: {
+    type: Number,
+    min: 0
+  }
 });
 
 customerTrafficSchema.plugin(timestamps);

@@ -7,7 +7,9 @@ const originObject = {
   WalkIn: "Walk In",
   HotelGuest: "QT Hotel Guest",
   Return: "Newspaper Article",
-  Unknown: "Other / Unknown"
+  Unknown: "Other / Unknown",
+  Return: "Return",
+  Traveler: "Traveller"
 };
 
 function CustomerTrafficForm({ onChange }) {
@@ -23,8 +25,10 @@ function CustomerTrafficForm({ onChange }) {
               const number = e.target.CustomerNumber.value;
               const isChef = e.target.chefSelect.value;
               const origin = e.target.originSelect.value;
+              const duration = e.target.duration.value;
+              const note = e.target.note.value;
 
-              onChange({ number, origin, isChef });
+              onChange({ number, origin, isChef, duration, note });
             }}
           >
             <div className="form-group">
@@ -39,23 +43,38 @@ function CustomerTrafficForm({ onChange }) {
                 })}
               </select>
             </div>
-            <div className="form-check">
+            <div className="form-check pl-0">
               <label htmlFor="chefSelect">Is chef?</label>
               <select className="form-control" id="chefSelect">
-                <option value={"unknown"}>I don't know</option>
-                <option value={"true"}>Yes</option>
-                <option value={"false"}>No</option>
+                <option value={"Unknown"}>I don't know</option>
+                <option value={"Chef"}>Yes</option>
+                <option value={"Not Chef"}>No</option>
               </select>
             </div>
-            <div className="form-check mb-3">
+            <div className="form-check pl-0">
               <label htmlFor="originSelect">Customers origin</label>
               <select className="form-control" id="originSelect">
                 {Object.keys(originObject).map(originkey => {
                   return (
-                    <option value={originkey} key={originkey}>{originObject[originkey]}</option>
+                    <option value={originkey} key={originkey}>
+                      {originObject[originkey]}
+                    </option>
                   );
                 })}
               </select>
+            </div>
+            <div class="form-group">
+              <label for="duration">Duration</label>
+              <input
+                class="form-control"
+                type="number"
+                id="duration"
+                placeholder="Number"
+              />
+            </div>
+            <div class="form-group">
+              <label for="note">Notes</label>
+              <textarea class="form-control" id="note" rows="4" />
             </div>
             <button type="submit" className="btn btn-primary pull-right">
               Save
