@@ -92,7 +92,8 @@ class App extends Component {
     weekRangeKnife: 10,
     weekRangeSharp: 10,
     chosenImage: null,
-    sortedCustomers: null
+    sortedCustomers: null,
+    editSale: null
   };
 
   // for image uploading
@@ -554,6 +555,10 @@ class App extends Component {
       });
   };
 
+  onChangeEditSale = data => {
+    this.setState({ editSale: data });
+  };
+
   render() {
     const {
       error,
@@ -577,7 +582,8 @@ class App extends Component {
       weekRangeKnife,
       weekRangeSharp,
       chosenImage,
-      sortedCustomers
+      sortedCustomers,
+      editSale
     } = this.state;
     const signedIn = !!decodedToken;
 
@@ -804,7 +810,8 @@ class App extends Component {
                           sales={sales}
                           customers={customers}
                           deleteSale={this.onDeleteSale}
-                          editSale={this.onEditSale}
+                          onClickEditSale={this.onChangeEditSale}
+                          editSaleObject={editSale}
                         />
                       </Fragment>
                     ))}
