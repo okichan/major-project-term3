@@ -1,6 +1,12 @@
 import React, { Component, Fragment } from "react";
 import "./css/App.css";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+// import "./css/SalesForm.css";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ProductList from "./components/ProductList";
@@ -33,9 +39,11 @@ import {
 } from "./api/sales";
 
 import {
-	dailyCustomerTraffics,
-	listCustomerTraffics,
-	createCustomerTraffics
+  dailyCustomerTraffics,
+  listCustomerTraffics,
+  createCustomerTraffics,
+  updateCustomerTraffic,
+  deleteCustomerTraffics
 } from "./api/customerTraffics";
 
 import {
@@ -510,6 +518,39 @@ class App extends Component {
     });
   };
 
+  onDeleteCustomerTraffic = id => {
+    deleteCustomerTraffics(id)
+      .then(traffic => {
+        this.load();
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  onEditTraffic = data => {
+    updateCustomerTraffic(data._id, data)
+      .then(updatedTraffic => {
+        window.location.href = "/traffic";
+        this.setState(prevState => {
+          // Replace in existing products array
+          const updatedTraffic = prevState.traffics.map(traffic => {
+            if (traffic._id === updatedTraffic._id) {
+              return updatedTraffic;
+            } else {
+              return traffic;
+            }
+          });
+          return {
+            traffics: updatedTraffic
+          };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
   onImageReset = () => {
     this.setState({ chosenImage: null });
   };
@@ -728,12 +769,16 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/customertraffic"
+                    path="/traffic"
                     exact
                     render={requireAuth(() => (
                       <Fragment>
-                        {!!traffics ? (
-                          <CustomerTraffic traffics={traffics} />
+                        {!!customerTraffics ? (
+                          <CustomerTraffic
+                            traffic={customerTraffics}
+                            deleteTraffic={this.onDeleteCustomerTraffic}
+                            updateTraffic={this.onEditTraffic}
+                          />
                         ) : (
                           <p>Loading</p>
                         )}
