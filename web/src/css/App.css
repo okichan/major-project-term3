@@ -62,6 +62,10 @@ td a:hover {
   color: red;
 }
 
+#trash a:hover {
+  color: red;
+}
+
 #invert {
   transition: 0.4s ease;
 }
@@ -175,6 +179,12 @@ input[type="range"]::-webkit-slider-thumb:active {
 
 #greeting {
    display: none;
+}
+
+.amount-input {
+   width: 50px;
+   border: 1px solid rgb(207, 207, 207);
+   text-align: center
 }
 
 @media (min-width: 768px) {

@@ -324,7 +324,7 @@ function ProductList({
                           <div className="row">
                             <div className="col-3">
                               <p>Total sales: {product.totalSales}</p>
-                              <p>Total Orders: {product.totalOrders}</p>
+                              {/* <p>Total Orders: {product.totalOrders}</p> */}
                             </div>
                             <div className="col text-center">
                               {product.image ? (

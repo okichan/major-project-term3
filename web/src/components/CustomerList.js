@@ -3,14 +3,15 @@ import moment from "moment";
 import chef from "../chef.png";
 
 const customerOriginPicks = {
-  Facebook: "SNS (Facebook, Twitter etc)",
-  OnlineSearch: "Online",
-  Referral: "Family / Friend / Colleague",
-  Newspaper: "Newspaper Article",
-  WalkIn: "Walk In",
-  HotelGuest: "QT Hotel Guest",
-  Unknown: "Other / Unknown"
-};
+   Facebook: "SNS (Facebook, Twitter etc)",
+   OnlineSearch: "Online Search",
+   Referral: "Referral",
+   Newspaper: "Newspaper Article",
+   WalkIn: "Walk In",
+   HotelGuest: "QT Hotel Guest",
+   Return: "Return",
+   Unknown: "Other / Unknown"
+ };
 
 function CustomerList({
   sortedCustomers,
@@ -498,12 +499,12 @@ function CustomerList({
                                             </td>
                                             <td>{product.unitAmount}</td>
                                             <td>
-                                              {products &&
+                                              ${products &&
                                                 findProduct(product.product)
                                                   .price}
                                             </td>
                                             <td>
-                                              {products &&
+                                              ${products &&
                                                 multiplyNumbers(
                                                   findProduct(product.product)
                                                     .price,

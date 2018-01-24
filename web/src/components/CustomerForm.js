@@ -3,8 +3,8 @@ import chef from "../chef.png";
 
 const customerOriginPicks = {
   Facebook: "SNS (Facebook, Twitter etc)",
-  OnlineSearch: "Online",
-  Referral: "Family / Friend / Colleague",
+  OnlineSearch: "Online Search",
+  Referral: "Referral",
   Newspaper: "Newspaper Article",
   WalkIn: "Walk In",
   HotelGuest: "QT Hotel Guest",
@@ -53,7 +53,7 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
           <div className="form-group radio" id="radio">
             <span className="mr-5">Gender</span>
             <div className="form-check form-check-inline">
-              <label className="form-check-label">
+              <label className="form-check-label pointer">
                 <input
                   required
                   className="form-check-input"
@@ -65,7 +65,7 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
               </label>
             </div>
             <div className="form-check form-check-inline">
-              <label className="form-check-label">
+              <label className="form-check-label pointer">
                 <input
                   className="form-check-input"
                   value="female"
@@ -123,7 +123,7 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
             {Object.keys(customerOriginPicks).map((key, index) => {
               return (
                 <div className="form-check m-2" key={index}>
-                  <label className="form-check-label" key={key}>
+                  <label className="form-check-label pointer" key={key}>
                     <input
                       required
                       type="radio"
@@ -141,14 +141,17 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
 
           <div className="form-group">
             <div className="form-check form-check-inline">
-              <img src={chef} style={{ width: "25px" }} alt="logo" />
+            <label className="pointer">
               <input
                 className="form-check-input ml-2"
                 type="checkbox"
                 name="isChef"
-              />
+                />
+              <img src={chef} style={{ width: "25px" }} alt="logo" />
+                </label>
             </div>
           </div>
+
 
           <div className="form-group">
             <label>Notes</label>
