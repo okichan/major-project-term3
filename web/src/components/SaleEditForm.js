@@ -286,7 +286,11 @@ class SaleEditForm extends Component {
 
                     if (
                       Number(correspondingProduct.stock) +
-                        Number(correspondingPreviousProduct.unitAmount) <
+                        Number(
+                          correspondingPreviousProduct
+                            ? correspondingPreviousProduct.unitAmount
+                            : 0
+                        ) <
                       Number(updatedUnitAmount[i])
                     ) {
                       // stock validation failed
