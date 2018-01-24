@@ -1,5 +1,7 @@
 # Tanto store management system
 
+![Tanto Logo](https://image.ibb.co/gHzsDb/logo.png "Logo Title Text")
+
 ## Coder Factory term 3 major project
 
 ## Table of Contents
@@ -56,15 +58,25 @@ The solution that we have come up with collectively is an application that can a
 
 [Table of Contents](#table-of-contents)
 
+## User Stories
+
+[Trello](https://trello.com/b/uPW701tC/term-3-major-project-tanto-knife-store)
+
+Our user stories in regards to the application can be view on our public board on Trello.
+
+## User Flow Diagrams
+
+![User Flow Diagram](https://image.ibb.co/ghtNeG/Tanto_workflow_diagram.png "User Flow Diagram")
+
+[What we currency have](https://www.draw.io/?state=%7B%22ids%22:%5B%221UZkemIKUpsX8fjQ_omSHRfdIjl-uCjzu%22%5D,%22action%22:%22open%22,%22userId%22:%22105729896884967972758%22%7D#G1UZkemIKUpsX8fjQ_omSHRfdIjl-uCjzu)
+
+[Table of Contents](#table-of-contents)
+
 ## Design and Solution
 
 [Figma](https://www.figma.com/file/dtRqWfQ8bnwpx6a8yMAm6z5V/Term-3-major-project)
 
-[Table of Contents](#table-of-contents)
-
-## User Flow Diagrams
-
-[What we currency have](https://www.draw.io/?state=%7B%22ids%22:%5B%221UZkemIKUpsX8fjQ_omSHRfdIjl-uCjzu%22%5D,%22action%22:%22open%22,%22userId%22:%22105729896884967972758%22%7D#G1UZkemIKUpsX8fjQ_omSHRfdIjl-uCjzu)
+For our wireframes and initial designs, this can be found in the link about in our Figma
 
 [Table of Contents](#table-of-contents)
 
