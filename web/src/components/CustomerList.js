@@ -470,8 +470,8 @@ function CustomerList({
                                   <th scope="col">Date</th>
                                   <th scope="col">#</th>
                                   <th scope="col">Product</th>
+                                  <th scope="col">RRP</th>
                                   <th scope="col">Quantity</th>
-                                  <th scope="col">Price</th>
                                   <th scope="col">Total</th>
                                 </tr>
                               </thead>
@@ -497,12 +497,12 @@ function CustomerList({
                                                 findProduct(product.product)
                                                   .title}
                                             </td>
-                                            <td>{product.unitAmount}</td>
                                             <td>
                                               ${products &&
                                                 findProduct(product.product)
-                                                  .price}
+                                                .price}
                                             </td>
+                                                <td>{product.unitAmount}</td>
                                             <td>
                                               ${products &&
                                                 multiplyNumbers(

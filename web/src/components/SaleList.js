@@ -183,9 +183,9 @@ function SaleList({
                               <table className="table">
                                 <thead>
                                   <tr className="table-light">
-                                    <th scope="col">Product Code</th>
+                                    <th scope="col">Code</th>
                                     <th scope="col">Product</th>
-                                    <th scope="col">Price</th>
+                                    <th scope="col">RRP</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Total</th>
                                     <th />
@@ -206,7 +206,7 @@ function SaleList({
                                             : "deleted"}
                                         </td>
                                         <td>
-                                          {s.product
+                                             ${s.product
                                             ? s.product.price
                                             : "deleted"}
                                         </td>
@@ -214,7 +214,7 @@ function SaleList({
                                           {s.product ? s.unitAmount : "deleted"}
                                         </td>
                                         <td>
-                                          {multiplyNumbers(
+                                          ${multiplyNumbers(
                                             s.product ? s.product.price : 0,
                                             s.unitAmount
                                           )}
