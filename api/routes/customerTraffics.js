@@ -5,18 +5,6 @@ const moment = require("moment");
 
 const router = new express.Router();
 
-// get weather data from api
-getWeatherByDate = date => {
-  return weatherApi
-    .get(`/history.json?key=${process.env.WEATHER_API}&q=Melbourne&dt=${date}`)
-    .then(weather => {
-      return weather.data.forecast.forecastday[0];
-    })
-    .catch(error => {
-      console.log(error.response);
-    });
-};
-
 // get list
 router.get("/customerTraffics", (req, res) => {
   const { date } = req.query;
