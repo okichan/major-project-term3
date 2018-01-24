@@ -9,7 +9,6 @@ import ProductFilterForNewSale from "./ProductFilterForNewSale";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import jump from "jump.js";
-import { debuglog } from "util";
 
 class SalesFormV2 extends Component {
 	constructor(props) {
@@ -153,12 +152,11 @@ class SalesFormV2 extends Component {
 			product["unitAmount"] = unitAmount[index];
 			return products.push(product);
 		});
-      debugger
+
 		this.onCreateSale({ date, products, type, customer, totalPrice });
 	}
 
 	onCreateSale = saleData => {
-      console.log(saleData)
 		createSale(saleData)
 			.then(newSale => {
 				window.location.href = "/sales";
@@ -318,7 +316,7 @@ class SalesFormV2 extends Component {
 			<Fragment>
 				{customers &&
 					products && (
-						<form onSubmit={this.handleSubmit.bind(this)} className="col-md-8 col-lg-6 mx-auto mb-5">
+						<form onSubmit={this.handleSubmit} className="col-md-8 col-lg-6 mx-auto mb-5">
 							<div className="form-group">
 								<label>Date</label>
 								<DatePicker
