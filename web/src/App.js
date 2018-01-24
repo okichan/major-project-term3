@@ -60,8 +60,10 @@ import {
 	deleteCustomer
 } from "./api/customers";
 import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
+import { ExportRawdata } from "./components/ExportRawdata";
 import axios from "axios";
 import moment from "moment";
+
 
 class App extends Component {
   state = {
@@ -822,9 +824,9 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/report-monthly"
+                    path="/rawdata"
                     exact
-                    render={requireAuth(() => <div />)}
+                    render={requireAuth(() => <ExportRawdata />)}
                   />
 
                   <Route
