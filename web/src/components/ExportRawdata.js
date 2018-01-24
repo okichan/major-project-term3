@@ -24,7 +24,7 @@ export class ExportRawdata extends React.Component {
 	render() {
 		const { customers, products, dataSet2 } = this.state;
 		return (
-			<ExcelFile>
+			<ExcelFile element={ <p>Raw data</p> }>
 				<ExcelSheet data={products} name="Products">
 					<ExcelColumn label="Name" value="title" />
 					<ExcelColumn label="Category" value="category" />
