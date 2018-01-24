@@ -1,15 +1,14 @@
 import React from "react";
 
 const originObject = {
-  Referral: "Family / Friend / Colleague",
-  OnlineSearch: "Online",
-  Facebook: "SNS (Facebook, Twitter etc)",
-  WalkIn: "Walk In",
-  HotelGuest: "QT Hotel Guest",
-  Return: "Newspaper Article",
-  Unknown: "Other / Unknown",
-  Return: "Return",
-  Traveler: "Traveller"
+   Facebook: "SNS (Facebook, Twitter etc)",
+   OnlineSearch: "Online Search",
+   Referral: "Referral",
+   Newspaper: "Newspaper Article",
+   WalkIn: "Walk In",
+   HotelGuest: "QT Hotel Guest",
+   Return: "Return",
+   Unknown: "Other / Unknown"
 };
 
 function CustomerTraffic({ traffic, deleteTraffic, updateTraffic }) {

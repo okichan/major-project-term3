@@ -771,7 +771,7 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/traffic"
+                    path="/customer-traffic"
                     exact
                     render={requireAuth(() => (
                       <Fragment>
