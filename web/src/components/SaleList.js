@@ -28,7 +28,7 @@ function SaleList({
                   <th scope="col">Location</th>
                   <th scope="col">Operator</th>
                   <th scope="col">Customer</th>
-                  <th scope="col">Options</th>
+                  <th scope="col" />
                 </tr>
               </thead>
 
@@ -206,7 +206,7 @@ function SaleList({
                                             : "deleted"}
                                         </td>
                                         <td>
-                                             ${s.product
+                                          ${s.product
                                             ? s.product.price
                                             : "deleted"}
                                         </td>
