@@ -31,11 +31,11 @@ import Error from "./components/Error";
 import { signIn, signUp, signOutNow } from "./api/auth";
 import { getDecodedToken } from "./api/token";
 import {
-	listSales,
-	deleteSale,
-	updateSale,
-	dailySales,
-	monthRangeSales
+  listSales,
+  deleteSale,
+  updateSale,
+  dailySales,
+  monthRangeSales
 } from "./api/sales";
 
 import {
@@ -47,23 +47,26 @@ import {
 } from "./api/customerTraffics";
 
 import {
-	listProducts,
-	createProduct,
-	updateProduct,
-	deleteProduct
+  listProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct
 } from "./api/products";
 import {
-	listFilteredCustomers,
-	listCustomers,
-	createCustomer,
-	updateCustomer,
-	deleteCustomer
+  listFilteredCustomers,
+  listCustomers,
+  createCustomer,
+  updateCustomer,
+  deleteCustomer
 } from "./api/customers";
-import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
+import {
+  listNotifications,
+  updateNotifications,
+  deleteNotifications
+} from "./api/notifications";
 import { ExportRawdata } from "./components/ExportRawdata";
 import axios from "axios";
 import moment from "moment";
-
 
 class App extends Component {
   state = {
@@ -100,18 +103,14 @@ class App extends Component {
       formData.append("file", file);
       formData.append("tags", `codeinfuse, medium, gist`);
       formData.append("upload_preset", "drfrsbsl"); // Replace the preset name with your own
-      formData.append("api_key", "921677816388229"); // Replace API key with your own Cloudinary key
+      formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY); // Replace API key with your own Cloudinary key
       formData.append("timestamp", (Date.now() / 1000) | 0);
 
       // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
       return axios
-        .post(
-          "https://api.cloudinary.com/v1_1/dbbim9cy0/image/upload",
-          formData,
-          {
-            headers: { "X-Requested-With": "XMLHttpRequest" }
-          }
-        )
+        .post(process.env.REACT_APP_CLOUDINARY_ADDRESS, formData, {
+          headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
         .then(response => {
           const data = response.data;
           const fileURL = data.secure_url; // You should store this URL for future references in your app

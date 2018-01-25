@@ -16,7 +16,7 @@ function CustomerTrafficList({ traffic, deleteTraffic, updateTraffic }) {
   return (
     <div>
       <h1 className="text-center trafficHeading mt-5 mb-4">Customer Traffic</h1>
-      <table className="table table-hover table-sm text-center">
+      <table className="table table-hover table-sm text-center table-responsive">
         <thead>
           <tr>
             <th scope="col">Date</th>
