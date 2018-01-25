@@ -22,7 +22,7 @@ import SideBar from "./components/SideBar";
 import LinkButton from "./components/LinkButton";
 import CustomerForm from "./components/CustomerForm";
 import Home from "./components/Home";
-import CustomerTraffic from "./components/CustomerTraffic";
+import CustomerTrafficList from "./components/CustomerTrafficList";
 import NotificationList from "./components/NotificationList";
 import DailyReport from "./components/DailyReport";
 import WeeklyReport from "./components/WeeklyReport";
@@ -60,8 +60,10 @@ import {
 	deleteCustomer
 } from "./api/customers";
 import { listNotifications, updateNotifications, deleteNotifications } from "./api/notifications";
+import { ExportRawdata } from "./components/ExportRawdata";
 import axios from "axios";
 import moment from "moment";
+
 
 class App extends Component {
   state = {
@@ -769,12 +771,12 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/traffic"
+                    path="/customer-traffic"
                     exact
                     render={requireAuth(() => (
                       <Fragment>
                         {!!customerTraffics ? (
-                          <CustomerTraffic
+                          <CustomerTrafficList
                             traffic={customerTraffics}
                             deleteTraffic={this.onDeleteCustomerTraffic}
                             updateTraffic={this.onEditTraffic}
@@ -822,9 +824,9 @@ class App extends Component {
                   />
 
                   <Route
-                    path="/report-monthly"
+                    path="/rawdata"
                     exact
-                    render={requireAuth(() => <div />)}
+                    render={requireAuth(() => <ExportRawdata />)}
                   />
 
                   <Route

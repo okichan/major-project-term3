@@ -279,99 +279,65 @@ router.put("/sale/:id", authMiddleware.requireJWT, (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
 
-  Sale.findById(id)
-    .then(originalSale => {
-      Sale.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
-        .then(updatedSale => {
-          if (updatedSale) {
-            res.json(updatedSale);
-
-            //calculate the stock and totalSales for sales
-            updatedSale.products.forEach(updatedProductInfo => {
-              if (updatedProductInfo.product) {
-                // find each product for updateData
-                Product.findById(updatedProductInfo.product)
-                  .then(product => {
-                    if (
-                      originalSale.products.length < updatedSale.products.length
-                    ) {
-                      // find originalSale data to reset stock and totalSales
-                      const originalSaleProduct = originalSale.products.filter(
-                        saleProduct => {
-                          return `${saleProduct.product}` === `${product._id}`;
-                        }
-                      );
-
-                      if (originalSaleProduct.length !== 0) {
-                        // need to reset with original data
-                        const originalSaleAmount =
-                          originalSaleProduct[0].unitAmount;
-                        // set it as it used to be
-                        product.stock += originalSaleAmount;
-                        product.totalSales -= originalSaleAmount;
-                      }
-                      // reset not needed
-                      // calculate with new sale data
-                      product.stock -= updatedProductInfo.unitAmount;
-                      product.totalSales += updatedProductInfo.unitAmount;
-
-                      product.save();
-                    } else {
-                      // if something is deleted
-                      // find canceled products
-                      const cancelProducts = originalSale.products.filter(
-                        originalPro => {
-                          if (originalPro.product) {
-                            return (
-                              `${product._id}` !== `${originalPro.product}`
-                            );
-                          } else {
-                            return;
-                          }
-                        }
-                      );
-                      cancelProducts.forEach(cancelProduct => {
-                        Product.findByIdAndUpdate(
-                          cancelProduct.product,
-                          {
-                            $inc: {
-                              stock: cancelProduct.unitAmount,
-                              totalSales: -cancelProduct.unitAmount
-                            }
-                          },
-                          { new: true }
-                        ).exec();
-                      });
+  Sale.findById(id).then(originalSale => {
+    // calculate stock and total sales
+    originalSale.products.forEach(productInfo => {
+      // reset the stock and totalSales
+      Product.findByIdAndUpdate(
+        productInfo && productInfo.product,
+        {
+          $inc: {
+            stock: productInfo.unitAmount,
+            totalSales: -productInfo.unitAmount
+          }
+        },
+        { new: true }
+      )
+        .then(data => {
+          // update the sale
+          Sale.findByIdAndUpdate(id, updateData, {
+            new: true,
+            runValidators: true
+          }).then(updateSale => {
+            if (updateSale) {
+              res.json(updateSale);
+              // caluculate stock and totalSales with update data
+              updateSale.products.forEach(productInfo => {
+                // reset the stock and totalSales
+                Product.findByIdAndUpdate(
+                  productInfo && productInfo.product,
+                  {
+                    $inc: {
+                      stock: -productInfo.unitAmount,
+                      totalSales: productInfo.unitAmount
                     }
+                  },
+                  { new: true }
+                )
+                  .then(date => {
+                    console.log("update is done!!");
                   })
                   .catch(error => {
-                    res.status(404).json({
-                      error: new Error(
-                        `Sale with id '${
-                          updatedProductInfo.products
-                        }' not found`
-                      )
-                    });
+                    res.jason({ error });
+                    console.error(error.message);
                   });
-              } else {
-                return;
-              }
+              });
+            } else {
+              res.status(404).json({
+                error: new Error(`Sale with id '${id}' not found`)
+              });
+            }
+            // check if stock notification is needed
+            updateSale.products.forEach(product => {
+              stockAndTotalSalesCalculator(product.product, product.unitAmount);
             });
-          } else {
-            res.status(404).json({
-              error: new Error(`Sale with id '${id}' not found`)
-            });
-          }
+          });
         })
         .catch(error => {
-          res.status(400).json({ error });
+          console.error(error.message);
         });
-    })
-    .catch(error => {
-      res.status(404).json({
-        error: new Error(`Sale with id '${id}' not found`)
-      });
     });
+  });
 });
 
 // Delete

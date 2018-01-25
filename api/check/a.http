@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9raTEwQG9raS5jb20iLCJpYXQiOjE1MTY1OTg4MjQsImV4cCI6MTUxNzIwMzYyNCwic3ViIjoiNWE2MDI5NjZlODdlYjMzZGE4ZTRhZWZmIn0.29ZVlM0I71gOtjFOLqFUIhcmKGuRC7BOKIRgPcTW8OE
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9raTEwQG9raS5jb20iLCJ1c2VyTmFtZSI6Im9raTEwIiwiaWF0IjoxNTE2Nzg1MTI4LCJleHAiOjE1MTczODk5MjgsInN1YiI6IjVhNjAyOTY2ZTg3ZWIzM2RhOGU0YWVmZiJ9.lSgmBHw9UHp9CDMgcLwbOWBbgBmQpu3HwdZI9xBI1Sg
 
 ### Sign in
 POST https://tanto-api.now.sh/auth
@@ -7,15 +7,6 @@ Content-Type: application/json
 {
   "email": "test@test.com",
   "password": "12345"
-}
-
-### Sign in
-POST http://localhost:7000/auth
-Content-Type: application/json
-
-{
-  "email": "chymeng24@gmail.com",
-  "password": "123456"
 }
 ### Sign in
 POST http://localhost:7000/auth
@@ -71,16 +62,16 @@ Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 ### Update product
-PUT http://localhost:7000/product/5a54e6dce51e644448cd7811
+PUT http://localhost:7000/product/5a6848a31eec813a98b53109
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
-  "code": "41109"
+  "image": "https://res.cloudinary.com/dbbim9cy0/image/upload/v1516784808/qiatt9c9ldzuolzw05tl.jpg"
 }
 
 ### Delete product
-DELETE http://localhost:7000/product/5a54e6dce51e644448cd7811
+DELETE http://localhost:7000/product/5a6848a31eec813a98b53104
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
@@ -156,26 +147,3 @@ Content-Type: application/json
    {"product": "5a636f31d0cee30d18b48b77", "salePrice": "444", "unitAmount": "4"},
    {"product": "5a636f4cd0cee30d18b48b78", "salePrice": "555", "unitAmount": "5"}
     ],
-{
-   "products": [
-        {"product": "5a600e452024b62c82d613ad", "salePrice": "120", "unitAmount": "10"}
-    ]
-}
-
-### Create customer traffic
-POST http://localhost:7000/customerTraffics
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyNDU4NTAsImV4cCI6MTUxNjg1MDY1MCwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.ZmFs-VTCHsyDNc8iEG5AIzHe2Jlf-n05XKdTVcFa_cc
-Content-Type: application/json
-
-{"number": 5,
-"duration": 10,
-"origin": "Friend",
-"isChef": "true",
-"restaurant": "Vue de monde",
-"note": "Customer was very rude"
-}
-
-### Delete customer Traffic
-DELETE http://localhost:7000/customertraffic/5a67d8ce823e715a71edd70e
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoeW1lbmcyNEBnbWFpbC5jb20iLCJpYXQiOjE1MTY3NTU1ODYsImV4cCI6MTUxNzM2MDM4Niwic3ViIjoiNWE1MmY3OWMyZmMzNTA4YzZlZTBiZjEzIn0.w4um0OR3PqheDdzxMqC1XKwH8AwPSu47bUhOoYskV0Q
-Content-Type: application/json

@@ -15,7 +15,11 @@ function improveMessage(message) {
 }
 
 function Error({ error }) {
-  return <p>{improveMessage(error.message)}</p>;
+  return (
+    <p className="alert alert-danger text-center" role="alert">
+      {improveMessage(error.message)}
+    </p>
+  );
 }
 
 export default Error;

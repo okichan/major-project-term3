@@ -30,6 +30,7 @@ class CurrencyConverter extends Component {
               <h3>Currency</h3>
               <div className="row form-inline text-center">
                 <input
+                type="number"
                   className="form-control w-25 mr-1"
                   value={enteredNumber}
                   aria-label="entered number"

@@ -44,7 +44,22 @@ router.get("/customerTraffics", (req, res) => {
 router.post("/customerTraffics", authMiddleware.requireJWT, (req, res) => {
   CustomerTraffic.create(req.body)
     .then(customerTraffic => {
-      res.status(201).json(customerTraffic);
+      CustomerTraffic.findByIdAndUpdate(
+        customerTraffic._id,
+        {
+          createdAt: moment
+            .utc()
+            .add(11, "hours")
+            .toDate()
+        },
+        { new: true }
+      )
+        .then(data => {
+          res.status(201).json(customerTraffic);
+        })
+        .catch(error => {
+          res.json({ error });
+        });
     })
     .catch(error => {
       res.status(400).json({ error });

@@ -1,23 +1,25 @@
 import React from "react";
 
 const originObject = {
-  Referral: "Family / Friend / Colleague",
-  OnlineSearch: "Online",
   Facebook: "SNS (Facebook, Twitter etc)",
+  OnlineSearch: "Online Search",
+  Referral: "Referral",
+  Newspaper: "Newspaper Article",
   WalkIn: "Walk In",
   HotelGuest: "QT Hotel Guest",
-  Return: "Newspaper Article",
-  Unknown: "Other / Unknown",
   Return: "Return",
-  Traveler: "Traveller"
+  Unknown: "Other / Unknown"
 };
 
 function CustomerTrafficForm({ onChange }) {
   return (
     <div className="row">
       <div className="mx-auto m-1">
-        <h1 className="text-center">Customer Traffic</h1>
-        <div className="trafficForm">
+        <h2 className="text-center">Customer Traffic</h2>
+        <small className="float-right ">
+          <a href="/customer-traffic">view all</a>
+        </small>
+        <div className="trafficForm mt-4">
           <form
             className="form"
             onSubmit={e => {
@@ -43,15 +45,15 @@ function CustomerTrafficForm({ onChange }) {
                 })}
               </select>
             </div>
-            <div className="form-check pl-0">
+            <div className="form-group">
               <label htmlFor="chefSelect">Is chef?</label>
               <select className="form-control" id="chefSelect">
                 <option value={"Unknown"}>I don't know</option>
-                <option value={"Chef"}>Yes</option>
-                <option value={"Not Chef"}>No</option>
+                <option value={"true"}>Yes</option>
+                <option value={"false"}>No</option>
               </select>
             </div>
-            <div className="form-check pl-0">
+            <div className="form-group">
               <label htmlFor="originSelect">Customers origin</label>
               <select className="form-control" id="originSelect">
                 {Object.keys(originObject).map(originkey => {
@@ -63,18 +65,19 @@ function CustomerTrafficForm({ onChange }) {
                 })}
               </select>
             </div>
-            <div class="form-group">
-              <label for="duration">Duration (minutes)</label>
+            <div className="form-group">
+              <label htmlFor="duration">Duration (minutes)</label>
               <input
-                class="form-control"
+                className="form-control  col-md-4"
                 type="number"
                 id="duration"
-                placeholder="Number"
+                placeholder="15"
+                min="0"
               />
             </div>
-            <div class="form-group">
-              <label for="note">Notes</label>
-              <textarea class="form-control" id="note" rows="4" />
+            <div className="form-group">
+              <label htmlFor="note">Notes</label>
+              <textarea className="form-control" id="note" rows="4" />
             </div>
             <button type="submit" className="btn btn-primary pull-right">
               Save
