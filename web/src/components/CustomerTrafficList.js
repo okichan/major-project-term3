@@ -12,7 +12,7 @@ const originObject = {
   Unknown: "Other / Unknown"
 };
 
-function CustomerTraffic({ traffic, deleteTraffic, updateTraffic }) {
+function CustomerTrafficList({ traffic, deleteTraffic, updateTraffic }) {
   return (
     <div>
       <h1 className="text-center trafficHeading mt-5 mb-4">Customer Traffic</h1>
@@ -279,4 +279,4 @@ function CustomerTraffic({ traffic, deleteTraffic, updateTraffic }) {
   );
 }
 
-export default CustomerTraffic;
+export default CustomerTrafficList;

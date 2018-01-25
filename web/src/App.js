@@ -22,7 +22,7 @@ import SideBar from "./components/SideBar";
 import LinkButton from "./components/LinkButton";
 import CustomerForm from "./components/CustomerForm";
 import Home from "./components/Home";
-import CustomerTraffic from "./components/CustomerTraffic";
+import CustomerTrafficList from "./components/CustomerTrafficList";
 import NotificationList from "./components/NotificationList";
 import DailyReport from "./components/DailyReport";
 import WeeklyReport from "./components/WeeklyReport";
@@ -776,7 +776,7 @@ class App extends Component {
                     render={requireAuth(() => (
                       <Fragment>
                         {!!customerTraffics ? (
-                          <CustomerTraffic
+                          <CustomerTrafficList
                             traffic={customerTraffics}
                             deleteTraffic={this.onDeleteCustomerTraffic}
                             updateTraffic={this.onEditTraffic}
