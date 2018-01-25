@@ -24,7 +24,7 @@ export class ExportRawdata extends React.Component {
 	render() {
 		const { customers, products, dataSet2 } = this.state;
 		return (
-			<ExcelFile  filename="rawdata.xlsx" element={ <button className="btn btn-info m-3">Get rawdata</button> }>
+			<ExcelFile  filename="rawdata.xlsx" element={ <button className="btn btn-info">Get rawdata</button> }>
 				<ExcelSheet data={products} name="Products">
 					<ExcelColumn label="Name" value="title" />
 					<ExcelColumn label="Category" value="category" />

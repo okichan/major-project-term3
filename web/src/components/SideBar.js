@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ExportRawdata } from "../components/ExportRawdata";
 
 function SideBar({ signedIn }) {
 	return (
@@ -33,11 +34,45 @@ function SideBar({ signedIn }) {
 						</li>
 						<li className="nav-item">
 							<Link
-								to="/rawdata"
+								to="#"
 								className="nav-link ml-3"
+								data-toggle="modal"
+								data-target="#rawdata"
 							>
-                     Rawdata
+								Rawdata
 							</Link>
+								{/* beginning of modal */}
+								<div className="modal fade" id="rawdata">
+									<div className="modal-dialog" role="document">
+										<div className="modal-content" id="rawdata-modal-content">
+											<div className="modal-header">
+												<h5 className="modal-title">Rawdata</h5>
+												<button
+													type="button"
+													className="close"
+													data-dismiss="modal"
+													aria-label="Close"
+												>
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div className="modal-body" >
+												<p>Do you want to download rawdata?</p>
+											</div>
+											<div className="modal-footer">
+												<button
+													type="button"
+													className="btn btn-light"
+													data-dismiss="modal"
+												>
+													Cancel
+												</button>
+												<ExportRawdata />
+											</div>
+										</div>
+									</div>
+								</div>
+								{/* end of modal */}
 						</li>
 					</ul>
 				</li>

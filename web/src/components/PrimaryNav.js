@@ -26,8 +26,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							className="menu"
 							href="https://www.qthotelsandresorts.com/melbourne/evt-admin"
 							target="_blank"
-                     title="Wordpress"
-                     rel="noopener noreferrer"
+							title="Wordpress"
+							rel="noopener noreferrer"
 						>
 							<i className="fa fa-wordpress" />
 						</a>
@@ -37,8 +37,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							className="menu"
 							href="https://transact.nab.com.au/nabtransact/"
 							target="_blank"
-                     title="NAB"
-                     rel="noopener noreferrer"
+							title="NAB"
+							rel="noopener noreferrer"
 						>
 							<i className="fa fa-star" />
 						</a>
@@ -48,8 +48,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							className="menu"
 							href="https://www.qthotelsandresorts.com/melbourne/eat-drink/tanto/"
 							target="_blank"
-                     title="QT Hotel"
-                     rel="noopener noreferrer"
+							title="QT Hotel"
+							rel="noopener noreferrer"
 						>
 							<i className="fa fa-building-o" />
 						</a>
@@ -59,8 +59,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							className="menu"
 							href="https://vimeo.com/user16748524/review/188253523/dc2848426c"
 							target="_blank"
-                     title="Vimeo"
-                     rel="noopener noreferrer"
+							title="Vimeo"
+							rel="noopener noreferrer"
 						>
 							<i className="fa fa-vimeo" />
 						</a>
@@ -73,8 +73,8 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 							<Fragment>
 								<li
 									className="nav-item  link-dark my-auto"
-                           style={{ whiteSpace: "nowrap" }}
-                           id="greeting"
+									style={{ whiteSpace: "nowrap" }}
+									id="greeting"
 								>
 									Hello {`${currentUser.userName}`}
 								</li>
@@ -101,6 +101,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 										<i className="fa fa-sign-out big" />
 									</Link>
 
+									{/* beginning of modal */}
 									<div className="modal fade" id="logout">
 										<div className="modal-dialog" role="document">
 											<div className="modal-content">
@@ -115,7 +116,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
-												<div className="modal-body">
+												<div className="modal-body text-left">
 													<p>{`Are you sure you would like to sign out ${
 														currentUser.userName
 													} ?`}</p>
@@ -123,7 +124,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 												<div className="modal-footer">
 													<button
 														type="button"
-														className="btn btn-primary"
+														className="btn btn-light"
 														data-dismiss="modal"
 													>
 														Cancel
@@ -140,7 +141,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 											</div>
 										</div>
 									</div>
-
+									{/* end of modal */}
 									{/* <button >
                            <i className="fa fa-sign-out big" ></i>
                                     </button> */}
