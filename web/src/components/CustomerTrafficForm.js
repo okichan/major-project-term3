@@ -1,14 +1,14 @@
 import React from "react";
 
 const originObject = {
-   Facebook: "SNS (Facebook, Twitter etc)",
-   OnlineSearch: "Online Search",
-   Referral: "Referral",
-   Newspaper: "Newspaper Article",
-   WalkIn: "Walk In",
-   HotelGuest: "QT Hotel Guest",
-   Return: "Return",
-   Unknown: "Other / Unknown"
+  Facebook: "SNS (Facebook, Twitter etc)",
+  OnlineSearch: "Online Search",
+  Referral: "Referral",
+  Newspaper: "Newspaper Article",
+  WalkIn: "Walk In",
+  HotelGuest: "QT Hotel Guest",
+  Return: "Return",
+  Unknown: "Other / Unknown"
 };
 
 function CustomerTrafficForm({ onChange }) {
@@ -16,7 +16,9 @@ function CustomerTrafficForm({ onChange }) {
     <div className="row">
       <div className="mx-auto m-1">
         <h2 className="text-center">Customer Traffic</h2>
-        <small className="float-right "><a href="/customer-traffic">view all</a></small>
+        <small className="float-right ">
+          <a href="/customer-traffic">view all</a>
+        </small>
         <div className="trafficForm mt-4">
           <form
             className="form"
@@ -47,8 +49,8 @@ function CustomerTrafficForm({ onChange }) {
               <label htmlFor="chefSelect">Is chef?</label>
               <select className="form-control" id="chefSelect">
                 <option value={"Unknown"}>I don't know</option>
-                <option value={"Chef"}>Yes</option>
-                <option value={"Not Chef"}>No</option>
+                <option value={"true"}>Yes</option>
+                <option value={"false"}>No</option>
               </select>
             </div>
             <div className="form-group">
