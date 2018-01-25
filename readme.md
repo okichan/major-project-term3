@@ -1,4 +1,4 @@
-# Tanto store management system
+# Tanto management system
 
 ![Tanto Logo](https://image.ibb.co/gHzsDb/logo.png "Logo Title Text")
 
@@ -67,8 +67,6 @@ Our user stories in regards to the application can be view on our public board o
 ## User Flow Diagrams
 
 ![User Flow Diagram](https://image.ibb.co/ghtNeG/Tanto_workflow_diagram.png "User Flow Diagram")
-
-[What we currency have](https://www.draw.io/?state=%7B%22ids%22:%5B%221UZkemIKUpsX8fjQ_omSHRfdIjl-uCjzu%22%5D,%22action%22:%22open%22,%22userId%22:%22105729896884967972758%22%7D#G1UZkemIKUpsX8fjQ_omSHRfdIjl-uCjzu)
 
 [Table of Contents](#table-of-contents)
 
