@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const originObject = {
   Facebook: "SNS (Facebook, Twitter etc)",
@@ -17,7 +18,7 @@ function CustomerTrafficForm({ onChange }) {
       <div className="mx-auto m-1">
         <h2 className="text-center">Customer Traffic</h2>
         <small className="float-right ">
-          <a href="/customer-traffic">view all</a>
+          <Link to="/customer-traffic">view all</Link>
         </small>
         <div className="trafficForm mt-4">
           <form
