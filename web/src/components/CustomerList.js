@@ -42,8 +42,8 @@ function CustomerList({
       <small>Sort by name:</small>
       <br />
       <input
-        style={{ width: "70%" }}
-        className="mb-4 form-control"
+      //   style={{ width: "70%" }}
+        className="mb-4 form-control w-25"
         type="text"
         placeholder="Enter customer's name"
         onChange={e => {
