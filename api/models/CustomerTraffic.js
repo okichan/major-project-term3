@@ -1,5 +1,6 @@
 const mongoose = require("./init");
 const timestamps = require("mongoose-timestamp");
+const moment = require("moment");
 
 const customerTrafficSchema = new mongoose.Schema({
   number: {
@@ -12,10 +13,9 @@ const customerTrafficSchema = new mongoose.Schema({
   duration: {
     type: Number,
     min: 0
-  }
+  },
+  createdAt: Date
 });
-
-customerTrafficSchema.plugin(timestamps);
 
 const CustomerTraffic = mongoose.model(
   "CustomerTraffic",
