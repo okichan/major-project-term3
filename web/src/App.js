@@ -515,7 +515,7 @@ class App extends Component {
         .catch(error => {
           console.error(error.message);
         });
-      alert("Add new customer traffic");
+      alert("New customer traffic has been created.");
     });
   };
 

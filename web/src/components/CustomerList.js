@@ -38,14 +38,11 @@ function CustomerList({
 
   return (
     <Fragment>
-      <h2 className="text-center mb-4">Customers</h2>
-      <small>Sort by name:</small>
-      <br />
+      <h2 className="text-center pb-4">Customers</h2>
       <input
-      //   style={{ width: "70%" }}
-        className="mb-4 form-control w-25"
+        className="mb-2 form-control col-sm-3 col-md-3 col-lg-2"
         type="text"
-        placeholder="Enter customer's name"
+        placeholder="Filter by name:"
         onChange={e => {
           const value = e.target.value;
           onFilter(value);

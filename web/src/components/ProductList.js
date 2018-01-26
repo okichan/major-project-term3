@@ -77,7 +77,7 @@ function ProductList({
 											{product.stock}
 										</td>
 										<td>
-                                 											{/* modal begin */}
+											{/* modal begin */}
 											{/* modal edit begin */}
 											<div
 												className="modal fade"
@@ -156,7 +156,7 @@ function ProductList({
 																	<label>Category</label>
 																	<input
 																		type="text"
-																		className="form-control"
+																		className="form-control col-7 col-sm-4 col-md-3"
 																		id="category"
 																		name={product.category}
 																		defaultValue={product.category}
@@ -184,13 +184,53 @@ function ProductList({
 																</div>
 																<div className="form-group">
 																	<label>Stock</label>
-																	<input
-																		type="number"
-																		className="form-control w-25"
-																		id="stock"
-																		name={product.stock}
-																		defaultValue={product.stock}
-																	/>
+                                                   <div className="input-group">
+                                                      <div className="input-group-prepend">
+                                                         <span
+                                                            className="input-group-text pointer"
+                                                            onClick={e => {
+                                                               let amount = document.getElementById(
+                                                                  "stock"
+                                                               );
+                                                               if (
+                                                                  /\d/.test(amount.value) &&
+                                                                  amount.value > 1
+                                                               ) {
+                                                                  amount.value =
+                                                                     Number(amount.value) - 1;
+                                                               }
+                                                            }}
+                                                         >
+                                                            <i className="fa fa-minus " />
+                                                         </span>
+                                                      </div>
+
+                                                      <input
+                                                         type="number"
+                                                         className="text-center amount-input"
+                                                         id="stock"
+                                                         name={product.stock}
+                                                         defaultValue={product.stock}
+                                                         // style={{ height: "50px" }}
+                                                      />
+
+                                                      <div className="input-group-append">
+                                                         <span
+                                                            className="input-group-text pointer"
+                                                            onClick={e => {
+                                                               let amount = document.getElementById(
+                                                                  "stock"
+                                                               );
+                                                               if (/\d/.test(amount.value)) {
+                                                                  amount.value =
+                                                                     Number(amount.value) + 1;
+                                                               }
+                                                            }}
+                                                         >
+                                                            <i className="fa fa-plus" />
+                                                         </span>
+                                                      </div>
+																</div>
 																</div>
 																<Dropzone
 																	onDrop={onDrop}
