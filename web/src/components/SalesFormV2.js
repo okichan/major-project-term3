@@ -201,8 +201,8 @@ class SalesFormV2 extends Component {
 		for (let i = 0; i < this.state.count; i++) {
 			uiItems.push(
 				<div key={i} className="form-row ">
-					<div className="form-group col-10">
-            <hr/>
+					<div className="form-group col-11">
+						<hr />
 						<p>Product</p>
 						<ProductFilterForNewSale prodCategory={this.onProductFilter} countKey={i} />
 						<select
@@ -221,7 +221,7 @@ class SalesFormV2 extends Component {
 							})}
 						</select>
 					</div>
-					<div className="form-group col-2">
+					<div className="form-group col-1">
 						{/* <label>&#160;</label> */}
 						<button
 							onClick={this.removeClick.bind(this, i)}
@@ -268,7 +268,7 @@ class SalesFormV2 extends Component {
 								value={this.state.unitAmount[i] || ""}
 								onChange={this.handleChangeAmount.bind(this, i)}
 								placeholder="Amount"
-                        className="text-center amount-input"
+								className="text-center amount-input"
 								min={1}
 							/>
 							<div
@@ -316,7 +316,10 @@ class SalesFormV2 extends Component {
 			<Fragment>
 				{customers &&
 					products && (
-						<form onSubmit={this.handleSubmit} className="col-md-8 col-lg-6 mx-auto mb-5">
+						<form
+							onSubmit={this.handleSubmit}
+							className="col-md-10 col-xl-6 mx-auto mb-5"
+						>
 							<div className="form-group">
 								<label>Date</label>
 								<DatePicker
@@ -328,13 +331,14 @@ class SalesFormV2 extends Component {
 								/>
 							</div>
 
-                     {/* generate dynamic form */}
+							{/* generate dynamic form */}
 							{this.createUI()}
 
 							<label onClick={this.addClick.bind(this)} className="pointer " id="trash">
-								<i className="fa fa-plus-circle big mt-2 text-shadow" /> <span className="med">add more</span>
+								<i className="fa fa-plus-circle big mt-2 text-shadow" />{" "}
+								<span className="med">add more</span>
 							</label>
-                     <hr/>
+							<hr />
 							<h2 className="text-right">
 								{`Total $${this.state.totalPrice ? this.state.totalPrice : 0}`}
 							</h2>
@@ -409,7 +413,11 @@ class SalesFormV2 extends Component {
 									id="create-new-customer"
 									className="notification-checkbox sr-only"
 								/>
-								<label htmlFor="create-new-customer" className="mt-1 pointer text-shadow" id="trash">
+								<label
+									htmlFor="create-new-customer"
+									className="mt-1 pointer text-shadow"
+									id="trash"
+								>
 									[create new]
 								</label>
 							</div>
