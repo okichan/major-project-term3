@@ -1,8 +1,14 @@
-# Tanto management system
+# Tanto Management System
 
 ![Tanto Logo](https://image.ibb.co/gHzsDb/logo.png "Logo Title Text")
 
-## Coder Factory term 3 major project
+## Useful Links
+
+[Website Link](https://tanto.netlify.com/signin)
+
+[Presentation Slides](https://docs.google.com/presentation/d/1__HwmAxxGbnhNuGW9O3zxrAPKJOJ2siq-zzJoENJaEM/edit#slide=id.p)
+
+[Documentation Link (includes minutes)](https://docs.google.com/document/d/1Cu55d0rctqWQf9sVHFZ376ZGLEOQhSpns6cviiiJxN8/edit?usp=sharing)
 
 ## Table of Contents
 
@@ -14,6 +20,7 @@
 * [Design And Solution](#chosen-designs-and-solution)
 * [User Flow Diagrams](#user-flow-diagram)
 * [Database Design](#database-design)
+* [Post Project Review](#post-project-review)
 
 ## Project Brief
 
@@ -62,7 +69,7 @@ The solution that we have come up with collectively is an application that can a
 
 [Trello](https://trello.com/b/uPW701tC/term-3-major-project-tanto-knife-store)
 
-Our user stories in regards to the application can be view on our public board on Trello.
+Our user stories in regards to the application can be view on our public board on Trello. It also includes the NPMs we decided to use and some other useful links in regards to the project
 
 ## User Flow Diagrams
 
@@ -79,5 +86,29 @@ For our wireframes and initial designs, this can be found in the link about in o
 [Table of Contents](#table-of-contents)
 
 ## Database design
+
+![User Flow Diagram](https://image.ibb.co/do3y6w/db.png "Database Design")
+
+[Table of Contents](#table-of-contents)
+
+## Post Project Review
+
+## Collaboration as a team
+
+We all thoroughly enjoyed working as a team. All of us had different strengths and weaknesses but work through them together. All decisions were made as a team such as wireframes, implementation of features and how to approach challenges.
+We learned how to use Github effectively throughout the project with minimal conflicts.
+
+## Challenges
+
+* When we first did our two-day hackathon as a group, we used Slack as our primary source of combining code through copy and paste. This time around we decided to use Github because of the large-scale code that had to be merged between team members. Being our first time attempting this, we were cautious in our merges with conflicts.
+
+* At first, we struggled with data manipulation with nested arrays within objects which did take time to master however dealing with it so often has enhanced our skills.
+
+* Business owners and programmers have different thought processes which we came to realise through many situations where there were differing views on features.
+
+## Future plans
+
+After initially seeing our deployed application, the client was delighted with the result and wanted use to implement more features. We received an email with even more request and even though we were able to build some of them, there are still a few we are planning on implementing.
+Some of the planned future works include automated email services when necessary, more intensive reports that can be manipulated and customised, statistical data in regards to their website and possibly connecting with the hotel database for the more natural recording of transactions.
 
 [Table of Contents](#table-of-contents)
