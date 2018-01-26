@@ -38,7 +38,46 @@ function ProductList({
 											aria-controls="collapseExample"
 										>
 											{product.code}
-
+										</td>
+										<td
+											data-toggle="collapse"
+											data-target={`#${product._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											{product.category}
+										</td>
+										<td
+											data-toggle="collapse"
+											data-target={`#${product._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											{product.title}
+										</td>
+										<td
+											data-toggle="collapse"
+											data-target={`#${product._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											${product.price}
+										</td>
+										<td
+											className="text-center"
+											data-toggle="collapse"
+											data-target={`#${product._id}`}
+											role="button"
+											aria-expanded="false"
+											aria-controls="collapseExample"
+										>
+											{product.stock}
+										</td>
+										<td>
+                                 											{/* modal begin */}
 											{/* modal edit begin */}
 											<div
 												className="modal fade"
@@ -258,36 +297,7 @@ function ProductList({
 												</div>
 											</div>
 											{/* end delete modal/ */}
-										</td>
-										<td
-											data-toggle="collapse"
-											data-target={`#${product._id}`}
-											role="button"
-											aria-expanded="false"
-											aria-controls="collapseExample"
-										>
-											{product.category}
-										</td>
-										<td
-											data-toggle="collapse"
-											data-target={`#${product._id}`}
-											role="button"
-											aria-expanded="false"
-											aria-controls="collapseExample"
-										>
-											{product.title}
-										</td>
-										<td
-											data-toggle="collapse"
-											data-target={`#${product._id}`}
-											role="button"
-											aria-expanded="false"
-											aria-controls="collapseExample"
-										>
-											${product.price}
-										</td>
-										<td className="text-center">{product.stock}</td>
-										<td>
+											{/* end  modal/ */}
 											<i
 												className="fa fa-pencil-square-o med mx-1"
 												// type="button"
