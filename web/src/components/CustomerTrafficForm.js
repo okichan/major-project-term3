@@ -72,8 +72,8 @@ function CustomerTrafficForm({ onChange }) {
                 className="form-control  col-md-4"
                 type="number"
                 id="duration"
+                placeholder="15"
                 min="0"
-                defaultValue="0"
               />
             </div>
             <div className="form-group">
