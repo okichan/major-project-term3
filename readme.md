@@ -4,7 +4,7 @@
 
 ## Useful Links
 
-[Website Links(React App)](https://tanto.netlify.com/signin)
+[Website Links(React App)](https://tanto.netlify.com)
 
 * [Signin](https://tanto.netlify.com/signin)
 * [Signout](https://tanto.netlify.com/signup)
