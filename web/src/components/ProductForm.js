@@ -1,5 +1,6 @@
 import React from "react";
 import Dropzone from "react-dropzone";
+import Incrementer from "./Incrementer";
 
 const categoryArray = [
 	"Wa-Bocho",
@@ -80,47 +81,9 @@ function ProductForm({ products, submitTitle, onSubmit, chosenImage, onDrop }) {
 						/>
 					</div>
 
-					<div className="form-group">
-						<label htmlFor="amount">Amount</label>
-						<div className="input-group">
-							<div className="input-group-prepend">
-								<span
-									className="input-group-text pointer"
-									onClick={e => {
-										let amount = document.getElementById("amount");
-										if (/\d/.test(amount.value) && amount.value > 1) {
-											amount.value = Number(amount.value) - 1;
-										}
-									}}
-								>
-									<i className="fa fa-minus " />
-								</span>
-							</div>
-							<input
-								id="amount"
-								name="stock"
-								type="number"
-								className="text-center amount-input"
-								defaultValue="1"
-							/>
-							<div className="input-group-append">
-								<span
-									className="input-group-text pointer"
-									onClick={e => {
-										let amount = document.getElementById("amount");
-										if (/\d/.test(amount.value)) {
-											amount.value = Number(amount.value) + 1;
-										}
-									}}
-								>
-									<i className="fa fa-plus " />
-								</span>
-							</div>
-						</div>
-					</div>
+               <Incrementer label="Amount" elementId="stock"/>
 
 					<label htmlFor="image">Image</label>
-
 					<Dropzone
 						onDrop={onDrop}
 						multiple={false}

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Incrementer({ label, elementId }) {
+function Incrementer({ label, elementId, elementName={elementId}, defaultValue="1" }) {
 	return (
 		<div className="form-group">
 			<label htmlFor="amount">{label}</label>
@@ -20,10 +20,10 @@ function Incrementer({ label, elementId }) {
 				</div>
 				<input
 					id={elementId}
-					name={elementId}
+					name={elementName}
 					type="number"
 					className="text-center amount-input"
-					defaultValue="1"
+					defaultValue={defaultValue}
 				/>
 				<div className="input-group-append">
 					<span
