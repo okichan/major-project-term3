@@ -2,9 +2,17 @@
 
 ![Tanto Logo](https://image.ibb.co/gHzsDb/logo.png "Logo Title Text")
 
+## Team
+[Mizuki Zenta](https://github.com/MizukiZ/)
+
+[Chy Meng](https://github.com/chymeng/)
+
+[Tomomi Oki](https://github.com/okichan/)
+
+
 ## Useful Links
 
-[Website Links(React App)](https://tanto.netlify.com)
+[Website Links (React App)](https://tanto.netlify.com)
 
 * [Signin](https://tanto.netlify.com/signin)
 * [Signout](https://tanto.netlify.com/signup)
@@ -17,7 +25,7 @@
 * [Weekly reports](https://tanto.netlify.com/report-weekly)
 * [Customers traffic](https://tanto.netlify.com/customer-traffic)
 
-[Production api(React App)](https://tanto-api.now.sh)
+[Production api (React App)](https://tanto-api.now.sh/products)
 
 [Presentation Slides](https://docs.google.com/presentation/d/1__HwmAxxGbnhNuGW9O3zxrAPKJOJ2siq-zzJoENJaEM/edit#slide=id.p)
 
