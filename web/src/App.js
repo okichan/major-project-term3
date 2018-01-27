@@ -806,7 +806,7 @@ class App extends Component {
                     path="/report-weekly"
                     exact
                     render={requireAuth(() => (
-                      <div>
+                      <Fragment>
                         <WeeklyReport
                           monthRangeSales={monthRangeSales}
                           customerTraffics={customerTraffics}
@@ -818,7 +818,7 @@ class App extends Component {
                           weekRangeSharp={weekRangeSharp}
                           onChageRange={this.onChageRange}
                         />
-                      </div>
+                      </Fragment>
                     ))}
                   />
 

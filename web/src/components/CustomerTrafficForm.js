@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Incrementer from "./Incrementer";
+import "../css/Slider.css"
 
 const originObject = {
 	Facebook: "SNS (Facebook, Twitter etc)",
@@ -14,8 +16,8 @@ const originObject = {
 
 function CustomerTrafficForm({ onChange }) {
 	return (
-		<div className="row">
-			<div className="mx-auto m-1">
+		<div className="row ">
+			<div className="mx-auto w-75 m-1">
 				<h2 className="text-center">Customer Traffic</h2>
 				<small className="float-right ">
 					<Link to="/customer-traffic">view all</Link>
@@ -25,7 +27,7 @@ function CustomerTrafficForm({ onChange }) {
 						className="form"
 						onSubmit={e => {
 							e.preventDefault();
-							const number = e.target.CustomerNumber.value;
+							const number = e.target.customerNumber.value;
 							const isChef = e.target.chefSelect.value;
 							const origin = e.target.originSelect.value;
 							const duration = e.target.duration.value;
@@ -33,24 +35,14 @@ function CustomerTrafficForm({ onChange }) {
 							onChange({ number, origin, isChef, duration, note });
 						}}
 					>
-						<div className="form-group">
-							<label htmlFor="CustomerNumber">People</label>
-							<select multiple className="form-control" id="CustomerNumber">
-								{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => {
-									return (
-										<option key={`trafficId${num}`} value={num}>
-											{num}
-										</option>
-									);
-								})}
-							</select>
-						</div>
+						<Incrementer label="People" elementId="customerNumber" />
 						<div className="form-group">
 							<label>Chef?</label>
 							{/* <select className="form-control" id="chefSelect"> */}
 							<div className="form-check">
 								<label className="form-check-label pointer">
 									<input
+                           required
 										type="radio"
 										name="chefSelect"
 										className="form-check-input"
@@ -59,7 +51,7 @@ function CustomerTrafficForm({ onChange }) {
 									Yes
 								</label>
 							</div>
-							<div  className="form-check">
+							<div className="form-check">
 								<label className="form-check-label pointer">
 									<input
 										type="radio"
@@ -97,14 +89,20 @@ function CustomerTrafficForm({ onChange }) {
 							</select>
 						</div>
 						<div className="form-group">
-							<label htmlFor="duration">Duration (minutes)</label>
+							<label htmlFor="duration">Duration</label>
 							<input
-								className="form-control  col-md-4"
-								type="number"
-								id="duration"
-								min="0"
+								type="range"
+                        min="0"
+                        step="5"
+								max="120"
 								defaultValue="0"
-							/>
+								className="slider w-100 "
+								id="duration"
+								onChange={e => {
+									document.getElementById("range-value").innerHTML = `${e.target.value} minutes`;
+								}}
+							/> 
+							<p id="range-value">&#160;</p>
 						</div>
 						<div className="form-group">
 							<label htmlFor="note">Notes</label>

@@ -422,12 +422,13 @@ function WeeklyReport({
     : null;
 
   return (
-    <div className="container text-center">
+    <div className="container py-4 text-center">
       {customerGraph ? (
         <div className="mb-4">
           <h2>Customer Traffic (Chef or NonChef)</h2>
-          <p>Week range : {weekRangeChef}</p>
+          <p className="m-0 p-0">Week range : {weekRangeChef}</p>
           <input
+            className="col-md-4 p-0"
             min="1"
             max="26"
             type="range"
@@ -481,8 +482,9 @@ function WeeklyReport({
       {customerOriginChart && (
         <div className="mb-4">
           <h2>Customer with origin</h2>
-          <p>Week range : {weekRangeOrigin}</p>
+          <p className="m-0 p-0">Week range : {weekRangeOrigin}</p>
           <input
+            className="col-md-4 p-0"
             min="1"
             max="26"
             type="range"
@@ -550,8 +552,9 @@ function WeeklyReport({
       {saleTrendKnife && (
         <div className="mb-4">
           <h2>Sale Trend Knife and Stone</h2>
-          <p>Week range : {weekRangeKnife}</p>
+          <p className="m-0 p-0">Week range : {weekRangeKnife}</p>
           <input
+            className="col-md-4 p-0"
             min="1"
             max="26"
             type="range"
@@ -584,8 +587,9 @@ function WeeklyReport({
       {saleTrendSharpening && (
         <div className="mb-4">
           <h2>Sale Trend Sharpening</h2>
-          <p>Week range : {weekRangeSharp}</p>
+          <p className="m-0 p-0">Week range : {weekRangeSharp}</p>
           <input
+            className="col-md-4 p-0"
             min="1"
             max="26"
             type="range"
