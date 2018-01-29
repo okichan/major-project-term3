@@ -28,6 +28,17 @@
   display: none;
 }
 
+#weather-ul {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   border-right: 1px solid #e4e4e4;
+}
+
+#weather-ul:last-child {
+   border-right: 0px;
+}
+
 td a {
   color: #222;
 }
