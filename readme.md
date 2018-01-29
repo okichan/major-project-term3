@@ -31,6 +31,8 @@
 
 [Documentation Link (includes minutes)](https://docs.google.com/document/d/1Cu55d0rctqWQf9sVHFZ376ZGLEOQhSpns6cviiiJxN8/edit?usp=sharing)
 
+[Client questionnaire](https://docs.google.com/document/d/1CGwHIicpuTjPQWmAArkpmS9gCCW1xLFc_WO_-To4Iss/edit?usp=gmail)
+
 ## Table of Contents
 
 * [Project brief](#project-brief)
