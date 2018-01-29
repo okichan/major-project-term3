@@ -17,7 +17,7 @@
 * [Weekly reports](https://tanto.netlify.com/report-weekly)
 * [Customers traffic](https://tanto.netlify.com/customer-traffic)
 
-[Production api(React App)](https://tanto-api.now.sh)
+[Production api](https://tanto-api.now.sh)
 
 [Presentation Slides](https://docs.google.com/presentation/d/1__HwmAxxGbnhNuGW9O3zxrAPKJOJ2siq-zzJoENJaEM/edit#slide=id.p)
 
