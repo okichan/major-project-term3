@@ -32,7 +32,7 @@ class Weather extends Component {
    render() {
       const { weatherNow, weatherDaily, error } = this.state;
       return (
-         <div className="text-center">
+         <div className="text-center mb-4">
             {!!error && <p>{error.message}</p>}
             {weatherNow && weatherDaily ? (
                <Fragment>
