@@ -12,20 +12,10 @@
 
 ## Useful Links
 
-[Website Links (React App)](https://tanto.netlify.com)
+[Website Links (React App)](https://mct-project-t3-demo.netlify.com/)
 
-* [Signin](https://tanto.netlify.com/signin)
-* [Signout](https://tanto.netlify.com/signup)
-* [Sales](https://tanto.netlify.com/sales)
-* [New sales](https://tanto.netlify.com/new-sales)
-* [Products](https://tanto.netlify.com/products)
-* [Customers](https://tanto.netlify.com/customers)
-* [Notifications](https://tanto.netlify.com/notifications)
-* [Daily reports](https://tanto.netlify.com/report-daily)
-* [Weekly reports](https://tanto.netlify.com/report-weekly)
-* [Customers traffic](https://tanto.netlify.com/customer-traffic)
 
-[Production api (React App)](https://tanto-api.now.sh/products)
+[Production api](https://mct-project-t3-demo.now.sh/products)
 
 [Presentation Slides](https://docs.google.com/presentation/d/1__HwmAxxGbnhNuGW9O3zxrAPKJOJ2siq-zzJoENJaEM/edit#slide=id.p)
 
