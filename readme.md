@@ -3,23 +3,24 @@
 ![Tanto Logo](https://image.ibb.co/gHzsDb/logo.png "Logo Title Text")
 
 ## Team
+
 [Mizuki Zenta](https://github.com/MizukiZ/)
 
 [Chy Meng](https://github.com/chymeng/)
 
 [Tomomi Oki](https://github.com/okichan/)
 
-
 ## Useful Links
 
 [Website Links (React App)](https://mct-project-t3-demo.netlify.com/)
-
 
 [Production api](https://mct-project-t3-demo.now.sh/products)
 
 [Presentation Slides](https://docs.google.com/presentation/d/1__HwmAxxGbnhNuGW9O3zxrAPKJOJ2siq-zzJoENJaEM/edit#slide=id.p)
 
 [Documentation Link (includes minutes)](https://docs.google.com/document/d/1Cu55d0rctqWQf9sVHFZ376ZGLEOQhSpns6cviiiJxN8/edit?usp=sharing)
+
+[Client questionnaire](https://docs.google.com/document/d/1CGwHIicpuTjPQWmAArkpmS9gCCW1xLFc_WO_-To4Iss/edit?usp=gmail)
 
 ## Table of Contents
 
