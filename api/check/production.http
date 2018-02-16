@@ -1,4 +1,4 @@
-@base_url = https://yarra-api-lzhprstysc.now.sh
+@base_url = https://tanto-api.now.sh
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9raTNAb2tpLmNvbSIsImlhdCI6MTUxMzIxMjE1NCwiZXhwIjoxNTEzODE2OTU0LCJzdWIiOiI1YTMxYzhkNmJkMDJjZTAwYTFlMjI2M2UifQ.jLLwawSK33HvPn_yhHKMCGOQFisr-xjOHYvlo2adfok
 
 ### List products
@@ -20,7 +20,7 @@ POST {{base_url}}/auth/register
 Content-Type: application/json
 
 {
-  "email": "oki3@oki.com",
+  "email": "okitest@oki.com",
   "firstName": "tomomi",
   "lastName": "oki",
   "password": "123123"
