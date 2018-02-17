@@ -16,17 +16,17 @@ function SignInForm({ onSignIn }) {
 						const form = event.target;
 						const elements = form.elements; // Allows looking up fields using their 'name' attributes
 						// Get entered values from fields
-						const email = elements.email.value;
+						const username = elements.username.value;
 						const password = elements.password.value;
 
 						// Pass this information along to the parent component
-						onSignIn({ email, password });
+						onSignIn({ username, password });
 					}}
 				>
 					<div className="form-group ">
-						<label className="control-label ">Email</label>
+						<label className="control-label ">Username</label>
 						<div className="input-group">
-							<input type="email" name="email" required />
+							<input type="text" name="username" required />
 						</div>
 					</div>
 

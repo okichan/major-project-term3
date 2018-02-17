@@ -258,8 +258,8 @@ class App extends Component {
     return CustomerOriginPieChart;
   };
 
-  onSignIn = ({ email, password }) => {
-    signIn({ email, password })
+  onSignIn = ({ username, password }) => {
+    signIn({ username, password })
       .then(decodedToken => {
         this.setState({ decodedToken });
       })
@@ -268,8 +268,8 @@ class App extends Component {
       });
   };
 
-  onSignUp = ({ email, password, userName }) => {
-    signUp({ email, password, userName })
+  onSignUp = ({ userName, password }) => {
+    signUp({ password, userName })
       .then(decodedToken => {
         this.setState({ decodedToken });
       })

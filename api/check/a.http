@@ -1,13 +1,14 @@
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9raTEwQG9raS5jb20iLCJ1c2VyTmFtZSI6Im9raTEwIiwiaWF0IjoxNTE2Nzg1MTI4LCJleHAiOjE1MTczODk5MjgsInN1YiI6IjVhNjAyOTY2ZTg3ZWIzM2RhOGU0YWVmZiJ9.lSgmBHw9UHp9CDMgcLwbOWBbgBmQpu3HwdZI9xBI1Sg
 
-### Sign in
-POST https://tanto-api.now.sh/auth
+### Sign up
+POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "username": "tetete",
   "password": "12345"
 }
+
 ### Sign in
 POST http://localhost:7000/auth
 Content-Type: application/json

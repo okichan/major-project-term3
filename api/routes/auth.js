@@ -8,7 +8,11 @@ router.post('/auth/register',
   /* middleware that handles the registration process */
   authMiddleware.register,
   /* json handler */
-  authMiddleware.signJWTForUser
+  (req, res) => {
+      res.json({
+         user: req.user
+      })
+  }
 )
 
 // Sign in
