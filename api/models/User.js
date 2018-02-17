@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
 // Enhance using the devise-like library to add email/password to our model
 userSchema.plugin(passportLocalMongoose, {
 //   usernameField: "username",
-  usernameLowerCase: true, // Ensure that all emails are lowercase
+  usernameLowerCase: true, // Ensure that all user names are lowercase
   session: false // Disable sessions as we'll use JWTs
 });
 

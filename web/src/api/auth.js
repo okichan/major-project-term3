@@ -1,9 +1,9 @@
 import api, { setToken } from "./init";
 import { getDecodedToken } from "./token";
 
-export function signIn({ email, password }) {
+export function signIn({ username, password }) {
   return api
-    .post("/auth", { email, password })
+    .post("/auth", { username, password })
     .then(res => {
       const token = res.data.token;
       setToken(token);
@@ -11,15 +11,15 @@ export function signIn({ email, password }) {
     })
     .catch(error => {
       if (/ 401/.test(error.message)) {
-        error = new Error("The email/password combination was incorrect");
+        error = new Error("The username/password combination is incorrect");
       }
 
       throw error;
     });
 }
 
-export function signUp({ email, password, userName }) {
-  return api.post("/auth/register", { email, password, userName }).then(res => {
+export function signUp({ username, password }) {
+  return api.post("/auth/register", { username, password }).then(res => {
     const token = res.data.token;
     setToken(token);
     return getDecodedToken();

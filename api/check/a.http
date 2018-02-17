@@ -19,15 +19,15 @@ Content-Type: application/json
 }
 
 ### Get Products
-GET https://tanto-api.now.sh/products
+GET http://localhost:7000/products
 Authorization: Bearer {{ token }}
 
 ### Get Sales
-GET https://tanto-api.now.sh/sales
+GET http://localhost:7000/sales
 Authorization: Bearer {{ token }}
 
 ### Register
-POST https://tanto-api.now.sh/auth/register
+POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
@@ -37,7 +37,7 @@ Content-Type: application/json
 }
 
 ### Create product
-POST https://tanto-api.now.sh/products
+POST http://localhost:7000/products
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
@@ -78,7 +78,7 @@ Content-Type: application/json
 
 ### Read customer
 GET http://localhost:7000/customers
-# Authorization: Bearer {{ token }}
+Authorization: Bearer {{ token }}
 
 ### Add new customer
 POST http://localhost:7000/customers

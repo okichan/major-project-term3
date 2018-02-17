@@ -52,7 +52,7 @@ function NotificationList({ notifications, onClickDelete, onClickToggle }) {
                 ? notification.product
                 : notification.sale;
             return (
-              <div>
+              <div key={notification._id}>
                 {notification.type === "stock" ? (
                   <div
                     className="row my-4 py-3"

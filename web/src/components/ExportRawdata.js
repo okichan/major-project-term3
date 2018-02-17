@@ -10,7 +10,7 @@ const flattenObject = function(ob) {
 	let toReturn = {};
 	for (var i in ob) {
 		if (!ob.hasOwnProperty(i)) continue;
-		if (typeof ob[i] == 'object') {
+		if (typeof ob[i] === 'object') {
 			var flatObject = flattenObject(ob[i]);
 			for (var x in flatObject) {
 				if (!flatObject.hasOwnProperty(x)) continue;

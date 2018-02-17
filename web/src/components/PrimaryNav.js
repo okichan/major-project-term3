@@ -76,7 +76,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 									style={{ whiteSpace: "nowrap" }}
 									id="greeting"
 								>
-									Hello {`${currentUser.userName}`}
+									Hello {`${currentUser.username}`}
 								</li>
 								<li className="nav-item link-dark">
 									<Link to="/notifications" className="nav-link " title="Notification">
@@ -118,7 +118,7 @@ function PrimaryNav({ signedIn, signOut, notificationCount, currentUser }) {
 												</div>
 												<div className="modal-body text-left">
 													<p>{`Are you sure you would like to sign out ${
-														currentUser.userName
+														currentUser.username
 													} ?`}</p>
 												</div>
 												<div className="modal-footer">
