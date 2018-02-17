@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
+import Help from "./components/Help";
 import ProductList from "./components/ProductList";
 import ProductFilter from "./components/ProductFilter";
 import ProductForm from "./components/ProductForm";
@@ -697,6 +698,16 @@ class App extends Component {
                   />
 
                   <Route
+                    path="/help"
+                    exact
+                    render={() =>
+                     <Fragment>
+                        <Help />
+                     </Fragment>
+                    }
+                  />
+
+                  <Route
                     path="/account"
                     exact
                     render={requireAuth(() => (
@@ -759,12 +770,6 @@ class App extends Component {
                       <Fragment>
                         <h1 className="text-center my-4">New sales</h1>
                         <SalesFormV2 />
-                        {/* <SalesForm
-													products={products}
-													productPrice={productPrice}
-													onChangeTitle={this.onChangeTitle}
-													onChangePrice={this.onChangePrice}
-												/> */}
                       </Fragment>
                     ))}
                   />
