@@ -19,13 +19,11 @@ function SignUpForm({ onSignUp }) {
                      const elements = form.elements; // Allows looking up fields using their 'name' attributes
                      // Get entered values from fields
                      //   const email = elements.email.value;
-                     const userName = elements.userName.value;
+                     const username = elements.username.value;
                      const password = elements.password.value;
 
                      // Pass this information along to the parent component
-                     console.log(userName, password);
-                     
-                     onSignUp({ userName, password });
+                     onSignUp({ username, password });
                   }}
                >
                   <fieldset>
@@ -33,7 +31,7 @@ function SignUpForm({ onSignUp }) {
                         <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                            <label className="mb-2">
                               {"User name: "}
-                              <input type="text" name="userName" />
+                              <input type="text" name="username" />
                            </label>
                            <label className="mb-2">
                               {"Password: "}

@@ -72,8 +72,7 @@ function signJWTForUser(req, res) {
    const token = JWT.sign(
       // Payload
       {
-         // email: user.email,
-         userName: user.userName
+         username: user.username
       },
       // Secret
       jwtSecret,

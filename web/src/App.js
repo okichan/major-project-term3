@@ -268,8 +268,8 @@ class App extends Component {
       });
   };
 
-  onSignUp = ({ userName, password }) => {
-    signUp({ password, userName })
+  onSignUp = ({ username, password }) => {
+    signUp({ username, password })
       .then(decodedToken => {
         this.setState({ decodedToken });
       })

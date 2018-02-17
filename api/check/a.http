@@ -5,7 +5,7 @@ POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "username": "tetete",
+  "username": "tomomi",
   "password": "12345"
 }
 
@@ -14,8 +14,8 @@ POST http://localhost:7000/auth
 Content-Type: application/json
 
 {
-  "email": "oki10@oki.com",
-  "password": "123123"
+  "username": "tomomi",
+  "password": "12345"
 }
 
 ### Get Products
