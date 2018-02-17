@@ -29,7 +29,7 @@ function SignUpForm({ onSignUp }) {
                      <div className="input-group-prepend">
                         <div className="input-group-text"><i className="fa fa-user" /></div>
                      </div>
-                     <input type="text" name="username" className="form-control" />
+                     <input type="text" name="username" className="form-control" placeholder="username" />
                   </div>
                </div>
                <div className="col-auto">
@@ -37,7 +37,7 @@ function SignUpForm({ onSignUp }) {
                      <div className="input-group-prepend">
                         <div className="input-group-text"><i className="fa fa-unlock-alt" />&nbsp;</div>
                      </div>
-                     <input type="password" name="password" className="form-control" />
+                     <input type="password" name="password" className="form-control" placeholder="password" />
                   </div>
                </div>
 
