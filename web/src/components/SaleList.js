@@ -80,7 +80,7 @@ function SaleList({
                           aria-expanded="false"
                           aria-controls="collapseExample"
                         >
-                          {sale.inCharge.userName}
+                          {sale.inCharge.username}
                         </td>
                         <td
                           data-toggle="collapse"
