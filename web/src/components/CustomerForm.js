@@ -55,7 +55,6 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
             <div className="form-check form-check-inline">
               <label className="form-check-label pointer">
                 <input
-                  required
                   className="form-check-input"
                   value="male"
                   type="radio"

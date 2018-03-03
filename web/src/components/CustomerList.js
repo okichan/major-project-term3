@@ -75,10 +75,14 @@ function CustomerList({
                       aria-controls="collapseExample"
                     >
                       {customer.gender === "male" ? (
-                        <i className="fa fa-male text-primary" />
-                      ) : (
-                        <i className="fa fa-female text-danger" />
-                      )}{" "}
+                        <i className="fa fa-male text-primary mr-2" />
+                      ) : "" }
+                      {customer.gender === "female" ? (
+                        <i className="fa fa-female text-danger mr-2" />
+                      ) : ""}
+                      {customer.gender === "" ? (
+                        "?"
+                      ) : ""}
                       {customer.firstName ? customer.firstName : "(unknown)"}{" "}
                       {customer.lastName ? customer.lastName : ""}
                     </td>
