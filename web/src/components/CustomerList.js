@@ -83,7 +83,7 @@ function CustomerList({
                         <i className="fa fa-female text-danger mr-2" />
                       ) : ""}
                       {customer.gender === "" ? (
-                        "?"
+                        <i className="fa fa-question text-muted mr-2" />
                       ) : ""}
                       {customer.firstName ? customer.firstName : "(unknown)"}{" "}
                       {customer.lastName ? customer.lastName : ""}
