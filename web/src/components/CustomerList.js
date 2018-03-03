@@ -39,7 +39,8 @@ function CustomerList({
   return (
     <Fragment>
       <h2 className="text-center pb-4">Customers</h2>
-      <input
+      {/* bug found thus disabled - edit modal does not work after filtered */}
+      {/* <input
         className="mb-2 form-control col-sm-3 col-md-3 col-lg-2"
         type="text"
         placeholder="Filter by name:"
@@ -47,7 +48,7 @@ function CustomerList({
           const value = e.target.value;
           onFilter(value);
         }}
-      />
+      /> */}
 
       {sortedCustomers && (
         <section className="table-responsive">
