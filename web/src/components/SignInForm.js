@@ -44,12 +44,12 @@ function SignInForm({ onSignIn }) {
                <div className="col-auto my-3">
                   <button type="submit" className="btn btn-primary mb-2">Sign In</button>
                </div>
-               <div className="col-auto">
+               {/* <div className="col-auto">
                   <Link to="/signup" className="">
                      <i className="fa fa-user-plus" />
                      <span> Add user</span>
                   </Link>
-               </div>
+               </div> */}
             </form>
          </div>
       </div>

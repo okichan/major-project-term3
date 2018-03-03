@@ -683,7 +683,7 @@ class App extends Component {
                     }
                   />
 
-                  <Route
+                  {/* <Route
                     path="/signup"
                     exact
                     render={() =>
@@ -695,7 +695,7 @@ class App extends Component {
                         </Fragment>
                       )
                     }
-                  />
+                  /> */}
 
                   <Route
                     path="/help"
