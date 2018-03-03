@@ -34,6 +34,7 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
             const phone = elements.phone.value;
             const origin = elements.origin.value;
             const isChef = elements.isChef.checked;
+            const workAt = elements.workAt.value;
             const note = elements.note.value;
 
             // Pass this information along to the parent component
@@ -46,6 +47,7 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
               phone,
               origin,
               isChef,
+              workAt,
               note
             });
           }}
@@ -151,6 +153,11 @@ function CustomerForm({ customers, submitTitle, onSubmit }) {
             </div>
           </div>
 
+
+          <div className="form-group">
+            <label>Work</label>
+            <input type="text" className="form-control" name="workAt"/>
+          </div>
 
           <div className="form-group">
             <label>Notes</label>

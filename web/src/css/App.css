@@ -16,6 +16,10 @@
    font-size: 1.3em;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .link-dark a {
    color: rgb(124, 124, 124);
 }

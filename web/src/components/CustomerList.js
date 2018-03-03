@@ -57,6 +57,7 @@ function CustomerList({
                 <th scope="col">Name</th>
                 <th scope="col" />
                 <th scope="col">Phone</th>
+                <th scope="col">Work</th>
                 <th scope="col">Note</th>
                 <th scope="col" />
                 <th scope="col" />
@@ -68,6 +69,7 @@ function CustomerList({
                 <tbody key={index}>
                   <tr className="row-hover">
                     <td
+                      className="nowrap"
                       data-toggle="collapse"
                       data-target={`#${customer._id}`}
                       role="button"
@@ -110,6 +112,17 @@ function CustomerList({
                       aria-controls="collapseExample"
                     >
                       {customer.phone ? customer.phone : "(unknown)"}
+                    </td>
+
+                    <td
+                      className="nowrap"
+                      data-toggle="collapse"
+                      data-target={`#${customer._id}`}
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      {customer.workAt}
                     </td>
 
                     <td
@@ -198,6 +211,7 @@ function CustomerList({
                                   const phone = elements.phone.value;
                                   const origin = elements.origin.value;
                                   const isChef = elements.isChef.checked;
+                                  const workAt = elements.workAt.value
                                   const note = elements.note.value;
 
                                   editCustomer({
@@ -209,6 +223,7 @@ function CustomerList({
                                     phone,
                                     origin,
                                     isChef,
+                                    workAt,
                                     note
                                   });
                                 }}
@@ -345,6 +360,15 @@ function CustomerList({
                                         }
                                       />
                                     </div>
+                                  </div>
+                                  <div className="form-group">
+                                    <label>Work</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      name="workAt"
+                                      defaultValue={customer.workAt}
+                                    />
                                   </div>
                                   <div className="form-group">
                                     <label>Notes</label>
