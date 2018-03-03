@@ -397,7 +397,7 @@ class SalesFormV2 extends Component {
 										{customers.map(m => {
 											return (
 												<option key={m._id} name={m._id} value={m._id}>
-													{m.phone} - {m.firstName === "" ? "(unknown)" : m.firstName}{" "}
+													{m.phone.length > 0 ? `${m.phone} -` : "" } {m.firstName === "" ? "(unknown)" : m.firstName}{" "}
 													{m.lastName === "" ? "" : m.lastName}
 												</option>
 											);
@@ -448,7 +448,7 @@ class SalesFormV2 extends Component {
 		});
 
 		listCustomers().then(customers => {
-			customers.sort((x, y) => x.phone > y.phone);
+			customers.sort((x, y) => x.phone - y.phone);
 			this.setState({ customers });
 		});
 	}
